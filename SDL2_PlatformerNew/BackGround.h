@@ -11,7 +11,7 @@ public:
 	// move ctor (zakazany)
 	BackGround(BackGround&& rhs) = delete;
 	// copy prirazeni
-	void operator=(const BackGround& rhs);
+	void operator=(const BackGround& rhs); 
 	// move prirazeni
 	void operator=(BackGround&& rhs);
 	// Destructor
