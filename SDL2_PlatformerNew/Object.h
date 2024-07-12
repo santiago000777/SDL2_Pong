@@ -1,5 +1,5 @@
 #pragma once
-#include "common.h"
+#include "BackGround.h"
 
 class Object {
 public:
@@ -34,7 +34,7 @@ protected:
 	bool kolize[4];
 
 private:
-	void MistoKolize(std::vector<TGameObject*>* otherObjects, float delta);
+	void MistoKolize(std::vector<Object*>* otherObjects, float delta);
 
 	SDL_Rect windowRect;
 	BackGround* background;
