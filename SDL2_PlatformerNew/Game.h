@@ -31,5 +31,14 @@ private:
 	const float posunPeriod = 1000.0f / 9000;
 	std::chrono::time_point<std::chrono::high_resolution_clock> firstFrame, secondFrame, firstPosun, secondPosun;
 	std::chrono::milliseconds durationFrame, durationPosun;
+
+	void InitWindow(const std::string& windowName = "Window", int posX = SDL_WINDOWPOS_CENTERED, 
+					int posY = SDL_WINDOWPOS_CENTERED, int windowWidth = 800, int windowHeight = 600, int flags = SDL_WINDOW_SHOWN);
+
+	void InitRenderer(SDL_Window* window, int index = -1, int flags = 1);
+
+	void Render();
+	void Clear();
+	void Posun(float delta);
 };
 
