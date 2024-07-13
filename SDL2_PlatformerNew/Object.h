@@ -1,9 +1,10 @@
 #pragma once
+#include "Texture.h"
 #include "BackGround.h"
 
 class Object {
 public:
-	Object(SDL_Renderer* renderer, SDL_Rect destBox, const std::string& path, SDL_Rect fromBox, SDL_Rect windowRect);
+	Object(SDL_Renderer* renderer, SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_Rect windowRect);
 	Object(const Object& rhs) = delete;
 	Object(Object&& rhs);
 	~Object();
@@ -12,6 +13,7 @@ public:
 	void operator=(Object&& rhs);
 
 	void SetBackground(BackGround* bg);
+	bool IsDestroyble();
 
 	virtual void Render();
 	virtual void HandleEvents();
@@ -31,10 +33,11 @@ protected:
 	SDL_Rect dstBox;
 	SDL_Rect srcBox;
 
-	bool kolize[4];
+	bool collision[4];
+	bool isDestroyble = false;
 
 private:
-	void MistoKolize(std::vector<Object*>* otherObjects, float delta);
+	void CollisionPoint(std::vector<Object*>* otherObjects, float delta);
 
 	SDL_Rect windowRect;
 	BackGround* background;

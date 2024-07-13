@@ -1,10 +1,13 @@
 #pragma once
+#include "Player.h"
+#include "BackGround.h"
 #include "Object.h"
 #define FPS		60
 
 class Game {
 public:
-	Game(const std::string& windowName, int posX, int posY, int windowWidth, int windowHeight, int flags);
+	Game(const std::string& windowName = "Window", int posX = SDL_WINDOWPOS_CENTERED,
+		 int posY = SDL_WINDOWPOS_CENTERED, int windowWidth = 800, int windowHeight = 600, int flags = SDL_WINDOW_SHOWN);
 	Game(const Game& rhs) = delete;
 	Game(Game&& rhs) = delete;
 	~Game();
@@ -14,8 +17,15 @@ public:
 
 	void Loop();
 
-	template <typename T>
-	void AddObject();
+	template <typename T> void AddObject(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox);
+	template<> void AddObject<Object>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
+		auto object = new Object(renderer, dstBox, path, fromBox, windowRect);
+		objects.push_back(object);
+	}
+	template<> void AddObject<Player>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
+		auto player = new Player(renderer, dstBox, path, fromBox, windowRect);
+		objects.push_back(player);
+	}
 
 	void SetBackGround(const std::string& BGpath);
 
@@ -32,13 +42,7 @@ private:
 	std::chrono::time_point<std::chrono::high_resolution_clock> firstFrame, secondFrame, firstPosun, secondPosun;
 	std::chrono::milliseconds durationFrame, durationPosun;
 
-	void InitWindow(const std::string& windowName = "Window", int posX = SDL_WINDOWPOS_CENTERED, 
-					int posY = SDL_WINDOWPOS_CENTERED, int windowWidth = 800, int windowHeight = 600, int flags = SDL_WINDOW_SHOWN);
-
-	void InitRenderer(SDL_Window* window, int index = -1, int flags = 1);
-
 	void Render();
 	void Clear();
 	void Posun(float delta);
 };
-
