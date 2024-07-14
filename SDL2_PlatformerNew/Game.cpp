@@ -17,7 +17,7 @@ Game::~Game() {
 	for (auto& object : objects) {
 		delete object;
 	}
-	delete backGround;
+	delete background;
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 }
@@ -40,17 +40,17 @@ void Game::Loop() {
 	secondFrame = std::chrono::high_resolution_clock::now();
 }
 
-void Game::SetBackGround(const std::string& BGpath) {
-	backGround = new BackGround(windowRect.w, windowRect.h, BGpath, renderer);
+void Game::SetBackground(const std::string& BGpath) {
+	background = new Background(windowRect.w, windowRect.h, BGpath, renderer);
 	for (auto& object : objects) {
-		object->SetBackground(backGround);
+		object->SetBackground(background);
 	}
 }
 
 void Game::Render() {
 	SDL_RenderClear(renderer);
 
-	backGround->Render(&windowRect);
+	background->Render(&windowRect);
 	for (auto& object : objects) {
 		object->Render();
 	}

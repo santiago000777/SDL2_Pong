@@ -1,6 +1,6 @@
 #pragma once
 #include "Player.h"
-#include "BackGround.h"
+#include "Background.h"
 #include "Object.h"
 #define FPS		60
 
@@ -27,13 +27,13 @@ public:
 		objects.push_back(player);
 	}
 
-	void SetBackGround(const std::string& BGpath);
+	void SetBackground(const std::string& BGpath);
 
 private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	SDL_Rect windowRect;
-	BackGround* backGround;
+	Background* background;
 
 	std::vector<Object*> objects;
 

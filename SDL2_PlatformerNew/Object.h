@@ -1,6 +1,6 @@
 #pragma once
 #include "Texture.h"
-#include "BackGround.h"
+#include "Background.h"
 
 class Object {
 public:
@@ -12,7 +12,7 @@ public:
 	void operator=(const Object& rhs);
 	void operator=(Object&& rhs);
 
-	void SetBackground(BackGround* bg);
+	void SetBackground(Background* bg);
 	bool IsDestroyble();
 
 	virtual void Render();
@@ -40,7 +40,7 @@ private:
 	void CollisionPoint(std::vector<Object*>* otherObjects, float delta);
 
 	SDL_Rect windowRect;
-	BackGround* background;
+	Background* background;
 	SDL_Texture* texture;
 };
 

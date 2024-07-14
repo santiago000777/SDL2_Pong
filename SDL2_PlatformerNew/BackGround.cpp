@@ -1,7 +1,7 @@
 #include "common.h"
-#include "BackGround.h"
+#include "Background.h"
 
-BackGround::BackGround(int width, int height, std::string path, SDL_Renderer* renderer)
+Background::Background(int width, int height, std::string path, SDL_Renderer* renderer)
 	: box { 0, 0, width, height }, renderer(renderer) {
 
 	SDL_Surface* surface = SDL_LoadBMP(path.c_str());
@@ -9,15 +9,15 @@ BackGround::BackGround(int width, int height, std::string path, SDL_Renderer* re
 	SDL_FreeSurface(surface);
 }
 
-BackGround::~BackGround() {
+Background::~Background() {
 	SDL_DestroyTexture(texture);
 	std::cout << "Deleted background\n";
 }
 
-void BackGround::Render(SDL_Rect* windowRect) {
+void Background::Render(SDL_Rect* windowRect) {
 	SDL_RenderCopy(renderer, texture, NULL, windowRect);
 }
 
-SDL_Texture* BackGround::GetTexture() {
+SDL_Texture* Background::GetTexture() {
 	return texture;
 }

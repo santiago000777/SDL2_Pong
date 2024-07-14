@@ -29,7 +29,7 @@ void Object::operator=(const Object& rhs) {
 void Object::operator=(Object&& rhs) {
 }
 
-void Object::SetBackground(BackGround* bg) {
+void Object::SetBackground(Background* bg) {
 	background = bg;
 }
 

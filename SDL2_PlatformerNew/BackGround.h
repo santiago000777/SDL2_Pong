@@ -1,21 +1,21 @@
 #pragma once
 
 
-class BackGround {
+class Background {
 public:
-	BackGround() = default;
+	Background() = default;
 	// ctor s parametry
-	BackGround(int width, int height, std::string path, SDL_Renderer* renderer);
+	Background(int width, int height, std::string path, SDL_Renderer* renderer);
 	// copy ctor (zakazany)
-	BackGround(const BackGround& rhs) = delete;
+	Background(const Background& rhs) = delete;
 	// move ctor (zakazany)
-	BackGround(BackGround&& rhs) = delete;
+	Background(Background&& rhs) = delete;
 	// copy prirazeni
-	void operator=(const BackGround& rhs); 
+	void operator=(const Background& rhs); 
 	// move prirazeni
-	void operator=(BackGround&& rhs);
+	void operator=(Background&& rhs);
 	// Destructor
-	~BackGround();
+	~Background();
 
 	void Render(SDL_Rect* windowRect); 
 	SDL_Texture* GetTexture();

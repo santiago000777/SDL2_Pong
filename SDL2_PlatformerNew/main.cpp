@@ -21,7 +21,7 @@ int main(int argc, char* args[]) {
 	const float ballScale = 3.0f;
 	game.AddObject<Object>({ 500, 200, (int)roundf(7 * ballScale), (int)roundf(7 * ballScale) }, "Pictures/BallBmp.bmp", { 0, 0, 7, 8 });
 
-	game.SetBackGround("Pictures/veitImg.bmp");
+	game.SetBackground("Pictures/veitImg.bmp");
 
 	while (!PressedKey(VK_SPACE)) {
 		game.Loop();
