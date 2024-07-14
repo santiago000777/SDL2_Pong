@@ -17,7 +17,7 @@ public:
 
 	virtual void Render();
 	virtual void HandleEvents();
-	virtual void Posun(std::vector<Object*>* otherObjects, float delta);
+	virtual void Update(std::vector<Object*>* otherObjects, float delta);
 	virtual void Clear();
 
 	enum eIndex : int {

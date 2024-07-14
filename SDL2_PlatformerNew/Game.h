@@ -38,11 +38,11 @@ private:
 	std::vector<Object*> objects;
 
 	const float deltaTime = 1000.0f / FPS;
-	const float posunPeriod = 1000.0f / 9000;
-	std::chrono::time_point<std::chrono::high_resolution_clock> firstFrame, secondFrame, firstPosun, secondPosun;
-	std::chrono::milliseconds durationFrame, durationPosun;
+	const float updateDelta = 1000.0f / 9000;
+	std::chrono::time_point<std::chrono::high_resolution_clock> firstFrame, secondFrame, firstUpdate, secondUpdate;
+	std::chrono::milliseconds durationFrame, durationUpdate;
 
 	void Render();
 	void Clear();
-	void Posun(float delta);
+	void Update(float delta);
 };

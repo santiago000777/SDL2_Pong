@@ -23,13 +23,13 @@ Game::~Game() {
 }
 
 void Game::Loop() {
-	durationPosun = std::chrono::duration_cast<std::chrono::milliseconds>(secondPosun - firstPosun);
-	if (durationPosun.count() >= posunPeriod) {
-		firstPosun = std::chrono::high_resolution_clock::now();
+	durationUpdate = std::chrono::duration_cast<std::chrono::milliseconds>(secondUpdate - firstUpdate);
+	if (durationUpdate.count() >= updateDelta) {
+		firstUpdate = std::chrono::high_resolution_clock::now();
 
-		Posun(/*durationPosun.count()**/1/*0*/);
+		Update(/*durationPosun.count()**/1/*0*/);
 	}
-	secondPosun = std::chrono::high_resolution_clock::now();
+	secondUpdate = std::chrono::high_resolution_clock::now();
 
 	durationFrame = std::chrono::duration_cast<std::chrono::milliseconds>(secondFrame - firstFrame);
 	if (durationFrame.count() >= deltaTime) {
@@ -64,9 +64,9 @@ void Game::Clear() {
 	}
 }
 
-void Game::Posun(float delta) {
+void Game::Update(float delta) {
 	for (auto& object : objects) {
 		object->HandleEvents();
-		object->Posun(&objects, delta);
+		object->Update(&objects, delta);
 	}
 }

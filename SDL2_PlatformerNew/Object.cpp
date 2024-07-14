@@ -45,7 +45,7 @@ void Object::HandleEvents() {
 	vector = { 0, 0 };
 }
 
-void Object::Posun(std::vector<Object*>* otherObjects, float delta) {
+void Object::Update(std::vector<Object*>* otherObjects, float delta) {
 	CollisionPoint(otherObjects, delta);
 
 	if (this->collision[LEFT]) {
