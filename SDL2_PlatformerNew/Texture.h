@@ -12,13 +12,14 @@ public:
 			BREAK();
 		}
 
-		SDL_Surface* surface = SDL_LoadBMP(path.c_str());
+		//SDL_Surface* surface = SDL_LoadBMP(path.c_str());
+		std::unique_ptr<SDL_Surface, void(*)(SDL_Surface*)> surface(SDL_LoadBMP(path.c_str()), SDL_FreeSurface);
 
 		Uint32 transparentColor = SDL_MapRGBA(surface->format, 255, 255, 255, 0);
-		SDL_SetColorKey(surface, SDL_ENABLE, transparentColor);
+		SDL_SetColorKey(surface.get(), SDL_ENABLE, transparentColor);
 
-		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-		SDL_FreeSurface(surface);
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface.get());
+		//SDL_FreeSurface(surface);
 
 		return texture;
 	}
