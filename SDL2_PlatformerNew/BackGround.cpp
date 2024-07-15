@@ -4,10 +4,11 @@
 Background::Background(int width, int height, std::string path, SDL_Renderer* renderer)
 	: box { 0, 0, width, height }, renderer(renderer) {
 
-	//SDL_Surface* surface = SDL_LoadBMP(path.c_str());
-	std::unique_ptr<SDL_Surface, void(*)(SDL_Surface*)> surface(SDL_LoadBMP(path.c_str()), SDL_FreeSurface);
-	texture = SDL_CreateTextureFromSurface(renderer, surface.get());
-	//SDL_FreeSurface(surface);
+	SDL_Surface* surface = SDL_LoadBMP(path.c_str());
+	
+	texture = SDL_CreateTextureFromSurface(renderer, surface);
+	//std::make_u
+	SDL_FreeSurface(surface);
 }
 
 //Background::Background(const Background& rhs) {

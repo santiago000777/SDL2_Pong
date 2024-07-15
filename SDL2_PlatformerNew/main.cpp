@@ -19,7 +19,7 @@ int main(int argc, char* args[]) {
 	game.AddObject<Player>({ 550, 500, 100, 24 }, "Pictures/paddle.bmp", { 0, 0, 25, 6 });
 
 	const float ballScale = 3.0f;
-	game.AddObject<Object>({ 500, 200, (int)roundf(7 * ballScale), (int)roundf(7 * ballScale) }, "Pictures/BallBmp.bmp", { 0, 0, 7, 8 });
+	game.AddObject<Ball>({ 500, 200, (int)roundf(7 * ballScale), (int)roundf(7 * ballScale) }, "Pictures/BallBmp.bmp", { 0, 0, 7, 8 });
 
 	game.SetBackground("Pictures/veitImg.bmp");
 

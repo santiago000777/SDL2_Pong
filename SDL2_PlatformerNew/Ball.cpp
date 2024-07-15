@@ -1,24 +1,29 @@
-#include "common.h"
-#include "Player.h"
+#include "Ball.h"
 
-Player::Player(SDL_Renderer* renderer, SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect)
+Ball::Ball(SDL_Renderer* renderer, SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect) 
 	: Object(renderer, dstBox, path, from, windowRect) {
-
+	/*std::random_device nahodneCis;
+	std::uniform_real_distribution<float> dist(-1.0f, 1.0f);
+	std::cout << dist(nahodneCis) << ",  " << dist(nahodneCis) << "\n";
+	vector = { roundf(dist(nahodneCis)), roundf(dist(nahodneCis)) };*/
+	vector = { 1, 1 };
 }
 
-//Player::Player(const Player& rhs) 
+//Ball::Ball(const Ball& rhs) 
 //	: Object(rhs) {
-//}
 //
-//Player::Player(Player&& rhs)
-//	: Object(std::move(rhs)) {
 //}
 
-Player::~Player() {
-	std::cout << "Deleted player\n";
+//Ball::Ball(Ball&& rhs) 
+//	: Object(std::move(rhs)) {
+//
+//}
+
+Ball::~Ball() {
+	std::cout << "Deleted ball\n";
 }
 
-//void Player::operator=(const Player& rhs) {
+//void Ball::operator=(const Ball& rhs) {
 //	this->dstBox = rhs.dstBox;
 //	this->srcBox = rhs.srcBox;
 //	this->windowRect = rhs.windowRect;
@@ -31,44 +36,38 @@ Player::~Player() {
 //	*this->background = *rhs.background;
 //	memcpy(this->collision, rhs.collision, 4 * sizeof(bool));
 //}
-//
-//void Player::operator=(Player&& rhs) {
+
+//void Ball::operator=(Ball&& rhs) {
 //	this->dstBox = rhs.dstBox;
 //	this->srcBox = rhs.srcBox;
 //	this->windowRect = rhs.windowRect;
 //	this->isDestroyble = rhs.isDestroyble;
 //	this->path = rhs.path;
 //	this->vector = rhs.vector;
-//
+//	
 //	memcpy(this->collision, rhs.collision, 4 * sizeof(bool));
-//
+//	
 //	this->background = rhs.background;
 //	rhs.background = NULL;
-//
+//	
 //	this->renderer = rhs.renderer;
 //	rhs.renderer = NULL;
-//
+//	
 //	this->texture = rhs.texture;
 //	rhs.texture = NULL;
 //}
 
-void Player::HandleEvents() {
-	vector.x = 0;
-	vector.y = 0;
-	if (PressedKey(eControls::UP)) {
-
-		vector.y = -1;
+void Ball::HandleEvents() {
+	if (this->collision[eIndex::UP]) {
+		vector.y *= -1;
 	}
-	if (PressedKey(eControls::LEFT)) {
-
-		vector.x = -1;
+	if (this->collision[eIndex::DOWN]) {
+		vector.y *= -1;
 	}
-	if (PressedKey(eControls::DOWN)) {
-
-		vector.y = 1;
+	if (this->collision[eIndex::LEFT]) {
+		vector.x *= -1;
 	}
-	if (PressedKey(eControls::RIGHT)) {
-
-		vector.x = 1;
+	if (this->collision[eIndex::RIGHT]) {
+		vector.x *= -1;
 	}
 }

@@ -36,11 +36,11 @@ static bool PressedKey(short key) {
 
 struct TVec2 {
 public:
-	int x { 0 }, y { 0 };
+	float x { 0 }, y { 0 };
 
 public:
 	TVec2() {}
-	TVec2(int x, int y)
+	TVec2(float x, float y)
 		: x(x), y(y) {
 	}
 	void operator+=(const TVec2& vec) {

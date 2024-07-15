@@ -1,16 +1,18 @@
 #include "common.h"
 #include "Game.h"
 
+
 Game::Game(const std::string& windowName, int posX, int posY, int windowWidth, int windowHeight, int flags) {
 	SDL_Init(SDL_INIT_EVERYTHING);
-
 	this->window = SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags);
-	this->windowRect.x = 0;
+	SRenderer::Init(window);
+	/*this->windowRect.x = 0;
 	this->windowRect.y = 0;
 	this->windowRect.w = windowWidth;
-	this->windowRect.h = windowHeight;
+	this->windowRect.h = windowHeight;*/
+	this->windowRect = { 0, 0, windowWidth, windowHeight };
 
-	this->renderer = SDL_CreateRenderer(window, -1, 1);
+	//this->renderer = SDL_CreateRenderer(window, -1, 1);
 }
 
 Game::~Game() {
@@ -18,8 +20,8 @@ Game::~Game() {
 		delete object;
 	}
 	delete background;
-	SDL_DestroyWindow(window);
-	SDL_DestroyRenderer(renderer);
+	//SDL_DestroyWindow(window);
+	//SDL_DestroyRenderer(renderer);
 }
 
 void Game::Loop() {
@@ -41,21 +43,21 @@ void Game::Loop() {
 }
 
 void Game::SetBackground(const std::string& BGpath) {
-	background = new Background(windowRect.w, windowRect.h, BGpath, renderer);
+	background = new Background(windowRect.w, windowRect.h, BGpath, SRenderer::Get().Renderer());
 	for (auto& object : objects) {
 		object->SetBackground(background);
 	}
 }
 
 void Game::Render() {
-	SDL_RenderClear(renderer);
+	SDL_RenderClear(SRenderer::Get().Renderer());
 
 	background->Render(&windowRect);
 	for (auto& object : objects) {
 		object->Render();
 	}
 
-	SDL_RenderPresent(renderer);
+	SDL_RenderPresent(SRenderer::Get().Renderer());
 }
 
 void Game::Clear() {

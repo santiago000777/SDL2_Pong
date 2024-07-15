@@ -1,7 +1,9 @@
 #pragma once
 #include "Player.h"
+#include "Ball.h"
 #include "Background.h"
 #include "Object.h"
+#include "Renderer.h"
 #define FPS		60
 
 class Game {
@@ -19,19 +21,21 @@ public:
 
 	template <typename T> void AddObject(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox);
 	template<> void AddObject<Object>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
-		auto object = new Object(renderer, dstBox, path, fromBox, windowRect);
+		auto object = new Object(SRenderer::Get().Renderer(), dstBox, path, fromBox, windowRect);
 		objects.push_back(object);
 	}
 	template<> void AddObject<Player>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
-		auto player = new Player(renderer, dstBox, path, fromBox, windowRect);
+		auto player = new Player(SRenderer::Get().Renderer(), dstBox, path, fromBox, windowRect);
 		objects.push_back(player);
+	}
+	template<> void AddObject<Ball>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
+		auto ball = new Ball(SRenderer::Get().Renderer(), dstBox, path, fromBox, windowRect);
+		objects.push_back(ball);
 	}
 
 	void SetBackground(const std::string& BGpath);
-
 private:
 	SDL_Window* window;
-	SDL_Renderer* renderer;
 	SDL_Rect windowRect;
 	Background* background;
 

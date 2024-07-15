@@ -1,5 +1,6 @@
 #include "common.h"
 #include "Object.h"
+#include "Renderer.h"
 
 Object::Object(SDL_Renderer* renderer, SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_Rect windowRect)
 	: renderer(renderer), dstBox(dstBox), path(path), srcBox(fromBox), windowRect(windowRect) {
@@ -89,7 +90,7 @@ bool Object::IsDestroyble() {
 }
 
 void Object::Render() {
-	SDL_RenderCopy(renderer, texture, &srcBox, &dstBox); // NULL -> pro cely obr.
+	SDL_RenderCopy(SRenderer::Get().Renderer(), texture, &srcBox, &dstBox); // NULL -> pro cely obr.
 }
 
 void Object::HandleEvents() {
