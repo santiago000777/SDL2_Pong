@@ -36,7 +36,7 @@ void Game::Loop() {
 }
 
 void Game::SetBackground(const std::string& BGpath) {
-	background = new Background(windowRect.w, windowRect.h, BGpath, SRenderer::Get().Renderer());
+	background = new Background(windowRect.w, windowRect.h, BGpath);
 	for (auto& object : objects) {
 		object->SetBackground(background);
 	}

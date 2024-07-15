@@ -4,7 +4,7 @@ class Background {
 public:
 	//Background() = default;
 	// ctor s parametry
-	Background(int width, int height, std::string path, SDL_Renderer* renderer);
+	Background(int width, int height, std::string path);
 	// copy ctor (zakazany)
 	Background(const Background& rhs) = delete;
 	// move ctor (zakazany)
@@ -21,7 +21,6 @@ public:
 
 private:
 	SDL_Texture* texture;
-	SDL_Renderer* renderer;
 	SDL_Rect box;
 };
 

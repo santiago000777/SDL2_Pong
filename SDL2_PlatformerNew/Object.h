@@ -4,7 +4,7 @@
 
 class Object {
 public:
-	Object(SDL_Renderer* renderer, SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_Rect windowRect);
+	Object(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_Rect windowRect);
 	Object(const Object& rhs) = delete;
 	Object(Object&& rhs) = delete;
 	~Object();
@@ -28,7 +28,6 @@ public:
 	};
 
 protected:
-	SDL_Renderer* renderer;
 	TVec2 vector;
 	SDL_Rect dstBox;
 	SDL_Rect srcBox;

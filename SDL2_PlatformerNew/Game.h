@@ -21,15 +21,15 @@ public:
 
 	template <typename T> void AddObject(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox);
 	template<> void AddObject<Object>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
-		auto object = new Object(SRenderer::Get().Renderer(), dstBox, path, fromBox, windowRect);
+		auto object = new Object(dstBox, path, fromBox, windowRect);
 		objects.push_back(object);
 	}
 	template<> void AddObject<Player>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
-		auto player = new Player(SRenderer::Get().Renderer(), dstBox, path, fromBox, windowRect);
+		auto player = new Player(dstBox, path, fromBox, windowRect);
 		objects.push_back(player);
 	}
 	template<> void AddObject<Ball>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
-		auto ball = new Ball(SRenderer::Get().Renderer(), dstBox, path, fromBox, windowRect);
+		auto ball = new Ball(dstBox, path, fromBox, windowRect);
 		objects.push_back(ball);
 	}
 

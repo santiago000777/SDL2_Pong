@@ -2,10 +2,10 @@
 #include "Object.h"
 #include "Renderer.h"
 
-Object::Object(SDL_Renderer* renderer, SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_Rect windowRect)
-	: renderer(renderer), dstBox(dstBox), path(path), srcBox(fromBox), windowRect(windowRect) {
+Object::Object(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_Rect windowRect)
+	: dstBox(dstBox), path(path), srcBox(fromBox), windowRect(windowRect) {
 
-	texture = Texture::Create(renderer, path);
+	texture = Texture::Create(path);
 }
 
 //Object::Object(const Object& rhs) {
@@ -151,7 +151,7 @@ void Object::Update(std::vector<Object*>* otherObjects, float delta) {
 }
 
 void Object::Clear() {
-	SDL_RenderCopy(renderer, background->GetTexture(), &srcBox, &dstBox);
+	SDL_RenderCopy(SRenderer::Get().Renderer(), background->GetTexture(), &srcBox, &dstBox);
 }
 
 void Object::CollisionPoint(std::vector<Object*>* otherObjects, float delta) {

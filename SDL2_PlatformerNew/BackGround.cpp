@@ -1,12 +1,13 @@
 #include "common.h"
 #include "Background.h"
+#include "Renderer.h"
 
-Background::Background(int width, int height, std::string path, SDL_Renderer* renderer)
-	: box { 0, 0, width, height }, renderer(renderer) {
+Background::Background(int width, int height, std::string path)
+	: box { 0, 0, width, height } {
 
 	SDL_Surface* surface = SDL_LoadBMP(path.c_str());
 	
-	texture = SDL_CreateTextureFromSurface(renderer, surface);
+	texture = SDL_CreateTextureFromSurface(SRenderer::Get().Renderer(), surface);
 	//std::make_u
 	SDL_FreeSurface(surface);
 }
@@ -49,7 +50,7 @@ Background::~Background() {
 }
 
 void Background::Render(SDL_Rect* windowRect) {
-	SDL_RenderCopy(renderer, texture, NULL, windowRect);
+	SDL_RenderCopy(SRenderer::Get().Renderer(), texture, NULL, windowRect);
 }
 
 SDL_Texture* Background::GetTexture() {

@@ -3,7 +3,7 @@
 
 class Player : public Object {
 public:
-    Player(SDL_Renderer* renderer, SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect);
+    Player(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect);
     // copy ctor (zakazany)
     Player(const Player& rhs) = delete;
     // move ctor (zakazany)

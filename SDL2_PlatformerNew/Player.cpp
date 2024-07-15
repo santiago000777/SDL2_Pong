@@ -1,8 +1,8 @@
 #include "common.h"
 #include "Player.h"
 
-Player::Player(SDL_Renderer* renderer, SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect)
-	: Object(renderer, dstBox, path, from, windowRect) {
+Player::Player(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect)
+	: Object(dstBox, path, from, windowRect) {
 
 }
 
