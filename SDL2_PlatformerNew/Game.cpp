@@ -6,13 +6,8 @@ Game::Game(const std::string& windowName, int posX, int posY, int windowWidth, i
 	SDL_Init(SDL_INIT_EVERYTHING);
 	this->window = SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags);
 	SRenderer::Init(window);
-	/*this->windowRect.x = 0;
-	this->windowRect.y = 0;
-	this->windowRect.w = windowWidth;
-	this->windowRect.h = windowHeight;*/
+	
 	this->windowRect = { 0, 0, windowWidth, windowHeight };
-
-	//this->renderer = SDL_CreateRenderer(window, -1, 1);
 }
 
 Game::~Game() {
@@ -20,8 +15,6 @@ Game::~Game() {
 		delete object;
 	}
 	delete background;
-	//SDL_DestroyWindow(window);
-	//SDL_DestroyRenderer(renderer);
 }
 
 void Game::Loop() {

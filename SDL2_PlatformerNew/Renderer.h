@@ -1,9 +1,8 @@
 #pragma once
-//#include "SDL.h"
 
 class SRenderer {
 public:
-	SRenderer() {}/* = delete;*/
+	SRenderer() {}
 	SRenderer(const SRenderer& rhs) = delete;
 	SRenderer(SRenderer&& rhs) = delete;
 	~SRenderer();
@@ -19,5 +18,3 @@ private:
 	static SDL_Renderer* renderer;
 	SDL_Window* window;
 };
-
-//extern SRenderer& Get();

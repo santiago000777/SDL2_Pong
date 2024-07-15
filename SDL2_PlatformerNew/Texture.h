@@ -13,7 +13,6 @@ public:
 		}
 
 		SDL_Surface* surface = SDL_LoadBMP(path.c_str());
-		//std::unique_ptr<SDL_Surface, void(*)(SDL_Surface*)> surface(SDL_LoadBMP(path.c_str()), SDL_FreeSurface);
 
 		Uint32 transparentColor = SDL_MapRGBA(surface->format, 255, 255, 255, 0);
 		SDL_SetColorKey(surface, SDL_ENABLE, transparentColor);

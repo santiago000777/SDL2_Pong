@@ -4,7 +4,6 @@
 SDL_Renderer* SRenderer::renderer = nullptr;
 SRenderer sRenderer;
 
-
 SRenderer::~SRenderer() {
 	SDL_DestroyRenderer(renderer);
 	std::cout << "Deleted Renderer\n";
@@ -16,14 +15,10 @@ void SRenderer::Init(SDL_Window* window) {
 	}
 }
 
-SRenderer& SRenderer::Get(/*SDL_Window* window*/) {
+SRenderer& SRenderer::Get() {
 	return sRenderer;
 }
 
 SDL_Renderer* SRenderer::Renderer() {
 	return renderer;
 }
-
-//SRenderer& Get() {
-//	return sRenderer;
-//}
