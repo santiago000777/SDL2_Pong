@@ -1,7 +1,7 @@
 #pragma once
 #include "common.h"
 
-class TTexture {
+class Texture {
 public:
 	static SDL_Texture* Create(SDL_Renderer* renderer, const std::string& path) {
 		if (path.empty()) {

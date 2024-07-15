@@ -4,7 +4,7 @@
 Object::Object(SDL_Renderer* renderer, SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_Rect windowRect)
 	: dstBox(dstBox), renderer(renderer), srcBox(fromBox), windowRect(windowRect) {
 
-	texture = TTexture::Create(renderer, path);
+	texture = Texture::Create(renderer, path);
 }
 
 Object::Object(Object&& rhs) {
