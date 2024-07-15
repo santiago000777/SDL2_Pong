@@ -7,13 +7,13 @@ public:
     // copy ctor (zakazany)
     Player(const Player& rhs) = delete;
     // move ctor (zakazany)
-    Player(Player&& rhs)/* = delete*/;
+    Player(Player&& rhs) = delete;
     // Destructor
     ~Player();
     // copy prirazeni
-    void operator=(const Player& rhs);
+    void operator=(const Player& rhs) = delete;
     // move prirazeni
-    void operator=(Player&& rhs);
+    void operator=(Player&& rhs) = delete;
 
     void HandleEvents() override;
 

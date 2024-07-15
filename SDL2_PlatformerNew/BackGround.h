@@ -1,9 +1,8 @@
 #pragma once
 
-
 class Background {
 public:
-	Background() = default;
+	//Background() = default;
 	// ctor s parametry
 	Background(int width, int height, std::string path, SDL_Renderer* renderer);
 	// copy ctor (zakazany)
@@ -11,9 +10,9 @@ public:
 	// move ctor (zakazany)
 	Background(Background&& rhs) = delete;
 	// copy prirazeni
-	void operator=(const Background& rhs); 
+	void operator=(const Background& rhs) = delete; 
 	// move prirazeni
-	void operator=(Background&& rhs);
+	void operator=(Background&& rhs) = delete;
 	// Destructor
 	~Background();
 

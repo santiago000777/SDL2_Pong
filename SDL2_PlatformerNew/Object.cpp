@@ -2,32 +2,83 @@
 #include "Object.h"
 
 Object::Object(SDL_Renderer* renderer, SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_Rect windowRect)
-	: dstBox(dstBox), renderer(renderer), srcBox(fromBox), windowRect(windowRect) {
+	: renderer(renderer), dstBox(dstBox), path(path), srcBox(fromBox), windowRect(windowRect) {
 
 	texture = Texture::Create(renderer, path);
 }
 
-Object::Object(Object&& rhs) {
-	this->dstBox = rhs.dstBox;
-	this->srcBox = rhs.srcBox;
-	this->windowRect = rhs.windowRect;
-
-	this->renderer = rhs.renderer;
-	rhs.renderer = NULL;
-	this->texture = rhs.texture;
-	rhs.texture = NULL;
-}
+//Object::Object(const Object& rhs) {
+//	this->dstBox = rhs.dstBox;
+//	this->srcBox = rhs.srcBox;
+//	this->windowRect = rhs.windowRect;
+//	this->isDestroyble = rhs.isDestroyble;
+//	this->path = rhs.path;
+//	this->vector = rhs.vector;
+//
+//	this->renderer = rhs.renderer;
+//	this->texture = Texture::Create(renderer, path);
+//	*this->background = *rhs.background;
+//	memcpy(this->collision, rhs.collision, 4 * sizeof(bool));
+//}
+//
+//Object::Object(Object&& rhs) {
+//	this->dstBox = rhs.dstBox;
+//	this->srcBox = rhs.srcBox;
+//	this->windowRect = rhs.windowRect;
+//	this->isDestroyble = rhs.isDestroyble;
+//	this->path = rhs.path;
+//	this->vector = rhs.vector;
+//
+//	memcpy(this->collision, rhs.collision, 4 * sizeof(bool));
+//
+//	this->background = rhs.background;
+//	rhs.background = NULL;
+//
+//	this->renderer = rhs.renderer;
+//	rhs.renderer = NULL;
+//
+//	this->texture = rhs.texture;
+//	rhs.texture = NULL;
+//}
 
 Object::~Object() {
 	SDL_DestroyTexture(texture);
 	std::cout << "Deleted Object!" << std::endl;
 }
 
-void Object::operator=(const Object& rhs) {
-}
-
-void Object::operator=(Object&& rhs) {
-}
+//void Object::operator=(const Object& rhs) {
+//	this->dstBox = rhs.dstBox;
+//	this->srcBox = rhs.srcBox;
+//	this->windowRect = rhs.windowRect;
+//	this->isDestroyble = rhs.isDestroyble;
+//	this->path = rhs.path;
+//	this->vector = rhs.vector;
+//
+//	this->renderer = rhs.renderer;
+//	this->texture = Texture::Create(renderer, path);
+//	*this->background = *rhs.background;
+//	memcpy(this->collision, rhs.collision, 4 * sizeof(bool));
+//}
+//
+//void Object::operator=(Object&& rhs) {
+//	this->dstBox = rhs.dstBox;
+//	this->srcBox = rhs.srcBox;
+//	this->windowRect = rhs.windowRect;
+//	this->isDestroyble = rhs.isDestroyble;
+//	this->path = rhs.path;
+//	this->vector = rhs.vector;
+//
+//	memcpy(this->collision, rhs.collision, 4 * sizeof(bool));
+//
+//	this->background = rhs.background;
+//	rhs.background = NULL;
+//
+//	this->renderer = rhs.renderer;
+//	rhs.renderer = NULL;
+//
+//	this->texture = rhs.texture;
+//	rhs.texture = NULL;
+//}
 
 void Object::SetBackground(Background* bg) {
 	background = bg;

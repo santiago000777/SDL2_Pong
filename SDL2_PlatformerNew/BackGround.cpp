@@ -10,6 +10,38 @@ Background::Background(int width, int height, std::string path, SDL_Renderer* re
 	//SDL_FreeSurface(surface);
 }
 
+//Background::Background(const Background& rhs) {
+//	this->box = rhs.box;
+//
+//	this->renderer = rhs.renderer;
+//	this->texture = rhs.texture;
+//}
+//
+//Background::Background(Background&& rhs) {
+//	this->box = rhs.box;
+//
+//	this->renderer = rhs.renderer;
+//	rhs.renderer = NULL;
+//	this->texture = rhs.texture;
+//	rhs.texture = NULL;
+//}
+//
+//void Background::operator=(const Background& rhs) {
+//	this->box = rhs.box;
+//
+//	this->renderer = rhs.renderer;
+//	this->texture = rhs.texture;
+//}
+//
+//void Background::operator=(Background&& rhs) {
+//	this->box = rhs.box;
+//
+//	this->renderer = rhs.renderer;
+//	rhs.renderer = NULL;
+//	this->texture = rhs.texture;
+//	rhs.texture = NULL;
+//}
+
 Background::~Background() {
 	SDL_DestroyTexture(texture);
 	std::cout << "Deleted background\n";

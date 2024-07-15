@@ -6,11 +6,11 @@ class Object {
 public:
 	Object(SDL_Renderer* renderer, SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_Rect windowRect);
 	Object(const Object& rhs) = delete;
-	Object(Object&& rhs);
+	Object(Object&& rhs) = delete;
 	~Object();
 
-	void operator=(const Object& rhs);
-	void operator=(Object&& rhs);
+	void operator=(const Object& rhs) = delete;
+	void operator=(Object&& rhs) = delete;
 
 	void SetBackground(Background* bg);
 	bool IsDestroyble();
@@ -36,11 +36,11 @@ protected:
 	bool collision[4];
 	bool isDestroyble = false;
 
-private:
-	void CollisionPoint(std::vector<Object*>* otherObjects, float delta);
-
 	SDL_Rect windowRect;
 	Background* background;
 	SDL_Texture* texture;
+	std::string path;
+private:
+	void CollisionPoint(std::vector<Object*>* otherObjects, float delta);
 };
 
