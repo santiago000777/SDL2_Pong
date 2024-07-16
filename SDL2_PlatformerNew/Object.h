@@ -13,7 +13,6 @@ public:
 	void operator=(const Object& rhs) = delete;
 	void operator=(Object&& rhs) = delete;
 
-	void SetBackground(Background* bg);
 	bool IsDestroyble();
 
 	virtual void Render();
@@ -36,10 +35,10 @@ protected:
 	bool isDestroyble = false;
 
 	SDL_Rect windowRect;
-	Background* background;
 
 	std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Texture::Delete};
 
+	
 private:
 	void CollisionPoint(std::vector<Object*>* otherObjects, float delta);
 

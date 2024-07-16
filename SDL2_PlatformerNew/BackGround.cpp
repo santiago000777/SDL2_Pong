@@ -5,7 +5,7 @@
 Background::Background(int width, int height, std::string path)
 	: box { 0, 0, width, height } {
 
-	texture.reset(Texture::Create(path));
+	texture.reset(Texture::Create(path, 255, 0, 255, 255));
 }
 
 //Background::Background(const Background& rhs) {
@@ -46,8 +46,4 @@ Background::~Background() {
 
 void Background::Render(SDL_Rect* windowRect) {
 	SDL_RenderCopy(SRenderer::Get().Renderer(), texture.get(), nullptr, windowRect);
-}
-
-SDL_Texture* Background::GetTexture() {
-	return texture.get();
 }

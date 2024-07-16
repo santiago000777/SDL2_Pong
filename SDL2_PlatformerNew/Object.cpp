@@ -6,7 +6,7 @@
 Object::Object(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_Rect windowRect)
 	: dstBox(dstBox), srcBox(fromBox), windowRect(windowRect) {
 
-	texture.reset(Texture::Create(path));
+	texture.reset(Texture::Create(path, 255, 255, 255, 255));
 }
 
 //Object::Object(const Object& rhs) {
@@ -44,8 +44,7 @@ Object::Object(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_R
 //}
 
 Object::~Object() {
-	//SDL_DestroyTexture(texture);
-	//std::cout << "Deleted Object!" << std::endl;
+
 }
 
 //void Object::operator=(const Object& rhs) {
@@ -82,10 +81,6 @@ Object::~Object() {
 //	rhs.texture = nullptr;
 //}
 
-void Object::SetBackground(Background* bg) {
-	background = bg;
-}
-
 bool Object::IsDestroyble() {
 	return isDestroyble;
 }
@@ -96,6 +91,7 @@ void Object::Render() {
 
 void Object::HandleEvents() {
 	vector = { 0, 0 };
+	
 }
 
 void Object::Update(std::vector<Object*>* otherObjects, float delta) {
@@ -150,8 +146,6 @@ void Object::Update(std::vector<Object*>* otherObjects, float delta) {
 		this->dstBox.y += roundf(vector.y * delta);
 	}
 }
-
-
 
 void Object::CollisionPoint(std::vector<Object*>* otherObjects, float delta) {
 	this->collision[LEFT] = false;

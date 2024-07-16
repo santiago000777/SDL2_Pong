@@ -17,8 +17,7 @@ public:
 	// Destructor
 	~Background();
 
-	void Render(SDL_Rect* windowRect); 
-	SDL_Texture* GetTexture();
+	void Render(SDL_Rect* windowRect);
 
 private:
 	std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Texture::Delete };

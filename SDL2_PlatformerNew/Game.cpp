@@ -1,7 +1,6 @@
 #include "common.h"
 #include "Game.h"
 
-
 Game::Game(const std::string& windowName, int posX, int posY, int windowWidth, int windowHeight, int flags) {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	this->window = SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags);
@@ -36,9 +35,6 @@ void Game::Loop() {
 
 void Game::SetBackground(const std::string& BGpath) {
 	background = new Background(windowRect.w, windowRect.h, BGpath);
-	for (auto& object : objects) {
-		object->SetBackground(background);
-	}
 }
 
 void Game::Render() {
@@ -54,6 +50,7 @@ void Game::Render() {
 
 void Game::Update(float delta) {
 	for (auto& object : objects) {
+		
 		object->HandleEvents();
 		object->Update(&objects, delta);
 	}
