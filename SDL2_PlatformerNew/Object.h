@@ -2,10 +2,6 @@
 #include "Texture.h"
 #include "Background.h"
 
-static void DeleteTexture(SDL_Texture* tex) {
-	SDL_DestroyTexture(tex);
-	std::cout << "SDL_Destroy -> Deleted Object!\n";
-}
 class Object {
 public:
 	Object() {}
@@ -23,7 +19,6 @@ public:
 	virtual void Render();
 	virtual void HandleEvents();
 	virtual void Update(std::vector<Object*>* otherObjects, float delta);
-	virtual void Clear();
 
 	enum eIndex : int {
 		LEFT = 0,
@@ -42,16 +37,11 @@ protected:
 
 	SDL_Rect windowRect;
 	Background* background;
-	std::string path;
 
-	std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, DeleteTexture };
-	
+	std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Texture::Delete};
+
 private:
 	void CollisionPoint(std::vector<Object*>* otherObjects, float delta);
 
-	static void DeleteTexture(SDL_Texture* tex) {
-		SDL_DestroyTexture(tex);
-		std::cout << "SDL_Destroy -> Deleted Object!\n";
-	}
 };
 

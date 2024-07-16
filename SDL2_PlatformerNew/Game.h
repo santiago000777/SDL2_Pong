@@ -47,6 +47,5 @@ private:
 	std::chrono::milliseconds durationFrame, durationUpdate;
 
 	void Render();
-	void Clear();
 	void Update(float delta);
 };

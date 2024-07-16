@@ -29,7 +29,6 @@ void Game::Loop() {
 	durationFrame = std::chrono::duration_cast<std::chrono::milliseconds>(secondFrame - firstFrame);
 	if (durationFrame.count() >= deltaTime) {
 		firstFrame = std::chrono::high_resolution_clock::now();
-		Clear();
 		Render();
 	}
 	secondFrame = std::chrono::high_resolution_clock::now();
@@ -51,12 +50,6 @@ void Game::Render() {
 	}
 
 	SDL_RenderPresent(SRenderer::Get().Renderer());
-}
-
-void Game::Clear() {
-	for (auto& object : objects) {
-		object->Clear();
-	}
 }
 
 void Game::Update(float delta) {

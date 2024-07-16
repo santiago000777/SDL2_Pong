@@ -2,10 +2,9 @@
 #include "Object.h"
 #include "Renderer.h"
 
-#include <functional>
 
 Object::Object(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_Rect windowRect)
-	: dstBox(dstBox), path(path), srcBox(fromBox), windowRect(windowRect) {
+	: dstBox(dstBox), srcBox(fromBox), windowRect(windowRect) {
 
 	texture.reset(Texture::Create(path));
 }
@@ -35,13 +34,13 @@ Object::Object(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_R
 //	memcpy(this->collision, rhs.collision, 4 * sizeof(bool));
 //
 //	this->background = rhs.background;
-//	rhs.background = NULL;
+//	rhs.background = nullptr;
 //
 //	this->renderer = rhs.renderer;
-//	rhs.renderer = NULL;
+//	rhs.renderer = nullptr;
 //
 //	this->texture = rhs.texture;
-//	rhs.texture = NULL;
+//	rhs.texture = nullptr;
 //}
 
 Object::~Object() {
@@ -74,13 +73,13 @@ Object::~Object() {
 //	memcpy(this->collision, rhs.collision, 4 * sizeof(bool));
 //
 //	this->background = rhs.background;
-//	rhs.background = NULL;
+//	rhs.background = nullptr;
 //
 //	this->renderer = rhs.renderer;
-//	rhs.renderer = NULL;
+//	rhs.renderer = nullptr;
 //
 //	this->texture = rhs.texture;
-//	rhs.texture = NULL;
+//	rhs.texture = nullptr;
 //}
 
 void Object::SetBackground(Background* bg) {
@@ -92,7 +91,7 @@ bool Object::IsDestroyble() {
 }
 
 void Object::Render() {
-	SDL_RenderCopy(SRenderer::Get().Renderer(), texture.get(), &srcBox, &dstBox); // NULL -> pro cely obr.
+	SDL_RenderCopy(SRenderer::Get().Renderer(), texture.get(), &srcBox, &dstBox); // nullptr -> pro cely obr.
 }
 
 void Object::HandleEvents() {
@@ -152,9 +151,7 @@ void Object::Update(std::vector<Object*>* otherObjects, float delta) {
 	}
 }
 
-void Object::Clear() {
-	SDL_RenderCopy(SRenderer::Get().Renderer(), background->GetTexture(), &srcBox, &dstBox);
-}
+
 
 void Object::CollisionPoint(std::vector<Object*>* otherObjects, float delta) {
 	this->collision[LEFT] = false;

@@ -8,7 +8,7 @@ public:
 		if (path.empty()) {
 			std::cout << "Textura nema prirazenou cestu, cesta je prazdna";
 			BREAK();
-		} else if (SDL_LoadBMP(path.c_str()) == NULL) {
+		} else if (SDL_LoadBMP(path.c_str()) == nullptr) {
 			std::cout << "Nelze nalezt soubor s cestou na nastaveni obrazku Textury: " + path;
 			BREAK();
 		}
@@ -22,5 +22,12 @@ public:
 		SDL_FreeSurface(surface);
 
 		return texture;
+	}
+
+	static void Delete(SDL_Texture* tex) {
+		if (tex == nullptr)
+			return;
+		SDL_DestroyTexture(tex);
+		std::cout << "SDL_Destroy -> Deleted Texture!\n";
 	}
 };

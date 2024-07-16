@@ -5,11 +5,7 @@
 Background::Background(int width, int height, std::string path)
 	: box { 0, 0, width, height } {
 
-	SDL_Surface* surface = SDL_LoadBMP(path.c_str());
-	
-	texture = SDL_CreateTextureFromSurface(SRenderer::Get().Renderer(), surface);
-	//std::make_u
-	SDL_FreeSurface(surface);
+	texture.reset(Texture::Create(path));
 }
 
 //Background::Background(const Background& rhs) {
@@ -23,9 +19,9 @@ Background::Background(int width, int height, std::string path)
 //	this->box = rhs.box;
 //
 //	this->renderer = rhs.renderer;
-//	rhs.renderer = NULL;
+//	rhs.renderer = nullptr;
 //	this->texture = rhs.texture;
-//	rhs.texture = NULL;
+//	rhs.texture = nullptr;
 //}
 //
 //void Background::operator=(const Background& rhs) {
@@ -39,20 +35,19 @@ Background::Background(int width, int height, std::string path)
 //	this->box = rhs.box;
 //
 //	this->renderer = rhs.renderer;
-//	rhs.renderer = NULL;
+//	rhs.renderer = nullptr;
 //	this->texture = rhs.texture;
-//	rhs.texture = NULL;
+//	rhs.texture = nullptr;
 //}
 
 Background::~Background() {
-	SDL_DestroyTexture(texture);
 	std::cout << "Deleted background\n";
 }
 
 void Background::Render(SDL_Rect* windowRect) {
-	SDL_RenderCopy(SRenderer::Get().Renderer(), texture, NULL, windowRect);
+	SDL_RenderCopy(SRenderer::Get().Renderer(), texture.get(), nullptr, windowRect);
 }
 
 SDL_Texture* Background::GetTexture() {
-	return texture;
+	return texture.get();
 }

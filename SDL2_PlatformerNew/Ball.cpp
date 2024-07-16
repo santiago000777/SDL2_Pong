@@ -48,13 +48,13 @@ Ball::~Ball() {
 //	memcpy(this->collision, rhs.collision, 4 * sizeof(bool));
 //	
 //	this->background = rhs.background;
-//	rhs.background = NULL;
+//	rhs.background = nullptr;
 //	
 //	this->renderer = rhs.renderer;
-//	rhs.renderer = NULL;
+//	rhs.renderer = nullptr;
 //	
 //	this->texture = rhs.texture;
-//	rhs.texture = NULL;
+//	rhs.texture = nullptr;
 //}
 
 void Ball::HandleEvents() {

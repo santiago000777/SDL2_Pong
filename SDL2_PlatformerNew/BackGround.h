@@ -1,4 +1,5 @@
 #pragma once
+#include "Texture.h"
 
 class Background {
 public:
@@ -20,7 +21,8 @@ public:
 	SDL_Texture* GetTexture();
 
 private:
-	SDL_Texture* texture;
+	std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Texture::Delete };
+
 	SDL_Rect box;
 };
 
