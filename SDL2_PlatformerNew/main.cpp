@@ -16,9 +16,9 @@ int main(int argc, char* args[]) {
 	for (int i = 0; i < 10; i++) {
 		game.AddObject<Object>({ 330 + (70 * i), 0, 90, 30 }, "Pictures/horizontalWall.bmp", { 0, 0, 9, 7 });
 	}
-	for (int i = 0; i < 10; i++) {
+	/*for (int i = 0; i < 10; i++) {
 		game.AddObject<Object>({ 330 + (70 * i), 540, 90, 30 }, "Pictures/horizontalWall.bmp", { 0, 0, 9, 7 });
-	}
+	}*/
 	game.AddObject<Player>({ 550, 500, 100, 24 }, "Pictures/paddle.bmp", { 0, 0, 25, 6 });
 
 	const float ballScale = 3.0f;
@@ -26,10 +26,11 @@ int main(int argc, char* args[]) {
 
 	game.SetBackground("Pictures/veitImg.bmp");
 
-	while (!PressedKey(VK_SPACE)) {
+	while (!PressedKey(VK_SPACE) && !game.IsGameOver()) {
 		game.Loop();
 	}
 
+	std::cout << "Game over!\n\n";
 	// opravit vraceni u drzeni left i right nebo up i down klavesy
 
 	return 0;

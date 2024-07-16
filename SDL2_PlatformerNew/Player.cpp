@@ -53,6 +53,7 @@ Player::~Player() {
 //}
 
 void Player::HandleEvents() {
+	
 	vector.x = 0;
 	vector.y = 0;
 	if (PressedKey(eControls::UP)) {
@@ -67,4 +68,14 @@ void Player::HandleEvents() {
 	if (PressedKey(eControls::RIGHT)) {
 		vector.x = 1;
 	}
+}
+
+bool Player::IsGameOver() {
+	if(lives <= 0)
+		return true;
+	return false;
+}
+
+void Player::DecreaseLives(int i) {
+	lives -= i;
 }

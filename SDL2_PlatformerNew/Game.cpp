@@ -37,6 +37,10 @@ void Game::SetBackground(const std::string& BGpath) {
 	background = new Background(windowRect.w, windowRect.h, BGpath);
 }
 
+bool Game::IsGameOver() {
+	return isGameOver;
+}
+
 void Game::Render() {
 	SDL_RenderClear(SRenderer::Get().Renderer());
 
@@ -60,4 +64,19 @@ void Game::Update(float delta) {
 		object->HandleEvents();
 		object->Update(&objects, delta);
 	}
+	int uncatchedBalls = 0;
+	for (auto ball : balls) {
+		if (ball->GetPosition().y > 540) {
+			uncatchedBalls++;
+		}
+	}
+	for (auto& player : players) {
+		player->DecreaseLives(uncatchedBalls);
+	}
+	for (auto& player : players) {
+		if (player->IsGameOver()) {
+			isGameOver = true;
+		}
+	}
+
 }

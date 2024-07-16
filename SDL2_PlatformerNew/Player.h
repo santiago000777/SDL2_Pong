@@ -17,6 +17,8 @@ public:
 
     void HandleEvents() override;
 
+    bool IsGameOver();
+    void DecreaseLives(int i);
 private:
     enum eControls : short {
         UP = 'w',
@@ -24,5 +26,6 @@ private:
         DOWN = 's',
         RIGHT = 'd'
     };
+    int lives = 1;
 };
 

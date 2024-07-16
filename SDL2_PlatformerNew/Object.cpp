@@ -147,6 +147,10 @@ void Object::Update(std::vector<Object*>* otherObjects, float delta) {
 	}
 }
 
+TVec2 Object::GetPosition() const {
+	return {(float)dstBox.x, (float)dstBox.y};
+}
+
 void Object::CollisionPoint(std::vector<Object*>* otherObjects, float delta) {
 	this->collision[LEFT] = false;
 	this->collision[RIGHT] = false;

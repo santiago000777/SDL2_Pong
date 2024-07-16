@@ -38,6 +38,7 @@ public:
 	}
 
 	void SetBackground(const std::string& BGpath);
+	bool IsGameOver();
 private:
 	SDL_Window* window;
 	SDL_Rect windowRect;
@@ -53,6 +54,8 @@ private:
 	const float updateDelta = 1000.0f / 9000;
 	std::chrono::time_point<std::chrono::high_resolution_clock> firstFrame, secondFrame, firstUpdate, secondUpdate;
 	std::chrono::milliseconds durationFrame, durationUpdate;
+
+	bool isGameOver = false;
 
 	void Render();
 	void Update(float delta);

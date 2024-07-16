@@ -25,6 +25,7 @@ public:
 		UP,
 		DOWN
 	};
+	TVec2 GetPosition() const;
 
 protected:
 	TVec2 vector;
