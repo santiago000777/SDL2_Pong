@@ -2,10 +2,12 @@
 #include "Object.h"
 #include "Renderer.h"
 
+#include <functional>
+
 Object::Object(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_Rect windowRect)
 	: dstBox(dstBox), path(path), srcBox(fromBox), windowRect(windowRect) {
 
-	texture = Texture::Create(path);
+	texture.reset(Texture::Create(path));
 }
 
 //Object::Object(const Object& rhs) {
@@ -43,8 +45,8 @@ Object::Object(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_R
 //}
 
 Object::~Object() {
-	SDL_DestroyTexture(texture);
-	std::cout << "Deleted Object!" << std::endl;
+	//SDL_DestroyTexture(texture);
+	//std::cout << "Deleted Object!" << std::endl;
 }
 
 //void Object::operator=(const Object& rhs) {
@@ -90,7 +92,7 @@ bool Object::IsDestroyble() {
 }
 
 void Object::Render() {
-	SDL_RenderCopy(SRenderer::Get().Renderer(), texture, &srcBox, &dstBox); // NULL -> pro cely obr.
+	SDL_RenderCopy(SRenderer::Get().Renderer(), texture.get(), &srcBox, &dstBox); // NULL -> pro cely obr.
 }
 
 void Object::HandleEvents() {
@@ -103,50 +105,50 @@ void Object::Update(std::vector<Object*>* otherObjects, float delta) {
 	if (this->collision[LEFT]) {
 
 		if (this->vector.x > 0 && !this->collision[RIGHT])
-			this->dstBox.x += this->vector.x * delta;
+			this->dstBox.x += roundf(this->vector.x * delta);
 
 		if (this->vector.y < 0 && !this->collision[UP]
 			|| this->vector.y > 0 && !this->collision[DOWN]) {
 
-			this->dstBox.y += this->vector.y * delta;
+			this->dstBox.y += roundf(this->vector.y * delta);
 		}
 	}
 	if (this->collision[RIGHT]) {
 
 		if (this->vector.x < 0 && !this->collision[LEFT]) {
-			this->dstBox.x += this->vector.x * delta;
+			this->dstBox.x += roundf(this->vector.x * delta);
 		}
 		if (this->vector.y < 0 && !this->collision[UP]
 			|| this->vector.y > 0 && !this->collision[DOWN]) {
 
-			this->dstBox.y += this->vector.y * delta;
+			this->dstBox.y += roundf(this->vector.y * delta);
 		}
 	}
 	if (this->collision[UP]) {
 
 		if (this->vector.y > 0 && !this->collision[DOWN])
-			this->dstBox.y += this->vector.y * delta;
+			this->dstBox.y += roundf(this->vector.y * delta);
 
 		if (this->vector.x < 0 && !this->collision[LEFT]
 			|| this->vector.x > 0 && !this->collision[RIGHT]) {
 
-			this->dstBox.x += this->vector.x * delta;
+			this->dstBox.x += roundf(this->vector.x * delta);
 		}
 	}
 	if (this->collision[DOWN]) {
 
 		if (this->vector.y < 0 && !this->collision[UP])
-			this->dstBox.y += this->vector.y * delta;
+			this->dstBox.y += roundf(this->vector.y * delta);
 
 		if (this->vector.x < 0 && !this->collision[LEFT]
 			|| this->vector.x > 0 && !this->collision[RIGHT]) {
 
-			this->dstBox.x += this->vector.x * delta;
+			this->dstBox.x += roundf(this->vector.x * delta);
 		}
 	}
 	if (!this->collision[LEFT] && !this->collision[RIGHT] && !this->collision[UP] && !this->collision[DOWN]) {
-		this->dstBox.x += vector.x * delta;
-		this->dstBox.y += vector.y * delta;
+		this->dstBox.x += roundf(vector.x * delta);
+		this->dstBox.y += roundf(vector.y * delta);
 	}
 }
 

@@ -2,8 +2,13 @@
 #include "Texture.h"
 #include "Background.h"
 
+static void DeleteTexture(SDL_Texture* tex) {
+	SDL_DestroyTexture(tex);
+	std::cout << "SDL_Destroy -> Deleted Object!\n";
+}
 class Object {
 public:
+	Object() {}
 	Object(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_Rect windowRect);
 	Object(const Object& rhs) = delete;
 	Object(Object&& rhs) = delete;
@@ -37,9 +42,16 @@ protected:
 
 	SDL_Rect windowRect;
 	Background* background;
-	SDL_Texture* texture;
 	std::string path;
+
+	std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, DeleteTexture };
+	
 private:
 	void CollisionPoint(std::vector<Object*>* otherObjects, float delta);
+
+	static void DeleteTexture(SDL_Texture* tex) {
+		SDL_DestroyTexture(tex);
+		std::cout << "SDL_Destroy -> Deleted Object!\n";
+	}
 };
 
