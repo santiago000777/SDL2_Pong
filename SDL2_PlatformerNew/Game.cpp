@@ -41,8 +41,14 @@ void Game::Render() {
 	SDL_RenderClear(SRenderer::Get().Renderer());
 
 	background->Render(&windowRect);
-	for (auto& object : objects) {
-		object->Render();
+	for (auto& wall : walls) {
+		wall->Render();
+	}
+	for (auto& ball : balls) {
+		ball->Render();
+	}
+	for (auto& player : players) {
+		player->Render();
 	}
 
 	SDL_RenderPresent(SRenderer::Get().Renderer());

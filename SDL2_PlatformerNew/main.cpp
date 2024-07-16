@@ -16,9 +16,9 @@ int main(int argc, char* args[]) {
 	for (int i = 0; i < 10; i++) {
 		game.AddObject<Object>({ 330 + (70 * i), 0, 90, 30 }, "Pictures/horizontalWall.bmp", { 0, 0, 9, 7 });
 	}
-	/*for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 10; i++) {
 		game.AddObject<Object>({ 330 + (70 * i), 540, 90, 30 }, "Pictures/horizontalWall.bmp", { 0, 0, 9, 7 });
-	}*/
+	}
 	game.AddObject<Player>({ 550, 500, 100, 24 }, "Pictures/paddle.bmp", { 0, 0, 25, 6 });
 
 	const float ballScale = 3.0f;

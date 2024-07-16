@@ -4,6 +4,7 @@
 #include "Background.h"
 #include "Object.h"
 #include "Renderer.h"
+
 #define FPS		60
 
 class Game {
@@ -21,16 +22,19 @@ public:
 
 	template <typename T> void AddObject(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox);
 	template<> void AddObject<Object>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
-		auto object = new Object(dstBox, path, fromBox, windowRect);
-		objects.push_back(object);
+		auto wall = new Object(dstBox, path, fromBox, windowRect);
+		objects.push_back(wall);
+		walls.push_back(wall);
 	}
 	template<> void AddObject<Player>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
 		auto player = new Player(dstBox, path, fromBox, windowRect);
 		objects.push_back(player);
+		players.push_back(player);
 	}
 	template<> void AddObject<Ball>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
 		auto ball = new Ball(dstBox, path, fromBox, windowRect);
 		objects.push_back(ball);
+		balls.push_back(ball);
 	}
 
 	void SetBackground(const std::string& BGpath);
@@ -40,6 +44,10 @@ private:
 	Background* background;
 
 	std::vector<Object*> objects;
+
+	std::vector<Object*> walls;
+	std::vector<Ball*> balls;
+	std::vector<Player*> players;
 
 	const float deltaTime = 1000.0f / FPS;
 	const float updateDelta = 1000.0f / 9000;
