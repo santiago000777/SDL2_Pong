@@ -64,6 +64,7 @@ void Game::Update(float delta) {
 		object->HandleEvents();
 		object->Update(&objects, delta);
 	}
+
 	int uncatchedBalls = 0;
 	for (auto ball : balls) {
 		if (ball->GetPosition().y > 540) {
@@ -78,5 +79,4 @@ void Game::Update(float delta) {
 			isGameOver = true;
 		}
 	}
-
 }
