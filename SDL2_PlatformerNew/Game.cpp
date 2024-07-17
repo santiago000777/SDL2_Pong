@@ -66,7 +66,7 @@ void Game::Update(float delta) {
 	}
 	int uncatchedBalls = 0;
 	for (auto ball : balls) {
-		if (ball->GetPosition().y > 540) {
+		if (ball->GetPosition().y > 800) {
 			uncatchedBalls++;
 		}
 	}
