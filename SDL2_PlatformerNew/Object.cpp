@@ -2,6 +2,7 @@
 #include "Object.h"
 #include "Renderer.h"
 
+std::vector<Player*>* Object::players = nullptr;
 
 Object::Object(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_Rect windowRect)
 	: dstBox(dstBox), srcBox(fromBox), windowRect(windowRect) {
@@ -147,8 +148,19 @@ void Object::Update(std::vector<Object*>* otherObjects, float delta) {
 	}
 }
 
-TVec2 Object::GetPosition() const {
-	return {(float)dstBox.x, (float)dstBox.y};
+SDL_Rect Object::GetPosition() const {
+	return dstBox;
+}
+
+bool Object::IsCollision(Object* otherObjects, float delta) {
+	if ((this->dstBox.x + this->vector.x * delta + this->dstBox.w > otherObjects->dstBox.x && this->dstBox.x + this->vector.x * delta < otherObjects->dstBox.x + otherObjects->dstBox.w) && (this->dstBox.y + this->vector.y * delta + this->dstBox.h > otherObjects->dstBox.y && this->dstBox.y + this->vector.y * delta < otherObjects->dstBox.y + otherObjects->dstBox.h)) {
+
+		return true;
+	} else return false;
+}
+
+int Object::GetPoints() const {
+	return points;
 }
 
 void Object::CollisionPoint(std::vector<Object*>* otherObjects, float delta) {
@@ -157,38 +169,51 @@ void Object::CollisionPoint(std::vector<Object*>* otherObjects, float delta) {
 	this->collision[UP] = false;
 	this->collision[DOWN] = false;
 
-	for (int i = 0; i < otherObjects->size(); i++) {
-		if (otherObjects->at(i) == this) {
+	for (auto& object : *otherObjects) {
+		if (object == this) {
 			continue;
 		}
 
-		if ((this->dstBox.x + this->vector.x * delta + this->dstBox.w > otherObjects->at(i)->dstBox.x && this->dstBox.x + this->vector.x * delta < otherObjects->at(i)->dstBox.x + otherObjects->at(i)->dstBox.w)
-			&& (this->dstBox.y + this->vector.y * delta + this->dstBox.h > otherObjects->at(i)->dstBox.y && this->dstBox.y + this->vector.y * delta < otherObjects->at(i)->dstBox.y + otherObjects->at(i)->dstBox.h)) {
+		if (IsCollision(object, delta)) {
 
-			if (this->vector.x * delta > 0 && this->dstBox.x + this->dstBox.w >= otherObjects->at(i)->dstBox.x
-				&& this->dstBox.y < otherObjects->at(i)->dstBox.y + otherObjects->at(i)->dstBox.h && this->dstBox.y + this->dstBox.h > otherObjects->at(i)->dstBox.y) {
+			if (this->isDestroyble) {
+				delete this;
+				return;
+			}
+
+			if (this->vector.x * delta > 0 && this->dstBox.x + this->dstBox.w >= object->GetPosition().x
+				&& this->dstBox.y < object->GetPosition().y + object->GetPosition().h && this->dstBox.y + this->dstBox.h > object->GetPosition().y) {
 
 				this->collision[RIGHT] = true;
 				std::cout << "RIGHT\n";
 			}
-			if (this->vector.x * delta < 0 && this->dstBox.x <= otherObjects->at(i)->dstBox.x + otherObjects->at(i)->dstBox.w
-				&& this->dstBox.y < otherObjects->at(i)->dstBox.y + otherObjects->at(i)->dstBox.h && this->dstBox.y + this->dstBox.h > otherObjects->at(i)->dstBox.y) {
+			if (this->vector.x * delta < 0 && this->dstBox.x <= object->GetPosition().x + object->GetPosition().w
+				&& this->dstBox.y < object->GetPosition().y + object->GetPosition().h && this->dstBox.y + this->dstBox.h > object->GetPosition().y) {
 
 				this->collision[LEFT] = true;
 				std::cout << "LEFT\n";
 			}
-			if (this->vector.y * delta > 0 && this->dstBox.y + this->dstBox.h >= otherObjects->at(i)->dstBox.y
-				&& this->dstBox.x < otherObjects->at(i)->dstBox.x + otherObjects->at(i)->dstBox.w && this->dstBox.x + this->dstBox.w > otherObjects->at(i)->dstBox.x) {
+			if (this->vector.y * delta > 0 && this->dstBox.y + this->dstBox.h >= object->GetPosition().y
+				&& this->dstBox.x < object->GetPosition().x + object->GetPosition().w && this->dstBox.x + this->dstBox.w > object->GetPosition().x) {
 
 				this->collision[DOWN] = true;
 				std::cout << "DOWN\n";
 			}
-			if (this->vector.y * delta < 0 && this->dstBox.y <= otherObjects->at(i)->dstBox.y + otherObjects->at(i)->dstBox.h
-				&& this->dstBox.x < otherObjects->at(i)->dstBox.x + otherObjects->at(i)->dstBox.w && this->dstBox.x + this->dstBox.w > otherObjects->at(i)->dstBox.x) {
+			if (this->vector.y * delta < 0 && this->dstBox.y <= object->GetPosition().y + object->GetPosition().h
+				&& this->dstBox.x < object->GetPosition().x + object->GetPosition().w && this->dstBox.x + this->dstBox.w > object->GetPosition().x) {
 
 				this->collision[UP] = true;
 				std::cout << "UP\n";
 			}
+
+			if (object->IsDestroyble()) {
+				for(auto& player : *players)
+				delete object;
+			}
 		}
 	}
+}
+
+void Object::SetPlayers(std::vector<Player*>* p) {
+	players = p;
 }

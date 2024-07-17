@@ -1,5 +1,4 @@
 #pragma once
-#include "Object.h"
 
 class Player : public Object {
 public:
@@ -9,7 +8,7 @@ public:
     // move ctor (zakazany)
     Player(Player&& rhs) = delete;
     // Destructor
-    ~Player();
+    ~Player()/* override*/;
     // copy prirazeni
     void operator=(const Player& rhs) = delete;
     // move prirazeni
@@ -18,7 +17,7 @@ public:
     void HandleEvents() override;
 
     bool IsGameOver();
-    void DecreaseLives(int i);
+    void AddLives(int i);
 private:
     enum eControls : short {
         UP = 'w',

@@ -60,23 +60,22 @@ void Game::Render() {
 
 void Game::Update(float delta) {
 	for (auto& object : objects) {
-		
 		object->HandleEvents();
 		object->Update(&objects, delta);
 	}
 	int uncatchedBalls = 0;
+	balls[0]->SetPlayers(&players);
 	for (auto ball : balls) {
 		if (ball->GetPosition().y > 800) {
 			uncatchedBalls++;
 		}
 	}
 	for (auto& player : players) {
-		player->DecreaseLives(uncatchedBalls);
+		player->AddLives(-uncatchedBalls);
 	}
 	for (auto& player : players) {
 		if (player->IsGameOver()) {
 			isGameOver = true;
 		}
 	}
-
 }

@@ -1,5 +1,6 @@
 #include "common.h"
 #include "Player.h"
+#include "Object.h"
 
 Player::Player(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect)
 	: Object(dstBox, path, from, windowRect) {
@@ -76,6 +77,6 @@ bool Player::IsGameOver() {
 	return false;
 }
 
-void Player::DecreaseLives(int i) {
-	lives -= i;
+void Player::AddLives(int i) {
+	lives += i;
 }

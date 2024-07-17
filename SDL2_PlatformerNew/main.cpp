@@ -2,6 +2,8 @@
 #include "Game.h"
 
 int main(int argc, char* args[]) {
+	srand(time(nullptr));
+
 	Game game("TITLE", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 604, 850, SDL_WINDOW_SHOWN); // SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED
 	game.SetBackground("Pictures/veitImg.bmp");
 	game.AddObject<Object>({ 25, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", { 0, 0, 7, 9 });
@@ -13,7 +15,7 @@ int main(int argc, char* args[]) {
 
 	const float ballScale = 3.0f;
 	game.AddObject<Ball>({ 400, 100, (int)roundf(7 * ballScale), (int)roundf(7 * ballScale) }, "Pictures/BallBmp.bmp", { 0, 0, 7, 8 });
-
+	game.AddObject<Ball>({ 300, 100, (int)roundf(7 * ballScale), (int)roundf(7 * ballScale) }, "Pictures/BallBmp.bmp", { 0, 0, 7, 8 });
 
 	while (!PressedKey(VK_SPACE) && !game.IsGameOver()) {
 		game.Loop();
