@@ -1,5 +1,7 @@
 #include "Ball.h"
 
+
+
 Ball::Ball(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect) 
 	: Object(dstBox, path, from, windowRect) {
 	/*std::random_device nahodneCis;
@@ -213,3 +215,51 @@ void Ball::Collision(Wall* object, float delta) {
 		}
 	}
 }
+
+//void Ball::CollisionPoint(std::vector<Brick*>* otherObjects, float delta) {
+//	this->collision[LEFT] = false;
+//	this->collision[RIGHT] = false;
+//	this->collision[UP] = false;
+//	this->collision[DOWN] = false;
+//
+//	for (auto& object : *otherObjects) {
+//		if (IsCollision(object, delta)) {
+//
+//			if (this->isDestroyble) {
+//				delete this;
+//				return;
+//			}
+//
+//			if (this->vector.x * delta > 0 && this->dstBox.x + this->dstBox.w >= object->GetPosition().x
+//				&& this->dstBox.y < object->GetPosition().y + object->GetPosition().h && this->dstBox.y + this->dstBox.h > object->GetPosition().y) {
+//				
+//				this->collision[RIGHT] = true;
+//				std::cout << "RIGHT\n";
+//			}
+//			if (this->vector.x * delta < 0 && this->dstBox.x <= object->GetPosition().x + object->GetPosition().w
+//				&& this->dstBox.y < object->GetPosition().y + object->GetPosition().h && this->dstBox.y + this->dstBox.h > object->GetPosition().y) {
+//
+//				this->collision[LEFT] = true;
+//				std::cout << "LEFT\n";
+//			}
+//			if (this->vector.y * delta > 0 && this->dstBox.y + this->dstBox.h >= object->GetPosition().y
+//				&& this->dstBox.x < object->GetPosition().x + object->GetPosition().w && this->dstBox.x + this->dstBox.w > object->GetPosition().x) {
+//
+//				this->collision[DOWN] = true;
+//				std::cout << "DOWN\n";
+//			}
+//			if (this->vector.y * delta < 0 && this->dstBox.y <= object->GetPosition().y + object->GetPosition().h
+//				&& this->dstBox.x < object->GetPosition().x + object->GetPosition().w && this->dstBox.x + this->dstBox.w > object->GetPosition().x) {
+//
+//				this->collision[UP] = true;
+//				std::cout << "UP\n";
+//			}
+//
+//			if (object->IsDestroyble()) {
+//				delete object;
+//			}
+//		}
+//	}
+//}
+
+

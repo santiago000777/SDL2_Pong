@@ -60,46 +60,24 @@ void Game::Render() {
 }
 
 void Game::Update(float delta) {
-	/*for (auto& wall : walls) {
-		wall->
-	}*/
-	for (auto& ball : balls) {
-		for (auto wall : walls) {
-			ball->Collision(wall, delta);
-		}
-	}
-	for (auto& ball : balls) {
-		for (auto player : players) {
-			ball->Collision(player, delta);
-		}
-	}
-	for (auto& ball : balls) {
-		ball->HandleEvents();
-		ball->Update(delta);
-	}
-	for (auto& player : players) {
-		for (auto& wall : walls) {
-			player->Collision(wall, delta);
-		}
-	}
-
-	for (auto& player : players) {
-		player->HandleEvents();
-		player->Update(delta);	// !!! i se pricita vektor k pozici!!! -> zde jen kontrola kolize
+	for (auto& object : objects) {
+		
+		object->HandleEvents();
+		object->Update(&objects, delta);
 	}
 	int uncatchedBalls = 0;
+	balls[0]->SetPlayers(&players);
 	for (auto ball : balls) {
-		if (ball->GetPosition().y > 540) {
+		if (ball->GetPosition().y > 800) {
 			uncatchedBalls++;
 		}
 	}
 	for (auto& player : players) {
-		player->DecreaseLives(uncatchedBalls);
+		player->AddLives(-uncatchedBalls);
 	}
 	for (auto& player : players) {
 		if (player->IsGameOver()) {
 			isGameOver = true;
 		}
 	}
-
 }

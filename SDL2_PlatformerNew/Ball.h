@@ -1,5 +1,6 @@
 #pragma once
-#include "Object.h"
+#include "Player.h"
+#include "Brick.h"
 class Ball : public Object {
 public:
     Ball(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect);
@@ -8,13 +9,17 @@ public:
     // move ctor (zakazany)
     Ball(Ball&& rhs) = delete;
     // Destructor
-    ~Ball();
+    ~Ball()/* override*/;
     // copy prirazeni
     void operator=(const Ball& rhs) = delete;
     // move prirazeni
     void operator=(Ball&& rhs) = delete;
 
-	void HandleEvents() override;
-
+    void HandleEvents() override;
+    
+    
+private:
+    //void CollisionPoint(std::vector<Brick*>* otherObjects, float delta);
+    
 };
 

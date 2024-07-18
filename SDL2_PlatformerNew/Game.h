@@ -4,6 +4,7 @@
 #include "Background.h"
 #include "Object.h"
 #include "Renderer.h"
+#include "Brick.h"
 
 #define FPS		60
 
@@ -30,11 +31,18 @@ public:
 		auto player = new Player(dstBox, path, fromBox, windowRect);
 		objects.push_back(player);
 		players.push_back(player);
+
+		player->SetPlayers(&players);
 	}
 	template<> void AddObject<Ball>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
 		auto ball = new Ball(dstBox, path, fromBox, windowRect);
 		objects.push_back(ball);
 		balls.push_back(ball);
+	}
+	template<> void AddObject<Brick>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
+		auto brick = new Brick(dstBox, path, fromBox, windowRect);
+		objects.push_back(brick);
+		bricks.push_back(brick);
 	}
 
 	void SetBackground(const std::string& BGpath);
@@ -49,6 +57,7 @@ private:
 	std::vector<Object*> walls;
 	std::vector<Ball*> balls;
 	std::vector<Player*> players;
+	std::vector<Brick*> bricks;
 
 	const float deltaTime = 1000.0f / FPS;
 	const float updateDelta = 1000.0f / 9000;

@@ -1,5 +1,4 @@
 #pragma once
-#include "Object.h"
 
 class Player : public Object {
 public:
@@ -9,7 +8,7 @@ public:
     // move ctor (zakazany)
     Player(Player&& rhs) = delete;
     // Destructor
-    ~Player();
+    ~Player()/* override*/;
     // copy prirazeni
     void operator=(const Player& rhs) = delete;
     // move prirazeni
@@ -29,22 +28,6 @@ public:
     SDL_Rect GetDstBox() const;
     bool IsGameOver();
     void DecreaseLives(int i);
-
-protected:
-    TVec2 vector;
-    SDL_Rect dstBox;
-    SDL_Rect srcBox;
-
-    bool collision[4];
-    bool isDestroyble = false;
-
-    SDL_Rect windowRect;
-    std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Texture::Delete };
-
-
-    void CollisionPoint(std::vector<Wall*>* others, float delta);
-    
-    
 private:
     enum eControls : short {
         UP = 'w',
