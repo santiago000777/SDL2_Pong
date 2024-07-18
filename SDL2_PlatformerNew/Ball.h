@@ -20,8 +20,7 @@ public:
 
     void Render();
     bool IsDestroyble();
-    void Update(std::vector<Player*>* otherObjects, float delta);
-    void Update(std::vector<Wall*>* otherObjects, float delta);
+    void Update(float delta);
     enum eIndex : int {
         LEFT = 0,
         RIGHT,
@@ -30,19 +29,21 @@ public:
     };
     SDL_Rect GetDstBox() const;
 
+    void Collision(Player* player , float delta);
+    void Collision(Wall* wall, float delta);
+
 protected:
     TVec2 vector;
     SDL_Rect dstBox;
     SDL_Rect srcBox;
 
-    bool collision[4];
+    bool collision[4] = { 0, 0, 0, 0 };
     bool isDestroyble = false;
 
     SDL_Rect windowRect;
     std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Texture::Delete };
 
 
-    void CollisionPoint(std::vector<Player*>* otherObjects, float delta);
-    void CollisionPoint(std::vector<Wall*>* otherObjects, float delta);
+    
 };
 
