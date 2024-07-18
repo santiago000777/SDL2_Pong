@@ -1,5 +1,9 @@
 #include "MoveComponent.h"
 
+MoveComponent::MoveComponent(SDL_Rect dstBox) 
+	: dstBox(dstBox) {
+}
+
 bool MoveComponent::IsDestroyble() {
 	return isDestroyble;
 }

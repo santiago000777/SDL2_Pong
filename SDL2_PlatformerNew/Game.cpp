@@ -10,8 +10,17 @@ Game::Game(const std::string& windowName, int posX, int posY, int windowWidth, i
 }
 
 Game::~Game() {
-	for (auto& object : objects) {
+	/*for (auto& object : objects) {
 		delete object;
+	*/
+	for (auto& wall : walls) {
+		delete wall;
+	}
+	for (auto& ball : balls) {
+		delete ball;
+	}
+	for (auto& player : players) {
+		delete player;
 	}
 	delete background;
 }
@@ -59,15 +68,30 @@ void Game::Render() {
 }
 
 void Game::Update(float delta) {
-	for (auto& object : objects) {
-		
-		object->HandleEvents();
-		object->Update(&objects, delta);
+	/*for (auto& wall : walls) {
+		wall->
+	}*/
+	for (auto& ball : balls) {
+		//ball->Update(&walls, delta);
+		ball->Update(&players, delta);
+		//ball->HandleEvents();
+	}
+	for (auto& ball : balls) {
+		ball->Update(&walls, delta);
+		//ball->HandleEvents();
+	}
+	for (auto& ball : balls) {
+		ball->HandleEvents();
+	}
+	
+	for (auto& player : players) {
+		player->Update(&walls, delta);
+		player->HandleEvents();
 	}
 
 	int uncatchedBalls = 0;
 	for (auto ball : balls) {
-		if (ball->GetPosition().y > 540) {
+		if (ball->GetDstBox().y > 820) {
 			uncatchedBalls++;
 		}
 	}

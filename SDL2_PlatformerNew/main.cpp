@@ -5,26 +5,19 @@
 		// -> pridani k players isAlive
 
 int main(int argc, char* args[]) {
-	Game game("TITLE", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1200, 600, SDL_WINDOW_SHOWN); // SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED
+	Game game("TITLE", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 604, 850, SDL_WINDOW_SHOWN); // SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED
+	game.SetBackground("Pictures/veitImg.bmp");
+	game.AddObject<Wall>({ 25, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", { 0, 0, 7, 9 });
+	game.AddObject<Wall>({ 25 + 525, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", { 0, 0, 7, 9 });
 
-	for (int i = 0; i < 6; i++) {
-		game.AddObject<Object>({ 350, 90 * i, 30, 90 }, "Pictures/verticalWall.bmp", { 0, 0, 7, 9 });
-	}
-	for (int i = 0; i < 6; i++) {
-		game.AddObject<Object>({ 850, 90 * i, 30, 90 }, "Pictures/verticalWall.bmp", { 0, 0, 7, 9 });
-	}
-	for (int i = 0; i < 10; i++) {
-		game.AddObject<Object>({ 330 + (70 * i), 0, 90, 30 }, "Pictures/horizontalWall.bmp", { 0, 0, 9, 7 });
-	}
-	/*for (int i = 0; i < 10; i++) {
-		game.AddObject<Object>({ 330 + (70 * i), 540, 90, 30 }, "Pictures/horizontalWall.bmp", { 0, 0, 9, 7 });
-	}*/
-	game.AddObject<Player>({ 550, 500, 100, 24 }, "Pictures/paddle.bmp", { 0, 0, 25, 6 });
+	game.AddObject<Wall>({ 25, 50, 550, 30 }, "Pictures/horizontalWall.bmp", { 0, 0, 9, 7 });
+	
+	//game.AddObject<Wall>({ 25, 750, 550, 30 }, "Pictures/horizontalWall.bmp", { 0, 0, 9, 7 });
+
+	game.AddObject<Player>({ 300, 750, 100, 24 }, "Pictures/paddle.bmp", { 0, 0, 25, 6 });
 
 	const float ballScale = 3.0f;
-	game.AddObject<Ball>({ 400, 100, (int)roundf(7 * ballScale), (int)roundf(7 * ballScale) }, "Pictures/BallBmp.bmp", { 0, 0, 7, 8 });
-
-	game.SetBackground("Pictures/veitImg.bmp");
+	game.AddObject<Ball>({ 300, 100, (int)roundf(7 * ballScale), (int)roundf(7 * ballScale) }, "Pictures/BallBmp.bmp", { 0, 0, 7, 8 });
 
 	while (!PressedKey(VK_SPACE) && !game.IsGameOver()) {
 		game.Loop();

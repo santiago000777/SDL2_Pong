@@ -3,8 +3,9 @@
 
 class MoveComponent {
 public:
-	TVec2 vector;
 
+	MoveComponent(SDL_Rect dstBox);
+		
 	bool IsDestroyble();
 	virtual void HandleEvents() = 0;
 	virtual void Update(std::vector<MoveComponent*>* others, float delta);
@@ -16,10 +17,13 @@ public:
 	};
 	SDL_Rect GetDstBox() const;
 
-private:
-	bool collision[4];
-	bool isDestroyble = false;
+protected:
 	SDL_Rect dstBox;
+	TVec2 vector;
+	bool isDestroyble = false;
+	bool collision[4];
+
+private:
 	void CollisionPoint(std::vector<MoveComponent*>* others, float delta);
 };
 
