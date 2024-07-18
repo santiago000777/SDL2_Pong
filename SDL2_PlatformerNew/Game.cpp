@@ -29,6 +29,7 @@ void Game::Loop() {
 	if (durationFrame.count() >= deltaTime) {
 		firstFrame = std::chrono::high_resolution_clock::now();
 		Render();
+		//std::cout << "<====New Frame====>\n";
 	}
 	secondFrame = std::chrono::high_resolution_clock::now();
 }
@@ -59,10 +60,32 @@ void Game::Render() {
 }
 
 void Game::Update(float delta) {
-	for (auto& object : objects) {
-		
-		object->HandleEvents();
-		object->Update(&objects, delta);
+	/*for (auto& wall : walls) {
+		wall->
+	}*/
+	for (auto& ball : balls) {
+		for (auto wall : walls) {
+			ball->Collision(wall, delta);
+		}
+	}
+	for (auto& ball : balls) {
+		for (auto player : players) {
+			ball->Collision(player, delta);
+		}
+	}
+	for (auto& ball : balls) {
+		ball->HandleEvents();
+		ball->Update(delta);
+	}
+	for (auto& player : players) {
+		for (auto& wall : walls) {
+			player->Collision(wall, delta);
+		}
+	}
+
+	for (auto& player : players) {
+		player->HandleEvents();
+		player->Update(delta);	// !!! i se pricita vektor k pozici!!! -> zde jen kontrola kolize
 	}
 	int uncatchedBalls = 0;
 	for (auto ball : balls) {

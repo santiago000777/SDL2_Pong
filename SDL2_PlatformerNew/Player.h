@@ -17,8 +17,34 @@ public:
 
     void HandleEvents() override;
 
+    void Render();
+    bool IsDestroyble();
+    void Update(std::vector<Wall*>* others, float delta);
+    enum class eIndex : int {
+        LEFT = 0,
+        RIGHT,
+        UP,
+        DOWN
+    };
+    SDL_Rect GetDstBox() const;
     bool IsGameOver();
     void DecreaseLives(int i);
+
+protected:
+    TVec2 vector;
+    SDL_Rect dstBox;
+    SDL_Rect srcBox;
+
+    bool collision[4];
+    bool isDestroyble = false;
+
+    SDL_Rect windowRect;
+    std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Texture::Delete };
+
+
+    void CollisionPoint(std::vector<Wall*>* others, float delta);
+    
+    
 private:
     enum eControls : short {
         UP = 'w',
