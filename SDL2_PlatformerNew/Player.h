@@ -19,7 +19,7 @@ public:
 
     void Render();
     bool IsDestroyble();
-    void Update(std::vector<Wall*>* others, float delta);
+    void Update(float delta);
     enum class eIndex : int {
         LEFT = 0,
         RIGHT,
@@ -29,6 +29,7 @@ public:
     SDL_Rect GetDstBox() const;
     bool IsGameOver();
     void DecreaseLives(int i);
+    void Collision(Wall* wall, float delta);
 
 protected:
     TVec2 vector;
@@ -42,7 +43,6 @@ protected:
     std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Texture::Delete };
 
 
-    void CollisionPoint(std::vector<Wall*>* others, float delta);
     
     
 private:

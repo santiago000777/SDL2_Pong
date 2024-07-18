@@ -68,17 +68,12 @@ void Game::Render() {
 }
 
 void Game::Update(float delta) {
-	/*for (auto& wall : walls) {
-		wall->
-	}*/
 	for (auto& ball : balls) {
-		//ball->Update(&walls, delta);	// !!! i se pricita vektor k pozici!!! -> zde jen kontrola kolize
 		for (auto wall : walls) {
 			ball->Collision(wall, delta);
 		}
 	}
 	for (auto& ball : balls) {
-		//ball->Update(&players, delta);	// !!! i se pricita vektor k pozici!!! -> zde jen kontrola kolize
 		for (auto player : players) {
 			ball->Collision(player, delta);
 		}
@@ -87,10 +82,15 @@ void Game::Update(float delta) {
 		ball->HandleEvents();
 		ball->Update(delta);
 	}
-	
+
 	for (auto& player : players) {
-		player->Update(&walls, delta);	// !!! i se pricita vektor k pozici!!! -> zde jen kontrola kolize
+		for (auto wall : walls) {
+			player->Collision(wall, delta);
+		}
+	}
+	for (auto& player : players) {
 		player->HandleEvents();
+		player->Update(delta);
 	}
 
 	int uncatchedBalls = 0;
