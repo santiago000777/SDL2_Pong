@@ -21,12 +21,13 @@ public:
     void DecreaseLives(int i);
     void Collision(Wall* wall, float delta);
 
-protected:
-    TVec2 vector;
-
-    bool collision[4];
+    int GetPlayerId() const;
 
 private:
+    TVec2 vector;
+    int idPlayer;
+    static int playerCount;
+    bool collision[4];
     enum class eControls : short {
         UP = 'w',
         LEFT = 'a',
@@ -35,4 +36,3 @@ private:
     };
     int lives = 1;
 };
-

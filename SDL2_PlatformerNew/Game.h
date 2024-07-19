@@ -4,9 +4,10 @@
 #include "Background.h"
 #include "Wall.h"
 #include "Renderer.h"
+#include "Brick.h"
 
 
-#define FPS		165
+#define FPS		160
 
 class Game {
 public:
@@ -48,7 +49,7 @@ private:
 	std::vector<Wall*> walls;
 	std::vector<Ball*> balls;
 	std::vector<Player*> players;
-	//std::vector<Brick*> bricks;
+	std::vector<Brick*> bricks;
 
 	const float deltaTime = 1000.0f / FPS;
 	const float updateDelta = 1000.0f / 9000;

@@ -1,9 +1,12 @@
 #include "common.h"
 #include "Player.h"
 
+int Player::playerCount = 0;
+
 Player::Player(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect) 
 	: Object(dstBox, path, from, windowRect) {
-	
+	idPlayer = playerCount;
+	playerCount++;
 }
 
 //Player::Player(const Player& rhs) 
@@ -170,6 +173,10 @@ void Player::Collision(Wall* object, float delta) {
 			return;
 		}
 	}
+}
+
+int Player::GetPlayerId() const {
+	return idPlayer;
 }
 
 bool Player::IsGameOver() {

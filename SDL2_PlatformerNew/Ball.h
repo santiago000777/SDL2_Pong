@@ -1,6 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "Wall.h"
+#include "Brick.h"
 
 class Ball : public Object {
 public:
@@ -21,10 +22,11 @@ public:
 
     void Collision(Player* player , float delta);
     void Collision(Wall* wall, float delta);
+    void Collision(Brick* wall, float delta);
 
 protected:
     TVec2 vector;
-
+    int playerOwnerId = -1;
     bool collision[4] = { 0, 0, 0, 0 };
 };
 
