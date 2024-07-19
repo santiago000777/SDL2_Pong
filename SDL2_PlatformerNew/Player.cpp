@@ -75,7 +75,6 @@ void Player::HandleEvents() {
 
 void Player::Update(float delta) {
 	
-
 	if (!this->collision[LEFT] && !this->collision[RIGHT] && !this->collision[UP] && !this->collision[DOWN]) {
 		this->dstBox.x += roundf(vector.x * delta);
 		this->dstBox.y += roundf(vector.y * delta);
@@ -177,6 +176,10 @@ void Player::Collision(Wall* object, float delta) {
 
 int Player::GetPlayerId() const {
 	return idPlayer;
+}
+
+void Player::AddPoints(int points) {
+	this->points += points;
 }
 
 bool Player::IsGameOver() {

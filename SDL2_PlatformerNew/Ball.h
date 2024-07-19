@@ -17,6 +17,8 @@ public:
     // move prirazeni
     void operator=(Ball&& rhs) = delete;
 
+    int GetOwnerId() const;
+    int GetPoints() const;
 	void HandleEvents();
     void Update(float delta);
 
@@ -25,6 +27,7 @@ public:
     void Collision(Brick* wall, float delta);
 
 protected:
+    int points = 0;
     TVec2 vector;
     int playerOwnerId = -1;
     bool collision[4] = { 0, 0, 0, 0 };

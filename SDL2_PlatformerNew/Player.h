@@ -22,6 +22,7 @@ public:
     void Collision(Wall* wall, float delta);
 
     int GetPlayerId() const;
+    void AddPoints(int points);
 
 private:
     TVec2 vector;
@@ -35,4 +36,5 @@ private:
         RIGHT = 'd'
     };
     int lives = 1;
+    int points = 0;
 };

@@ -38,6 +38,11 @@ public:
 		
 		balls.push_back(ball);
 	}
+	template<> void AddObject<Brick>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
+		auto brick = new Brick(dstBox, path, fromBox, windowRect);
+
+		bricks.push_back(brick);
+	}
 
 	void SetBackground(const std::string& BGpath);
 	bool IsGameOver();

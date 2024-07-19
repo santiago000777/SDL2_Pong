@@ -49,6 +49,14 @@ Ball::~Ball() {
 //	rhs.texture = nullptr;
 //}
 
+int Ball::GetOwnerId() const {
+	return playerOwnerId;
+}
+
+int Ball::GetPoints() const {
+	return points;
+}
+
 void Ball::HandleEvents() {
 	if (this->collision[eIndex::UP]) {
 		vector.y *= -1;
@@ -65,6 +73,7 @@ void Ball::HandleEvents() {
 }
 
 void Ball::Update(float delta) {
+	points = 0;
 	if (!this->collision[LEFT] && !this->collision[RIGHT] && !this->collision[UP] && !this->collision[DOWN]) {
 		this->dstBox.x += roundf(vector.x * delta);
 		this->dstBox.y += roundf(vector.y * delta);
@@ -158,11 +167,12 @@ void Ball::Collision(Player* object, float delta) {
 		}
 		if (object->IsDestroyble()) {
 			delete object;
+			playerOwnerId = -1;
 			return;
 		}
-		playerOwnerId = object->GetPlayerId();
+		else
+			playerOwnerId = object->GetPlayerId();
 	}
-	
 }
 
 void Ball::Collision(Wall* object, float delta) {
@@ -225,7 +235,12 @@ void Ball::Collision(Brick* object, float delta) {
 			this->collision[UP] = true;
 			std::cout << "Ball - UP\n";
 		}
+		if (object->IsDestroyble()) {
+			points += object->GetPoints();
 
+			delete object;
+			return;
+		}
 
 		playerOwnerId = -1;
 	}

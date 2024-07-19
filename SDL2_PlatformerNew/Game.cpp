@@ -6,6 +6,7 @@ Game::Game(const std::string& windowName, int posX, int posY, int windowWidth, i
 	this->window = SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags);
 	SRenderer::Init(window);
 	
+	
 	this->windowRect = { 0, 0, windowWidth, windowHeight };
 }
 
@@ -19,7 +20,11 @@ Game::~Game() {
 	for (auto& player : players) {
 		delete player;
 	}
+	for (auto& brick : bricks) {
+		delete brick;
+	}
 	delete background;
+	SDL_DestroyWindow(window);
 }
 
 void Game::Loop() {
@@ -83,6 +88,13 @@ void Game::Update(float delta) {
 	for (auto& player : players) {
 		for (auto wall : walls) {
 			player->Collision(wall, delta);
+		}
+	}
+	for (auto& player : players) {
+		for (auto ball : balls) {
+			if (ball->GetOwnerId() == player->GetPlayerId()) {
+				player->AddPoints(ball->GetPoints());
+			}
 		}
 	}
 	for (auto& player : players) {
