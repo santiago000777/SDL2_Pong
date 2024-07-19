@@ -16,8 +16,18 @@ public:
 
     void HandleEvents() override;
 
+    void Render();
+    bool IsDestroyble();
+    void Update(std::vector<Wall*>* others, float delta);
+    enum class eIndex : int {
+        LEFT = 0,
+        RIGHT,
+        UP,
+        DOWN
+    };
+    SDL_Rect GetDstBox() const;
     bool IsGameOver();
-    void AddLives(int i);
+    void DecreaseLives(int i);
 private:
     enum eControls : short {
         UP = 'w',

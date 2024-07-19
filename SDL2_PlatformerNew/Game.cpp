@@ -29,6 +29,7 @@ void Game::Loop() {
 	if (durationFrame.count() >= deltaTime) {
 		firstFrame = std::chrono::high_resolution_clock::now();
 		Render();
+		//std::cout << "<====New Frame====>\n";
 	}
 	secondFrame = std::chrono::high_resolution_clock::now();
 }
@@ -60,6 +61,7 @@ void Game::Render() {
 
 void Game::Update(float delta) {
 	for (auto& object : objects) {
+		
 		object->HandleEvents();
 		object->Update(&objects, delta);
 	}
