@@ -17,8 +17,9 @@ int main(int argc, char* args[]) {
 	game.AddObject<Player>({ 56, 750, 100, 24 }, "Pictures/paddle.bmp", { 0, 0, 25, 6 });
 
 	const float ballScale = 3.0f;
-	game.AddObject<Ball>({ 300, 100, (int)roundf(7 * ballScale), (int)roundf(7 * ballScale) }, "Pictures/BallBmp.bmp", { 0, 0, 7, 8 });
+	game.AddObject<Ball>({ 300, 200, (int)roundf(7 * ballScale), (int)roundf(7 * ballScale) }, "Pictures/BallBmp.bmp", { 0, 0, 7, 8 });
 
+	game.AddObject<Brick>({ 100, 100, 500, 20}, "Pictures/Brick.bmp", {0, 0, 16, 5});
 	while (!PressedKey(VK_SPACE) && !game.IsGameOver()) {
 		game.Loop();
 	}

@@ -17,6 +17,6 @@ public:
 	int GetPoints() const;
     void SetPoints(int points);
 private:
-	int points;
+	int points = 1;
 };
 

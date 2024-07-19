@@ -59,6 +59,9 @@ void Game::Render() {
 	for (auto& wall : walls) {
 		wall->Render();
 	}
+	for (auto& brick : bricks) {
+		brick->Render();
+	}
 	for (auto& ball : balls) {
 		ball->Render();
 	}
@@ -81,6 +84,13 @@ void Game::Update(float delta) {
 		}
 	}
 	for (auto& ball : balls) {
+		for (int i = 0; i < bricks.size(); i++) {
+			if (ball->Collision(bricks[i], delta)) {
+				bricks.erase(bricks.begin() + i);
+			}
+		}
+	}
+	for (auto& ball : balls) {
 		ball->HandleEvents();
 		ball->Update(delta);
 	}
@@ -92,8 +102,9 @@ void Game::Update(float delta) {
 	}
 	for (auto& player : players) {
 		for (auto ball : balls) {
-			if (ball->GetOwnerId() == player->GetPlayerId()) {
+			if (ball->GetOwnerId() == player->GetPlayerId() && ball->GetPoints() > 0) {
 				player->AddPoints(ball->GetPoints());
+				ball->ResetPoints();
 			}
 		}
 	}

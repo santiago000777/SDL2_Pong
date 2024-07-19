@@ -74,7 +74,9 @@ void Player::HandleEvents() {
 }
 
 void Player::Update(float delta) {
-	
+	if (points > 0) {
+		std::cout << "Player - " << points << "\n";
+	}
 	if (!this->collision[LEFT] && !this->collision[RIGHT] && !this->collision[UP] && !this->collision[DOWN]) {
 		this->dstBox.x += roundf(vector.x * delta);
 		this->dstBox.y += roundf(vector.y * delta);

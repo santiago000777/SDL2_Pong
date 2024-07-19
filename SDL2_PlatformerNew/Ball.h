@@ -21,10 +21,11 @@ public:
     int GetPoints() const;
 	void HandleEvents();
     void Update(float delta);
+    void ResetPoints();
 
     void Collision(Player* player , float delta);
     void Collision(Wall* wall, float delta);
-    void Collision(Brick* wall, float delta);
+    bool Collision(Brick* wall, float delta);
 
 protected:
     int points = 0;
