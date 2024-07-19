@@ -8,6 +8,8 @@
 
 #define FPS		60
 
+#define FPS		165
+
 class Game {
 public:
 	Game(const std::string& windowName = "Window", int posX = SDL_WINDOWPOS_CENTERED,
