@@ -1,11 +1,11 @@
 #include "common.h"
 #include "Game.h"
 
-	// pridat rozdilne kontejney (players, walls, ...)
-		// -> pridani k players isAlive
+	// chybna kolize u balonu + player + wall v rohu
+	// pridat animace
 
 int main(int argc, char* args[]) {
-	Game game("TITLE", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 604, 850, SDL_WINDOW_SHOWN); // SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED
+	Game game("PONG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 604, 850, SDL_WINDOW_SHOWN); // SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED
 	game.SetBackground("Pictures/veitImg.bmp");
 	game.AddObject<Wall>({ 25, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", { 0, 0, 7, 9 });
 	game.AddObject<Wall>({ 25 + 525, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", { 0, 0, 7, 9 });
