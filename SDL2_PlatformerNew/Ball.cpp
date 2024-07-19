@@ -1,24 +1,15 @@
 #include "Ball.h"
 
 Ball::Ball(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect) 
-	: dstBox(dstBox), srcBox(from), windowRect(windowRect) {
+	: Object(dstBox, path, from, windowRect) {
 	/*std::random_device nahodneCis;
 	std::uniform_real_distribution<float> dist(-1.0f, 1.0f);
 	std::cout << dist(nahodneCis) << ",  " << dist(nahodneCis) << "\n";
 	vector = { roundf(dist(nahodneCis)), roundf(dist(nahodneCis)) };*/
-	texture.reset(Texture::Create(path, 255, 255, 255, 255));
+	
 	vector = { 1, 1 };
 }
 
-//Ball::Ball(const Ball& rhs) 
-//	: Object(rhs) {
-//
-//}
-
-//Ball::Ball(Ball&& rhs) 
-//	: Object(std::move(rhs)) {
-//
-//}
 
 Ball::~Ball() {
 	std::cout << "Deleted ball\n";
@@ -71,14 +62,6 @@ void Ball::HandleEvents() {
 	if (this->collision[eIndex::RIGHT]) {
 		vector.x *= -1;
 	}
-}
-
-void Ball::Render() {
-	SDL_RenderCopy(SRenderer::Get().Renderer(), texture.get(), &srcBox, &dstBox);
-}
-
-bool Ball::IsDestroyble() {
-	return isDestroyble;
 }
 
 void Ball::Update(float delta) {
@@ -143,10 +126,6 @@ void Ball::Update(float delta) {
 	this->collision[RIGHT] = false;
 	this->collision[UP] = false;
 	this->collision[DOWN] = false;
-}
-
-SDL_Rect Ball::GetDstBox() const {
-	return dstBox;
 }
 
 void Ball::Collision(Player* object, float delta) {

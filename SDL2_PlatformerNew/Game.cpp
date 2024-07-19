@@ -10,9 +10,6 @@ Game::Game(const std::string& windowName, int posX, int posY, int windowWidth, i
 }
 
 Game::~Game() {
-	/*for (auto& object : objects) {
-		delete object;
-	*/
 	for (auto& wall : walls) {
 		delete wall;
 	}

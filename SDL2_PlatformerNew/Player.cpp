@@ -2,9 +2,8 @@
 #include "Player.h"
 
 Player::Player(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect) 
-	: dstBox(dstBox), srcBox(from), windowRect(windowRect) {
-
-	texture.reset(Texture::Create(path, 255, 255, 255, 255));
+	: Object(dstBox, path, from, windowRect) {
+	
 }
 
 //Player::Player(const Player& rhs) 
@@ -71,18 +70,10 @@ void Player::HandleEvents() {
 	}
 }
 
-void Player::Render() {
-	SDL_RenderCopy(SRenderer::Get().Renderer(), texture.get(), &srcBox, &dstBox);
-}
-
-bool Player::IsDestroyble() {
-	return isDestroyble;
-}
-
 void Player::Update(float delta) {
 	
 
-	if (!this->collision[(int)eIndex::LEFT] && !this->collision[(int)eIndex::RIGHT] && !this->collision[(int)eIndex::UP] && !this->collision[(int)eIndex::DOWN]) {
+	if (!this->collision[LEFT] && !this->collision[RIGHT] && !this->collision[UP] && !this->collision[DOWN]) {
 		this->dstBox.x += roundf(vector.x * delta);
 		this->dstBox.y += roundf(vector.y * delta);
 	}
@@ -92,60 +83,57 @@ void Player::Update(float delta) {
 			return;
 		}
 
-		if (this->collision[(int)eIndex::LEFT]) {
+		if (this->collision[LEFT]) {
 
-			if (this->vector.x > 0 && !this->collision[(int)eIndex::RIGHT])
+			if (this->vector.x > 0 && !this->collision[RIGHT])
 				this->dstBox.x += roundf(this->vector.x * delta);
 
-			if (this->vector.y < 0 && !this->collision[(int)eIndex::UP]
-				|| this->vector.y > 0 && !this->collision[(int)eIndex::DOWN]) {
+			if (this->vector.y < 0 && !this->collision[UP]
+				|| this->vector.y > 0 && !this->collision[DOWN]) {
 
 				this->dstBox.y += roundf(this->vector.y * delta);
 			}
 		}
-		if (this->collision[(int)eIndex::RIGHT]) {
+		if (this->collision[RIGHT]) {
+			
 
-			if (this->vector.x < 0 && !this->collision[(int)eIndex::LEFT]) {
+			if (this->vector.x < 0 && !this->collision[LEFT]) {
 				this->dstBox.x += roundf(this->vector.x * delta);
 			}
-			if (this->vector.y < 0 && !this->collision[(int)eIndex::UP]
-				|| this->vector.y > 0 && !this->collision[(int)eIndex::DOWN]) {
+			if (this->vector.y < 0 && !this->collision[UP]
+				|| this->vector.y > 0 && !this->collision[DOWN]) {
 
 				this->dstBox.y += roundf(this->vector.y * delta);
 			}
 		}
-		if (this->collision[(int)eIndex::UP]) {
+		if (this->collision[UP]) {
 
-			if (this->vector.y > 0 && !this->collision[(int)eIndex::DOWN])
+			if (this->vector.y > 0 && !this->collision[DOWN])
 				this->dstBox.y += roundf(this->vector.y * delta);
 
-			if (this->vector.x < 0 && !this->collision[(int)eIndex::LEFT]
-				|| this->vector.x > 0 && !this->collision[(int)eIndex::RIGHT]) {
+			if (this->vector.x < 0 && !this->collision[LEFT]
+				|| this->vector.x > 0 && !this->collision[RIGHT]) {
 
 				this->dstBox.x += roundf(this->vector.x * delta);
 			}
 		}
-		if (this->collision[(int)eIndex::DOWN]) {
+		if (this->collision[DOWN]) {
 
-			if (this->vector.y < 0 && !this->collision[(int)eIndex::UP])
+			if (this->vector.y < 0 && !this->collision[UP])
 				this->dstBox.y += roundf(this->vector.y * delta);
 
-			if (this->vector.x < 0 && !this->collision[(int)eIndex::LEFT]
-				|| this->vector.x > 0 && !this->collision[(int)eIndex::RIGHT]) {
+			if (this->vector.x < 0 && !this->collision[LEFT]
+				|| this->vector.x > 0 && !this->collision[RIGHT]) {
 
 				this->dstBox.x += roundf(this->vector.x * delta);
 			}
 		}
 	}
 	
-	this->collision[(int)eIndex::LEFT] = false;
-	this->collision[(int)eIndex::RIGHT] = false;
-	this->collision[(int)eIndex::UP] = false;
-	this->collision[(int)eIndex::DOWN] = false;
-}
-
-SDL_Rect Player::GetDstBox() const {
-	return dstBox;
+	this->collision[LEFT] = false;
+	this->collision[RIGHT] = false;
+	this->collision[UP] = false;
+	this->collision[DOWN] = false;
 }
 
 void Player::Collision(Wall* object, float delta) {
@@ -155,25 +143,25 @@ void Player::Collision(Wall* object, float delta) {
 		if (this->vector.x * delta > 0 && this->dstBox.x + this->dstBox.w >= object->GetDstBox().x
 			&& this->dstBox.y < object->GetDstBox().y + object->GetDstBox().h && this->dstBox.y + this->dstBox.h > object->GetDstBox().y) {
 
-			this->collision[(int)eIndex::RIGHT] = true;
+			this->collision[RIGHT] = true;
 			std::cout << "Player - RIGHT\n";
 		}
 		if (this->vector.x * delta < 0 && this->dstBox.x <= object->GetDstBox().x + object->GetDstBox().w
 			&& this->dstBox.y < object->GetDstBox().y + object->GetDstBox().h && this->dstBox.y + this->dstBox.h > object->GetDstBox().y) {
 
-			this->collision[(int)eIndex::LEFT] = true;
+			this->collision[LEFT] = true;
 			std::cout << "Player - LEFT\n";
 		}
 		if (this->vector.y * delta > 0 && this->dstBox.y + this->dstBox.h >= object->GetDstBox().y
 			&& this->dstBox.x < object->GetDstBox().x + object->GetDstBox().w && this->dstBox.x + this->dstBox.w > object->GetDstBox().x) {
 
-			this->collision[(int)eIndex::DOWN] = true;
+			this->collision[DOWN] = true;
 			std::cout << "Player - DOWN\n";
 		}
 		if (this->vector.y * delta < 0 && this->dstBox.y <= object->GetDstBox().y + object->GetDstBox().h
 			&& this->dstBox.x < object->GetDstBox().x + object->GetDstBox().w && this->dstBox.x + this->dstBox.w > object->GetDstBox().x) {
 
-			this->collision[(int)eIndex::UP] = true;
+			this->collision[UP] = true;
 			std::cout << "Player - UP\n";
 		}
 
