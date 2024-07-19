@@ -3,11 +3,12 @@
 
 
 Ball::Ball(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect) 
-	: Object(dstBox, path, from, windowRect) {
+	: dstBox(dstBox), srcBox(from), windowRect(windowRect) {
 	/*std::random_device nahodneCis;
 	std::uniform_real_distribution<float> dist(-1.0f, 1.0f);
 	std::cout << dist(nahodneCis) << ",  " << dist(nahodneCis) << "\n";
 	vector = { roundf(dist(nahodneCis)), roundf(dist(nahodneCis)) };*/
+	texture.reset(Texture::Create(path, 255, 255, 255, 255));
 	vector = { 1, 1 };
 }
 
@@ -72,11 +73,6 @@ void Ball::HandleEvents() {
 	if (this->collision[eIndex::RIGHT]) {
 		vector.x *= -1;
 	}
-
-	this->collision[LEFT] = false;
-	this->collision[RIGHT] = false;
-	this->collision[UP] = false;
-	this->collision[DOWN] = false;
 }
 
 void Ball::Render() {
@@ -144,6 +140,11 @@ void Ball::Update(float delta) {
 			}
 		}
 	}
+
+	this->collision[LEFT] = false;
+	this->collision[RIGHT] = false;
+	this->collision[UP] = false;
+	this->collision[DOWN] = false;
 }
 
 SDL_Rect Ball::GetDstBox() const {
@@ -158,31 +159,32 @@ void Ball::Collision(Player* object, float delta) {
 			&& this->dstBox.y < object->GetDstBox().y + object->GetDstBox().h && this->dstBox.y + this->dstBox.h > object->GetDstBox().y) {
 
 			this->collision[RIGHT] = true;
-			std::cout << "RIGHT\n";
+			std::cout << "Ball - RIGHT\n";
 		}
 		if (this->vector.x * delta < 0 && this->dstBox.x <= object->GetDstBox().x + object->GetDstBox().w
 			&& this->dstBox.y < object->GetDstBox().y + object->GetDstBox().h && this->dstBox.y + this->dstBox.h > object->GetDstBox().y) {
 
 			this->collision[LEFT] = true;
-			std::cout << "LEFT\n";
+			std::cout << "Ball - LEFT\n";
 		}
 		if (this->vector.y * delta > 0 && this->dstBox.y + this->dstBox.h >= object->GetDstBox().y
 			&& this->dstBox.x < object->GetDstBox().x + object->GetDstBox().w && this->dstBox.x + this->dstBox.w > object->GetDstBox().x) {
 
 			this->collision[DOWN] = true;
-			std::cout << "DOWN\n";
+			std::cout << "Ball - DOWN\n";
 		}
 		if (this->vector.y * delta < 0 && this->dstBox.y <= object->GetDstBox().y + object->GetDstBox().h
 			&& this->dstBox.x < object->GetDstBox().x + object->GetDstBox().w && this->dstBox.x + this->dstBox.w > object->GetDstBox().x) {
 
 			this->collision[UP] = true;
-			std::cout << "UP\n";
+			std::cout << "Ball - UP\n";
+		}
+		if (object->IsDestroyble()) {
+			delete object;
+			return;
 		}
 	}
-	if (object->IsDestroyble()) {
-		delete object;
-		return;
-	}
+	
 }
 
 void Ball::Collision(Wall* object, float delta) {
@@ -193,73 +195,25 @@ void Ball::Collision(Wall* object, float delta) {
 			&& this->dstBox.y < object->GetDstBox().y + object->GetDstBox().h && this->dstBox.y + this->dstBox.h > object->GetDstBox().y) {
 
 			this->collision[RIGHT] = true;
-			std::cout << "RIGHT\n";
+			std::cout << "Ball - RIGHT\n";
 		}
 		if (this->vector.x * delta < 0 && this->dstBox.x <= object->GetDstBox().x + object->GetDstBox().w
 			&& this->dstBox.y < object->GetDstBox().y + object->GetDstBox().h && this->dstBox.y + this->dstBox.h > object->GetDstBox().y) {
 
 			this->collision[LEFT] = true;
-			std::cout << "LEFT\n";
+			std::cout << "Ball - LEFT\n";
 		}
 		if (this->vector.y * delta > 0 && this->dstBox.y + this->dstBox.h >= object->GetDstBox().y
 			&& this->dstBox.x < object->GetDstBox().x + object->GetDstBox().w && this->dstBox.x + this->dstBox.w > object->GetDstBox().x) {
 
 			this->collision[DOWN] = true;
-			std::cout << "DOWN\n";
+			std::cout << "Ball - DOWN\n";
 		}
 		if (this->vector.y * delta < 0 && this->dstBox.y <= object->GetDstBox().y + object->GetDstBox().h
 			&& this->dstBox.x < object->GetDstBox().x + object->GetDstBox().w && this->dstBox.x + this->dstBox.w > object->GetDstBox().x) {
 
 			this->collision[UP] = true;
-			std::cout << "UP\n";
+			std::cout << "Ball - UP\n";
 		}
 	}
 }
-
-//void Ball::CollisionPoint(std::vector<Brick*>* otherObjects, float delta) {
-//	this->collision[LEFT] = false;
-//	this->collision[RIGHT] = false;
-//	this->collision[UP] = false;
-//	this->collision[DOWN] = false;
-//
-//	for (auto& object : *otherObjects) {
-//		if (IsCollision(object, delta)) {
-//
-//			if (this->isDestroyble) {
-//				delete this;
-//				return;
-//			}
-//
-//			if (this->vector.x * delta > 0 && this->dstBox.x + this->dstBox.w >= object->GetPosition().x
-//				&& this->dstBox.y < object->GetPosition().y + object->GetPosition().h && this->dstBox.y + this->dstBox.h > object->GetPosition().y) {
-//				
-//				this->collision[RIGHT] = true;
-//				std::cout << "RIGHT\n";
-//			}
-//			if (this->vector.x * delta < 0 && this->dstBox.x <= object->GetPosition().x + object->GetPosition().w
-//				&& this->dstBox.y < object->GetPosition().y + object->GetPosition().h && this->dstBox.y + this->dstBox.h > object->GetPosition().y) {
-//
-//				this->collision[LEFT] = true;
-//				std::cout << "LEFT\n";
-//			}
-//			if (this->vector.y * delta > 0 && this->dstBox.y + this->dstBox.h >= object->GetPosition().y
-//				&& this->dstBox.x < object->GetPosition().x + object->GetPosition().w && this->dstBox.x + this->dstBox.w > object->GetPosition().x) {
-//
-//				this->collision[DOWN] = true;
-//				std::cout << "DOWN\n";
-//			}
-//			if (this->vector.y * delta < 0 && this->dstBox.y <= object->GetPosition().y + object->GetPosition().h
-//				&& this->dstBox.x < object->GetPosition().x + object->GetPosition().w && this->dstBox.x + this->dstBox.w > object->GetPosition().x) {
-//
-//				this->collision[UP] = true;
-//				std::cout << "UP\n";
-//			}
-//
-//			if (object->IsDestroyble()) {
-//				delete object;
-//			}
-//		}
-//	}
-//}
-
-

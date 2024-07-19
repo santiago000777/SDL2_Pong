@@ -10,8 +10,17 @@ Game::Game(const std::string& windowName, int posX, int posY, int windowWidth, i
 }
 
 Game::~Game() {
-	for (auto& object : objects) {
+	/*for (auto& object : objects) {
 		delete object;
+	*/
+	for (auto& wall : walls) {
+		delete wall;
+	}
+	for (auto& ball : balls) {
+		delete ball;
+	}
+	for (auto& player : players) {
+		delete player;
 	}
 	delete background;
 }
@@ -29,7 +38,6 @@ void Game::Loop() {
 	if (durationFrame.count() >= deltaTime) {
 		firstFrame = std::chrono::high_resolution_clock::now();
 		Render();
-		//std::cout << "<====New Frame====>\n";
 	}
 	secondFrame = std::chrono::high_resolution_clock::now();
 }
@@ -60,20 +68,39 @@ void Game::Render() {
 }
 
 void Game::Update(float delta) {
-	for (auto& object : objects) {
-		
-		object->HandleEvents();
-		object->Update(&objects, delta);
+	for (auto& ball : balls) {
+		for (auto wall : walls) {
+			ball->Collision(wall, delta);
+		}
 	}
+	for (auto& ball : balls) {
+		for (auto player : players) {
+			ball->Collision(player, delta);
+		}
+	}
+	for (auto& ball : balls) {
+		ball->HandleEvents();
+		ball->Update(delta);
+	}
+
+	for (auto& player : players) {
+		for (auto wall : walls) {
+			player->Collision(wall, delta);
+		}
+	}
+	for (auto& player : players) {
+		player->HandleEvents();
+		player->Update(delta);
+	}
+
 	int uncatchedBalls = 0;
-	balls[0]->SetPlayers(&players);
 	for (auto ball : balls) {
-		if (ball->GetPosition().y > 800) {
+		if (ball->GetDstBox().y > 820) {
 			uncatchedBalls++;
 		}
 	}
 	for (auto& player : players) {
-		player->AddLives(-uncatchedBalls);
+		player->DecreaseLives(uncatchedBalls);
 	}
 	for (auto& player : players) {
 		if (player->IsGameOver()) {

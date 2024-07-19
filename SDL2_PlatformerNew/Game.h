@@ -2,11 +2,9 @@
 #include "Player.h"
 #include "Ball.h"
 #include "Background.h"
-#include "Object.h"
+#include "Wall.h"
 #include "Renderer.h"
-#include "Brick.h"
 
-#define FPS		60
 
 #define FPS		165
 
@@ -24,27 +22,20 @@ public:
 	void Loop();
 
 	template <typename T> void AddObject(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox);
-	template<> void AddObject<Object>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
-		auto wall = new Object(dstBox, path, fromBox, windowRect);
-		objects.push_back(wall);
+	template<> void AddObject<Wall>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
+		auto wall = new Wall(dstBox, path, fromBox, windowRect);
+		
 		walls.push_back(wall);
 	}
 	template<> void AddObject<Player>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
 		auto player = new Player(dstBox, path, fromBox, windowRect);
-		objects.push_back(player);
+		
 		players.push_back(player);
-
-		player->SetPlayers(&players);
 	}
 	template<> void AddObject<Ball>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
 		auto ball = new Ball(dstBox, path, fromBox, windowRect);
-		objects.push_back(ball);
+		
 		balls.push_back(ball);
-	}
-	template<> void AddObject<Brick>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
-		auto brick = new Brick(dstBox, path, fromBox, windowRect);
-		objects.push_back(brick);
-		bricks.push_back(brick);
 	}
 
 	void SetBackground(const std::string& BGpath);
@@ -54,12 +45,10 @@ private:
 	SDL_Rect windowRect;
 	Background* background;
 
-	std::vector<Object*> objects;
-
-	std::vector<Object*> walls;
+	std::vector<Wall*> walls;
 	std::vector<Ball*> balls;
 	std::vector<Player*> players;
-	std::vector<Brick*> bricks;
+	//std::vector<Brick*> bricks;
 
 	const float deltaTime = 1000.0f / FPS;
 	const float updateDelta = 1000.0f / 9000;
