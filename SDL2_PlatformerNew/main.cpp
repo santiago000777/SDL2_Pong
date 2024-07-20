@@ -27,7 +27,7 @@ int main(int argc, char* args[]) {
 	while (!PressedKey(VK_SPACE) && !game.IsGameOver()) {
 		game.Loop();
 	}
-
+	
 	// opravit vraceni u drzeni left i right nebo up i down klavesy
 
 		std::cout << "Game over!\n\n";
