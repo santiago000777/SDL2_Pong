@@ -96,6 +96,7 @@ void Game::Update(float delta) {
 	}
 
 	for (auto& player : players) {
+		player->HandleEvents();
 		for (auto wall : walls) {
 			player->Collision(wall, delta);
 		}
@@ -109,7 +110,6 @@ void Game::Update(float delta) {
 		}
 	}
 	for (auto& player : players) {
-		player->HandleEvents();
 		player->Update(delta);
 	}
 

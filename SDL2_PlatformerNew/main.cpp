@@ -2,6 +2,7 @@
 #include "Game.h"
 
 	// chybna kolize u balonu + player + wall v rohu
+	// chyba u rychleho mackani klavesy kdyz hrac je u zdi
 	// pridat animace
 
 int main(int argc, char* args[]) {
@@ -12,14 +13,17 @@ int main(int argc, char* args[]) {
 
 	game.AddObject<Wall>({ 25, 50, 550, 30 }, "Pictures/horizontalWall.bmp", { 0, 0, 9, 7 });
 	
-	//game.AddObject<Wall>({ 25, 750, 550, 30 }, "Pictures/horizontalWall.bmp", { 0, 0, 9, 7 });
+	//game.AddObject<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", { 0, 0, 9, 7 });
 
 	game.AddObject<Player>({ 56, 750, 100, 24 }, "Pictures/paddle.bmp", { 0, 0, 25, 6 });
 
 	const float ballScale = 3.0f;
 	game.AddObject<Ball>({ 300, 200, (int)roundf(7 * ballScale), (int)roundf(7 * ballScale) }, "Pictures/BallBmp.bmp", { 0, 0, 7, 8 });
 
-	game.AddObject<Brick>({ 100, 100, 500, 20}, "Pictures/Brick.bmp", {0, 0, 16, 5});
+	for (int i = 0; i < 6; i++) {
+		game.AddObject<Brick>({ 120 + 64 * i, 100, 64, 20 }, "Pictures/Brick.bmp", { 0, 0, 16, 5 });
+	}
+	
 	while (!PressedKey(VK_SPACE) && !game.IsGameOver()) {
 		game.Loop();
 	}

@@ -97,6 +97,7 @@ void Player::Update(float delta) {
 
 				this->dstBox.y += roundf(this->vector.y * delta);
 			}
+			this->collision[LEFT] = false;
 		}
 		if (this->collision[RIGHT]) {
 			
@@ -109,6 +110,7 @@ void Player::Update(float delta) {
 
 				this->dstBox.y += roundf(this->vector.y * delta);
 			}
+			this->collision[RIGHT] = false;
 		}
 		if (this->collision[UP]) {
 
@@ -120,6 +122,7 @@ void Player::Update(float delta) {
 
 				this->dstBox.x += roundf(this->vector.x * delta);
 			}
+			this->collision[UP] = false;
 		}
 		if (this->collision[DOWN]) {
 
@@ -131,13 +134,9 @@ void Player::Update(float delta) {
 
 				this->dstBox.x += roundf(this->vector.x * delta);
 			}
+			this->collision[DOWN] = false;
 		}
 	}
-	
-	this->collision[LEFT] = false;
-	this->collision[RIGHT] = false;
-	this->collision[UP] = false;
-	this->collision[DOWN] = false;
 }
 
 void Player::Collision(Wall* object, float delta) {
