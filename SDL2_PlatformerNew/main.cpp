@@ -33,3 +33,14 @@ int main(int argc, char* args[]) {
 	std::cout << "Game over!\n\n";
 	return 0;
 }
+
+	// Git
+/*
+* git log					-> zobrazeni vsech commitu
+* git pull origin _branch	-> nahrani do visual studia
+* 
+* git status				-> rozdily mezi kodem a poslednim commitem
+* git add _path				-> pridani souboru, ktery se zmenil, ke commitu
+* git commit -m "_msg"		-> commit se zpravou
+* git push origin _branch	-> nahrani do githubu 
+*/
