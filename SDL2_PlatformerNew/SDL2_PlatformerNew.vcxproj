@@ -155,9 +155,6 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="Pictures\Brick.bmp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

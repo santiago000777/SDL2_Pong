@@ -23,14 +23,15 @@ int main(int argc, char* args[]) {
 	for (int i = 0; i < 6; i++) {
 		game.AddObject<Brick>({ 120 + 64 * i, 100, 64, 20 }, "Pictures/Brick.bmp", { 0, 0, 16, 5 });
 	}
-	
+
 	while (!PressedKey(VK_SPACE) && !game.IsGameOver()) {
 		game.Loop();
 	}
 
 	// opravit vraceni u drzeni left i right nebo up i down klavesy
 
-	std::cout << "Game over!\n\n";
+		std::cout << "Game over!\n\n";
+		std::cout << "\n";
 	return 0;
 }
 
