@@ -2,7 +2,7 @@
 #include "Game.h"
 
 	// chybna kolize u balonu + player + wall v rohu
-	// chyba u rychleho mackani klavesy kdyz hrac je u zdi
+	// pridat deltaTime
 	// pridat animace
 
 int main(int argc, char* args[]) {
@@ -13,7 +13,7 @@ int main(int argc, char* args[]) {
 
 	game.AddObject<Wall>({ 25, 50, 550, 30 }, "Pictures/horizontalWall.bmp", { 0, 0, 9, 7 });
 	
-	//game.AddObject<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", { 0, 0, 9, 7 });
+	game.AddObject<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", { 0, 0, 9, 7 });
 
 	game.AddObject<Player>({ 56, 750, 100, 24 }, "Pictures/paddle.bmp", { 0, 0, 25, 6 });
 

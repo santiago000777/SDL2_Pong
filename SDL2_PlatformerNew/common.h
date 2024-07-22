@@ -51,6 +51,10 @@ public:
 		vec += *this;
 		return vec;
 	}
+	void operator*=(float f) {
+		this->x *= f;
+		this->y *= f;
+	}
 };
 
 struct TVec4 {
