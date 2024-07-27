@@ -1,9 +1,7 @@
 #pragma once
-#include "Player.h"
-#include "Wall.h"
-#include "Brick.h"
+#include "MovableObject.h"
 
-class Ball : public Object {
+class Ball : public MovableObject {
 public:
     Ball(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect);
     // copy ctor (zakazany)
@@ -19,18 +17,13 @@ public:
 
     int GetOwnerId() const;
     int GetPoints() const;
-	void HandleEvents();
-    void Update(float delta);
+    
+	void HandleEvents(float delta);
+    void Update();
     void ResetPoints();
-
-    void Collision(Player* player , float delta);
-    void Collision(Wall* wall, float delta);
-    bool Collision(Brick* wall, float delta);
 
 protected:
     int points = 0;
-    TVec2 vector;
     int playerOwnerId = -1;
-    bool collision[4] = { 0, 0, 0, 0 };
 };
 

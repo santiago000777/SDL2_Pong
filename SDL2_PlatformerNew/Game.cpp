@@ -75,30 +75,31 @@ void Game::Render() {
 void Game::Update(float delta) {
 	for (auto& ball : balls) {
 		for (auto wall : walls) {
-			ball->Collision(wall, delta);
+			MovableObject::Collision(*ball, *wall);
+			
 		}
 	}
 	for (auto& ball : balls) {
 		for (auto player : players) {
-			ball->Collision(player, delta);
+			MovableObject::Collision(*ball, *player);
 		}
 	}
 	for (auto& ball : balls) {
 		for (int i = 0; i < bricks.size(); i++) {
-			if (ball->Collision(bricks[i], delta)) {
+			if (MovableObject::Collision(*ball, *bricks[i])) {
 				bricks.erase(bricks.begin() + i);
 			}
 		}
 	}
 	for (auto& ball : balls) {
-		ball->HandleEvents();
-		ball->Update(delta);
+		ball->HandleEvents(delta);
+		ball->Update();
 	}
 
 	for (auto& player : players) {
-		player->HandleEvents();
+		player->HandleEvents(delta);
 		for (auto wall : walls) {
-			player->Collision(wall, delta);
+			MovableObject::Collision(*player, *wall);
 		}
 	}
 	for (auto& player : players) {
@@ -110,7 +111,7 @@ void Game::Update(float delta) {
 		}
 	}
 	for (auto& player : players) {
-		player->Update(delta);
+		player->Update();
 	}
 
 	int uncatchedBalls = 0;

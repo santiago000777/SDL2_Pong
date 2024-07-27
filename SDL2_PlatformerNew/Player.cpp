@@ -4,7 +4,7 @@
 int Player::playerCount = 0;
 
 Player::Player(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect) 
-	: Object(dstBox, path, from, windowRect) {
+	: MovableObject(dstBox, path, from, windowRect) {
 	idPlayer = playerCount;
 	playerCount++;
 }
@@ -55,7 +55,7 @@ Player::~Player() {
 //	rhs.texture = nullptr;
 //}
 
-void Player::HandleEvents() {
+void Player::HandleEvents(float delta) {
 	
 	vector.x = 0;
 	vector.y = 0;
@@ -71,15 +71,16 @@ void Player::HandleEvents() {
 	if (PressedKey((short)eControls::RIGHT)) {
 		vector.x = 1;
 	}
+	vector *= delta;
 }
 
-void Player::Update(float delta) {
+void Player::Update() {
 	if (points > 0) {
 		std::cout << "Player - " << points << "\n";
 	}
 	if (!this->collision[LEFT] && !this->collision[RIGHT] && !this->collision[UP] && !this->collision[DOWN]) {
-		this->dstBox.x += roundf(vector.x * delta);
-		this->dstBox.y += roundf(vector.y * delta);
+		this->dstBox.x += roundf(vector.x);
+		this->dstBox.y += roundf(vector.y);
 	}
 	else {
 		if (this->isDestroyble) {
@@ -90,88 +91,52 @@ void Player::Update(float delta) {
 		if (this->collision[LEFT]) {
 
 			if (this->vector.x > 0 && !this->collision[RIGHT])
-				this->dstBox.x += roundf(this->vector.x * delta);
+				this->dstBox.x += roundf(this->vector.x);
 
 			if (this->vector.y < 0 && !this->collision[UP]
 				|| this->vector.y > 0 && !this->collision[DOWN]) {
 
-				this->dstBox.y += roundf(this->vector.y * delta);
+				this->dstBox.y += roundf(this->vector.y);
 			}
 		}
 		if (this->collision[RIGHT]) {
 			
 
 			if (this->vector.x < 0 && !this->collision[LEFT]) {
-				this->dstBox.x += roundf(this->vector.x * delta);
+				this->dstBox.x += roundf(this->vector.x);
 			}
 			if (this->vector.y < 0 && !this->collision[UP]
 				|| this->vector.y > 0 && !this->collision[DOWN]) {
 
-				this->dstBox.y += roundf(this->vector.y * delta);
+				this->dstBox.y += roundf(this->vector.y);
 			}
 		}
 		if (this->collision[UP]) {
 
 			if (this->vector.y > 0 && !this->collision[DOWN])
-				this->dstBox.y += roundf(this->vector.y * delta);
+				this->dstBox.y += roundf(this->vector.y);
 
 			if (this->vector.x < 0 && !this->collision[LEFT]
 				|| this->vector.x > 0 && !this->collision[RIGHT]) {
 
-				this->dstBox.x += roundf(this->vector.x * delta);
+				this->dstBox.x += roundf(this->vector.x);
 			}
 		}
 		if (this->collision[DOWN]) {
 
 			if (this->vector.y < 0 && !this->collision[UP])
-				this->dstBox.y += roundf(this->vector.y * delta);
+				this->dstBox.y += roundf(this->vector.y);
 
 			if (this->vector.x < 0 && !this->collision[LEFT]
 				|| this->vector.x > 0 && !this->collision[RIGHT]) {
 
-				this->dstBox.x += roundf(this->vector.x * delta);
+				this->dstBox.x += roundf(this->vector.x);
 			}
 		}
 		this->collision[LEFT] = false;
 		this->collision[RIGHT] = false;
 		this->collision[UP] = false;
 		this->collision[DOWN] = false;
-	}
-}
-
-void Player::Collision(Wall* object, float delta) {
-	if ((this->dstBox.x + this->vector.x * delta + this->dstBox.w > object->GetDstBox().x && this->dstBox.x + this->vector.x * delta < object->GetDstBox().x + object->GetDstBox().w)
-		&& (this->dstBox.y + this->vector.y * delta + this->dstBox.h > object->GetDstBox().y && this->dstBox.y + this->vector.y * delta < object->GetDstBox().y + object->GetDstBox().h)) {
-
-		if (this->vector.x * delta > 0 && this->dstBox.x + this->dstBox.w >= object->GetDstBox().x
-			&& this->dstBox.y < object->GetDstBox().y + object->GetDstBox().h && this->dstBox.y + this->dstBox.h > object->GetDstBox().y) {
-
-			this->collision[RIGHT] = true;
-			std::cout << "Player - RIGHT\n";
-		}
-		if (this->vector.x * delta < 0 && this->dstBox.x <= object->GetDstBox().x + object->GetDstBox().w
-			&& this->dstBox.y < object->GetDstBox().y + object->GetDstBox().h && this->dstBox.y + this->dstBox.h > object->GetDstBox().y) {
-
-			this->collision[LEFT] = true;
-			std::cout << "Player - LEFT\n";
-		}
-		if (this->vector.y * delta > 0 && this->dstBox.y + this->dstBox.h >= object->GetDstBox().y
-			&& this->dstBox.x < object->GetDstBox().x + object->GetDstBox().w && this->dstBox.x + this->dstBox.w > object->GetDstBox().x) {
-
-			this->collision[DOWN] = true;
-			std::cout << "Player - DOWN\n";
-		}
-		if (this->vector.y * delta < 0 && this->dstBox.y <= object->GetDstBox().y + object->GetDstBox().h
-			&& this->dstBox.x < object->GetDstBox().x + object->GetDstBox().w && this->dstBox.x + this->dstBox.w > object->GetDstBox().x) {
-
-			this->collision[UP] = true;
-			std::cout << "Player - UP\n";
-		}
-
-		if (object->IsDestroyble()) {
-			delete object;
-			return;
-		}
 	}
 }
 

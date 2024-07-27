@@ -1,13 +1,13 @@
 #include "Ball.h"
 
 Ball::Ball(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect) 
-	: Object(dstBox, path, from, windowRect) {
+	: MovableObject(dstBox, path, from, windowRect) {
 	/*std::random_device nahodneCis;
 	std::uniform_real_distribution<float> dist(-1.0f, 1.0f);
 	std::cout << dist(nahodneCis) << ",  " << dist(nahodneCis) << "\n";
 	vector = { roundf(dist(nahodneCis)), roundf(dist(nahodneCis)) };*/
 	
-	vector = { 1.5f, 1.5f };
+	vector = { 1.0f, 1.0f };
 }
 
 
@@ -57,8 +57,9 @@ int Ball::GetPoints() const {
 	return points;
 }
 
-void Ball::HandleEvents() {
-	/*this->vector *= delta;
+
+void Ball::HandleEvents(float delta) {
+	this->vector *= delta;
 	if (this->collision[eIndex::UP]) {
 		vector.y *= -1;
 	}
@@ -70,15 +71,14 @@ void Ball::HandleEvents() {
 	}
 	if (this->collision[eIndex::RIGHT]) {
 		vector.x *= -1;
-	}*/
+	}
 }
 
-void Ball::Update(float delta) {
-	this->vector *= delta;
+void Ball::Update() {
 	
 	if (!this->collision[LEFT] && !this->collision[RIGHT] && !this->collision[UP] && !this->collision[DOWN]) {
-		this->dstBox.x += roundf(vector.x * delta);
-		this->dstBox.y += roundf(vector.y * delta);
+		this->dstBox.x += roundf(vector.x);
+		this->dstBox.y += roundf(vector.y);
 	}
 	else {
 		if (this->isDestroyble) {
@@ -86,61 +86,48 @@ void Ball::Update(float delta) {
 			return;
 		}
 
-		if (this->collision[eIndex::UP]) { 
-			vector.y *= -1; 
-		}
-		if (this->collision[eIndex::DOWN]) {
-			vector.y *= -1;
-		}
-		if (this->collision[eIndex::LEFT]) {
-			vector.x *= -1;
-		}
-		if (this->collision[eIndex::RIGHT]) {
-			vector.x *= -1;
-		}
-
 		if (this->collision[LEFT]) {
 
 			if (this->vector.x > 0 && !this->collision[RIGHT])
-				this->dstBox.x += roundf(this->vector.x * delta);
+				this->dstBox.x += roundf(this->vector.x);
 
 			if (this->vector.y < 0 && !this->collision[UP]
 				|| this->vector.y > 0 && !this->collision[DOWN]) {
 
-				this->dstBox.y += roundf(this->vector.y * delta);
+				this->dstBox.y += roundf(this->vector.y);
 			}
 		}
 		if (this->collision[RIGHT]) {
 
 			if (this->vector.x < 0 && !this->collision[LEFT]) {
-				this->dstBox.x += roundf(this->vector.x * delta);
+				this->dstBox.x += roundf(this->vector.x);
 			}
 			if (this->vector.y < 0 && !this->collision[UP]
 				|| this->vector.y > 0 && !this->collision[DOWN]) {
 
-				this->dstBox.y += roundf(this->vector.y * delta);
+				this->dstBox.y += roundf(this->vector.y);
 			}
 		}
 		if (this->collision[UP]) {
 
 			if (this->vector.y > 0 && !this->collision[DOWN])
-				this->dstBox.y += roundf(this->vector.y * delta);
+				this->dstBox.y += roundf(this->vector.y);
 
 			if (this->vector.x < 0 && !this->collision[LEFT]
 				|| this->vector.x > 0 && !this->collision[RIGHT]) {
 
-				this->dstBox.x += roundf(this->vector.x * delta);
+				this->dstBox.x += roundf(this->vector.x);
 			}
 		}
 		if (this->collision[DOWN]) {
 
 			if (this->vector.y < 0 && !this->collision[UP])
-				this->dstBox.y += roundf(this->vector.y * delta);
+				this->dstBox.y += roundf(this->vector.y);
 
 			if (this->vector.x < 0 && !this->collision[LEFT]
 				|| this->vector.x > 0 && !this->collision[RIGHT]) {
 
-				this->dstBox.x += roundf(this->vector.x * delta);
+				this->dstBox.x += roundf(this->vector.x);
 			}
 		}
 	}
@@ -153,116 +140,4 @@ void Ball::Update(float delta) {
 
 void Ball::ResetPoints() {
 	points = 0;
-}
-
-void Ball::Collision(Player* object, float delta) {
-	if ((this->dstBox.x + this->vector.x * delta + this->dstBox.w > object->GetDstBox().x && this->dstBox.x + this->vector.x * delta < object->GetDstBox().x + object->GetDstBox().w)
-	&& (this->dstBox.y + this->vector.y * delta + this->dstBox.h > object->GetDstBox().y && this->dstBox.y + this->vector.y * delta < object->GetDstBox().y + object->GetDstBox().h)) {
-
-		if (this->vector.x > 0 && this->dstBox.x + this->dstBox.w >= object->GetDstBox().x
-			&& this->dstBox.y < object->GetDstBox().y + object->GetDstBox().h && this->dstBox.y + this->dstBox.h > object->GetDstBox().y) {
-
-			//this->vector.x = this->dstBox.x + this->dstBox.w - object->GetDstBox().x;
-			this->collision[RIGHT] = true;
-			//std::cout << "Ball - RIGHT\n";
-		}
-		if (this->vector.x < 0 && this->dstBox.x <= object->GetDstBox().x + object->GetDstBox().w
-			&& this->dstBox.y < object->GetDstBox().y + object->GetDstBox().h && this->dstBox.y + this->dstBox.h > object->GetDstBox().y) {
-
-			this->collision[LEFT] = true;
-			//std::cout << "Ball - LEFT\n";
-		}
-		if (this->vector.y > 0 && this->dstBox.y + this->dstBox.h >= object->GetDstBox().y
-			&& this->dstBox.x < object->GetDstBox().x + object->GetDstBox().w && this->dstBox.x + this->dstBox.w > object->GetDstBox().x) {
-
-			this->collision[DOWN] = true;
-			//std::cout << "Ball - DOWN\n";
-		}
-		if (this->vector.y < 0 && this->dstBox.y <= object->GetDstBox().y + object->GetDstBox().h
-			&& this->dstBox.x < object->GetDstBox().x + object->GetDstBox().w && this->dstBox.x + this->dstBox.w > object->GetDstBox().x) {
-
-			this->collision[UP] = true;
-			//std::cout << "Ball - UP\n";
-		}
-		if (object->IsDestroyble()) {
-			delete object;
-			playerOwnerId = -1;
-			return;
-		}
-		else
-			playerOwnerId = object->GetPlayerId();
-	}
-}
-
-void Ball::Collision(Wall* object, float delta) {
-	if ((this->dstBox.x + this->vector.x * delta + this->dstBox.w > object->GetDstBox().x && this->dstBox.x + this->vector.x * delta < object->GetDstBox().x + object->GetDstBox().w)
-	&& (this->dstBox.y + this->vector.y * delta + this->dstBox.h > object->GetDstBox().y && this->dstBox.y + this->vector.y * delta < object->GetDstBox().y + object->GetDstBox().h)) {
-
-		if (this->vector.x > 0 && this->dstBox.x + this->dstBox.w + this->vector.x * delta >= object->GetDstBox().x
-			&& this->dstBox.y < object->GetDstBox().y + object->GetDstBox().h && this->dstBox.y + this->dstBox.h > object->GetDstBox().y) {
-
-			this->collision[RIGHT] = true;
-			//std::cout << "Ball - RIGHT\n";
-		}
-		if (this->vector.x < 0 && this->dstBox.x + this->vector.x * delta <= object->GetDstBox().x + object->GetDstBox().w
-			&& this->dstBox.y < object->GetDstBox().y + object->GetDstBox().h && this->dstBox.y + this->dstBox.h > object->GetDstBox().y) {
-
-			this->collision[LEFT] = true;
-			//std::cout << "Ball - LEFT\n";
-		}
-		if (this->vector.y > 0 && this->dstBox.y + this->dstBox.h + this->vector.y * delta >= object->GetDstBox().y
-			&& this->dstBox.x + this->vector.x * delta < object->GetDstBox().x + object->GetDstBox().w && this->dstBox.x + this->dstBox.w + this->vector.x * delta > object->GetDstBox().x) {
-
-			this->collision[DOWN] = true;
-			//std::cout << "Ball - DOWN\n";
-		}
-		if (this->vector.y < 0 && this->dstBox.y + this->vector.y * delta <= object->GetDstBox().y + object->GetDstBox().h
-			&& this->dstBox.x < object->GetDstBox().x + object->GetDstBox().w && this->dstBox.x + this->dstBox.w > object->GetDstBox().x) {
-
-			this->collision[UP] = true;
-			//std::cout << "Ball - UP\n";
-		}
-		playerOwnerId = -1;
-	}
-}
-
-bool Ball::Collision(Brick* object, float delta) {
-	if ((this->dstBox.x + this->vector.x * delta + this->dstBox.w > object->GetDstBox().x && this->dstBox.x + this->vector.x * delta < object->GetDstBox().x + object->GetDstBox().w)
-	&& (this->dstBox.y + this->vector.y * delta + this->dstBox.h > object->GetDstBox().y && this->dstBox.y + this->vector.y * delta < object->GetDstBox().y + object->GetDstBox().h)) {
-
-		if (this->vector.x > 0 && this->dstBox.x + this->dstBox.w >= object->GetDstBox().x
-			&& this->dstBox.y < object->GetDstBox().y + object->GetDstBox().h && this->dstBox.y + this->dstBox.h > object->GetDstBox().y) {
-
-			this->collision[RIGHT] = true;
-			//std::cout << "Ball - RIGHT\n";
-		}
-		if (this->vector.x < 0 && this->dstBox.x <= object->GetDstBox().x + object->GetDstBox().w
-			&& this->dstBox.y < object->GetDstBox().y + object->GetDstBox().h && this->dstBox.y + this->dstBox.h > object->GetDstBox().y) {
-
-			this->collision[LEFT] = true;
-			//std::cout << "Ball - LEFT\n";
-		}
-		if (this->vector.y > 0 && this->dstBox.y + this->dstBox.h >= object->GetDstBox().y
-			&& this->dstBox.x < object->GetDstBox().x + object->GetDstBox().w && this->dstBox.x + this->dstBox.w > object->GetDstBox().x) {
-
-			this->collision[DOWN] = true;
-			//std::cout << "Ball - DOWN\n";
-		}
-		if (this->vector.y < 0 && this->dstBox.y <= object->GetDstBox().y + object->GetDstBox().h
-			&& this->dstBox.x < object->GetDstBox().x + object->GetDstBox().w && this->dstBox.x + this->dstBox.w > object->GetDstBox().x) {
-
-			this->collision[UP] = true;
-			//std::cout << "Ball - UP\n";
-		}
-		if (object->IsDestroyble() && object->GetPoints() > 0) {
-			points += object->GetPoints();
-
-			delete object;
-		}
-
-		playerOwnerId = -1;
-		return true;
-	} else
-		return false;
-	
 }

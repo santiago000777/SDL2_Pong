@@ -1,7 +1,7 @@
 #pragma once
-#include "Wall.h"
+#include "MovableObject.h"
 
-class Player : public Object {
+class Player : public MovableObject {
 public:
     Player(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect);
     // copy ctor (zakazany)
@@ -15,20 +15,18 @@ public:
     // move prirazeni
     void operator=(Player&& rhs) = delete;
 
-    void HandleEvents();
-    void Update(float delta);
+    void HandleEvents(float delta);
+    void Update();
     bool IsGameOver();
     void DecreaseLives(int i);
-    void Collision(Wall* wall, float delta);
 
+    
     int GetPlayerId() const;
     void AddPoints(int points);
 
 private:
-    TVec2 vector;
     int idPlayer;
     static int playerCount;
-    bool collision[4];
     enum class eControls : short {
         UP = 'w',
         LEFT = 'a',

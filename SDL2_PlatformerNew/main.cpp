@@ -31,21 +31,28 @@ int main(int argc, char* args[]) {
 	// opravit vraceni u drzeni left i right nebo up i down klavesy
 
 		std::cout << "Game over!\n\n";
-		std::cout << "\n";
+
 	return 0;
 }
 
-	// Git
+	// Git commands
 /*
-* git log					-> zobrazeni vsech commitu
-* git pull origin <branch>	-> nahrani do visual studia
 
-* git status				-> rozdily mezi kodem a poslednim commitem
-* git add <path>			-> pridani souboru, ktery se zmenil, ke commitu
-* git commit -m "<msg>"		-> commit se zpravou
-* git push origin <branch>	-> nahrani do githubu 
+	--PULL--
+	* git log					-> zobrazeni vsech commitu
+	* git pull origin <branch>	-> nahrani do visual studia
+	
+	--COMMIT&PUSH--
+	* git status				-> rozdily mezi kodem a poslednim commitem
+	
+	* git add <path>			-> pridani daneho souboru, ktery se zmenil, ke commitu
+	* git add -A				-> pridani vsech souboru, ktery se zmenil, ke commitu
+	
+	* git commit -m "<msg>"		-> commit se zpravou
+	* git push origin <branch>	-> nahrani do githubu 
+	
+	--CHECKOUT--
+	* git checkout <branch>		-> prechazeni na novou branch
+	* git checkout <commit>		-> vraceni na dany commit
 
-* git checkout <branch>		-> prechazeni na novou branch
-
-* git checkout <commit>		-> vraceni na dany commit
 */
