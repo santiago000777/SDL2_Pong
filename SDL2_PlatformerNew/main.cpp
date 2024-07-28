@@ -44,7 +44,7 @@ int main(int argc, char* args[]) {
 	
 	--COMMIT&PUSH--
 	* git status				-> rozdily mezi kodem a poslednim commitem
-	
+
 	* git add <path>			-> pridani daneho souboru, ktery se zmenil, ke commitu
 	* git add -A				-> pridani vsech souboru, ktery se zmenil, ke commitu
 	

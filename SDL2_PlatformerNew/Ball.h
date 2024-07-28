@@ -15,9 +15,11 @@ public:
     // move prirazeni
     void operator=(Ball&& rhs) = delete;
 
+    void SetOwnerId(int id);
     int GetOwnerId() const;
     int GetPoints() const;
-    
+    void AddPoints(int points);
+
 	void HandleEvents(float delta);
     void Update();
     void ResetPoints();

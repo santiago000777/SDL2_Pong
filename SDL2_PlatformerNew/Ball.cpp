@@ -49,12 +49,20 @@ Ball::~Ball() {
 //	rhs.texture = nullptr;
 //}
 
+void Ball::SetOwnerId(int id) {
+	playerOwnerId = id;
+}
+
 int Ball::GetOwnerId() const {
 	return playerOwnerId;
 }
 
 int Ball::GetPoints() const {
 	return points;
+}
+
+void Ball::AddPoints(int points) {
+	this->points += points;
 }
 
 

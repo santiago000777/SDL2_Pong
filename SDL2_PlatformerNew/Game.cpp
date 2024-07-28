@@ -44,6 +44,24 @@ void Game::Loop() {
 	secondFrame = std::chrono::high_resolution_clock::now();
 }
 
+/*
+	==GameLoop==
+	
+	std::chrono::time_point<std::chrono::high_resolution_clock> firstCollision, secondCollision, firstFrame, secondFrame;
+	{
+		durationCollision = std::chrono::duration_cast<std::chrono::milliseconds>(secondCollision - firstCollision);
+		if(durationCollision >= deltaTime/4) {		-> 4x rychlejsi nez vykresleni
+			firstCollision = std::chrono::high_resolution_clock::now();
+			Collision();	-> kontrola kolize u vsech objektu
+		}
+		secondCollision = std::chrono::high_resolution_clock::now();
+
+		durationFrame = std::chrono::duration_cast<std::chrono::milliseconds>(secondFrame - firstFrame);
+		if (durationFrame.count() >= deltaTime) {
+	}
+	....
+*/
+
 void Game::SetBackground(const std::string& BGpath) {
 	background = new Background(windowRect.w, windowRect.h, BGpath);
 }
@@ -73,47 +91,57 @@ void Game::Render() {
 }
 
 void Game::Update(float delta) {
+		// Collision&HandleEvents
 	for (auto& ball : balls) {
+			// HandleEvents++
 		for (auto wall : walls) {
 			MovableObject::Collision(*ball, *wall);
-			
 		}
 	}
 	for (auto& ball : balls) {
 		for (auto player : players) {
-			MovableObject::Collision(*ball, *player);
+			if (MovableObject::Collision(*ball, *player)) {
+				ball->SetOwnerId(player->GetPlayerId());
+				if (ball->GetOwnerId() == player->GetPlayerId() && ball->GetPoints() > 0) {
+					player->AddPoints(ball->GetPoints());
+					ball->ResetPoints();
+				}
+			}
 		}
 	}
 	for (auto& ball : balls) {
 		for (int i = 0; i < bricks.size(); i++) {
 			if (MovableObject::Collision(*ball, *bricks[i])) {
+				ball->AddPoints(bricks[i]->GetPoints());
+				delete bricks[i];
 				bricks.erase(bricks.begin() + i);
 			}
 		}
 	}
+		
+		// ???
+		// Update
 	for (auto& ball : balls) {
+			//HandleEvents--
 		ball->HandleEvents(delta);
 		ball->Update();
 	}
+		// ???
 
+		// Collision&HandleEvents
 	for (auto& player : players) {
 		player->HandleEvents(delta);
 		for (auto wall : walls) {
 			MovableObject::Collision(*player, *wall);
 		}
 	}
-	for (auto& player : players) {
-		for (auto ball : balls) {
-			if (ball->GetOwnerId() == player->GetPlayerId() && ball->GetPoints() > 0) {
-				player->AddPoints(ball->GetPoints());
-				ball->ResetPoints();
-			}
-		}
-	}
+
+		// Update
 	for (auto& player : players) {
 		player->Update();
 	}
 
+		// Game over logic
 	int uncatchedBalls = 0;
 	for (auto ball : balls) {
 		if (ball->GetDstBox().y > 820) {
