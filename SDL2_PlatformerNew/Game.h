@@ -56,7 +56,6 @@ private:
 	std::vector<Brick*> bricks;
 
 	const float deltaTime = 1000.0f / FPS;
-	const float updateDelta = 1000.0f / 9000;
 	std::chrono::time_point<std::chrono::high_resolution_clock> firstFrame, secondFrame, firstUpdate, secondUpdate;
 	std::chrono::milliseconds durationFrame, durationUpdate;
 
@@ -64,6 +63,6 @@ private:
 
 	void Render();
 	void Update();
-	void HandleEvents(float delta);
+	void HandleEvents();
 	void Collision();
 };

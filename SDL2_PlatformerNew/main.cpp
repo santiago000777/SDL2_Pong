@@ -42,7 +42,7 @@ int main(int argc, char* args[]) {
 	* git log					-> zobrazeni vsech commitu
 	* git pull origin <branch>	-> nahrani do visual studia
 	
-	--COMMIT&PUSH--
+	--COMMIT & PUSH--
 	* git status				-> rozdily mezi kodem a poslednim commitem
 
 	* git add <path>			-> pridani daneho souboru, ktery se zmenil, ke commitu

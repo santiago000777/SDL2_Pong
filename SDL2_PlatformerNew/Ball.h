@@ -20,7 +20,7 @@ public:
     int GetPoints() const;
     void AddPoints(int points);
 
-	void HandleEvents(float delta);
+	void HandleEvents();
     void Update();
     void ResetPoints();
 

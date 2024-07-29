@@ -7,6 +7,7 @@ Game::Game(const std::string& windowName, int posX, int posY, int windowWidth, i
 	SRenderer::Init(window);
 	
 	this->windowRect = { 0, 0, windowWidth, windowHeight };
+	firstUpdate = std::chrono::high_resolution_clock::now();
 }
 
 Game::~Game() {
@@ -28,9 +29,15 @@ Game::~Game() {
 
 void Game::Loop() {
 	durationUpdate = std::chrono::duration_cast<std::chrono::milliseconds>(secondUpdate - firstUpdate);
-	if (durationUpdate.count() >= updateDelta/*deltaTime/4*/) {
+	if (durationUpdate.count() >= deltaTime/4) {
+			// ??
+		MovableObject::deltaT = durationUpdate.count();
+		std::cout << durationUpdate.count() << " ms\n";
+
 		firstUpdate = std::chrono::high_resolution_clock::now();
-		HandleEvents(/*durationUpdate.count()*/1);
+
+		HandleEvents();
+
 		Collision();
 		Update();
 	}
@@ -116,12 +123,12 @@ void Game::Update() {
 	}
 }
 
-void Game::HandleEvents(float delta) {
+void Game::HandleEvents() {
 	for (auto player : players) {
-		player->HandleEvents(delta);
+		player->HandleEvents();
 	}
 	for (auto ball : balls) {
-		ball->HandleEvents(delta);
+		ball->HandleEvents();
 	}
 }
 

@@ -55,7 +55,7 @@ Player::~Player() {
 //	rhs.texture = nullptr;
 //}
 
-void Player::HandleEvents(float delta) {
+void Player::HandleEvents() {
 	
 	vector.x = 0;
 	vector.y = 0;
@@ -71,16 +71,15 @@ void Player::HandleEvents(float delta) {
 	if (PressedKey((short)eControls::RIGHT)) {
 		vector.x = 1;
 	}
-	vector *= delta;
 }
 
 void Player::Update() {
 	if (points > 0) {
-		std::cout << "Player - " << points << "\n";
+		//std::cout << "Player - " << points << "\n";
 	}
 	if (!this->collision[LEFT] && !this->collision[RIGHT] && !this->collision[UP] && !this->collision[DOWN]) {
-		this->dstBox.x += roundf(vector.x);
-		this->dstBox.y += roundf(vector.y);
+		this->dstBox.x += roundf(vector.x * MovableObject::deltaT);
+		this->dstBox.y += roundf(vector.y * MovableObject::deltaT);
 	}
 	else {
 		if (this->isDestroyble) {
@@ -91,46 +90,46 @@ void Player::Update() {
 		if (this->collision[LEFT]) {
 
 			if (this->vector.x > 0 && !this->collision[RIGHT])
-				this->dstBox.x += roundf(this->vector.x);
+				this->dstBox.x += roundf(this->vector.x * MovableObject::deltaT);
 
 			if (this->vector.y < 0 && !this->collision[UP]
 				|| this->vector.y > 0 && !this->collision[DOWN]) {
 
-				this->dstBox.y += roundf(this->vector.y);
+				this->dstBox.y += roundf(this->vector.y * MovableObject::deltaT);
 			}
 		}
 		if (this->collision[RIGHT]) {
 			
 
 			if (this->vector.x < 0 && !this->collision[LEFT]) {
-				this->dstBox.x += roundf(this->vector.x);
+				this->dstBox.x += roundf(this->vector.x * MovableObject::deltaT);
 			}
 			if (this->vector.y < 0 && !this->collision[UP]
 				|| this->vector.y > 0 && !this->collision[DOWN]) {
 
-				this->dstBox.y += roundf(this->vector.y);
+				this->dstBox.y += roundf(this->vector.y * MovableObject::deltaT);
 			}
 		}
 		if (this->collision[UP]) {
 
 			if (this->vector.y > 0 && !this->collision[DOWN])
-				this->dstBox.y += roundf(this->vector.y);
+				this->dstBox.y += roundf(this->vector.y * MovableObject::deltaT);
 
 			if (this->vector.x < 0 && !this->collision[LEFT]
 				|| this->vector.x > 0 && !this->collision[RIGHT]) {
 
-				this->dstBox.x += roundf(this->vector.x);
+				this->dstBox.x += roundf(this->vector.x * MovableObject::deltaT);
 			}
 		}
 		if (this->collision[DOWN]) {
 
 			if (this->vector.y < 0 && !this->collision[UP])
-				this->dstBox.y += roundf(this->vector.y);
+				this->dstBox.y += roundf(this->vector.y * MovableObject::deltaT);
 
 			if (this->vector.x < 0 && !this->collision[LEFT]
 				|| this->vector.x > 0 && !this->collision[RIGHT]) {
 
-				this->dstBox.x += roundf(this->vector.x);
+				this->dstBox.x += roundf(this->vector.x * MovableObject::deltaT);
 			}
 		}
 		this->collision[LEFT] = false;

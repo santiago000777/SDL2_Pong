@@ -3,7 +3,7 @@
 class SRenderer {
 public:
 	SRenderer() {}
-	SRenderer(const SRenderer& rhs) = delete;
+	SRenderer(const SRenderer& rhs)	= delete;
 	SRenderer(SRenderer&& rhs) = delete;
 	~SRenderer();
 

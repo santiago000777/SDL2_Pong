@@ -11,6 +11,9 @@ public:
 	void operator=(MovableObject&& rhs) = delete;
 
 	static bool Collision(MovableObject& object, const Object& other);
+
+		// ??
+	static float deltaT;
 protected:
 
 	bool collision[4] = { 0, 0, 0, 0 };

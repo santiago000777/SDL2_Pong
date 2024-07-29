@@ -15,7 +15,7 @@ public:
     // move prirazeni
     void operator=(Player&& rhs) = delete;
 
-    void HandleEvents(float delta);
+    void HandleEvents();
     void Update();
     bool IsGameOver();
     void DecreaseLives(int i);
