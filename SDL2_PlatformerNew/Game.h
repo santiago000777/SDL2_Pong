@@ -6,7 +6,7 @@
 #include "Renderer.h"
 #include "Brick.h"
 
-#define FPS		165
+#define FPS		60
 
 class Game {
 public:

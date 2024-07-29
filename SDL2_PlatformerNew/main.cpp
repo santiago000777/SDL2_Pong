@@ -4,6 +4,8 @@
 	// chybna kolize u balonu + player + wall v rohu
 	// pridat deltaTime
 	// pridat animace
+	
+	// upravit Collision -> pomocne promenne
 
 int main(int argc, char* args[]) {
 	Game game("PONG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 604, 850, SDL_WINDOW_SHOWN); // SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED

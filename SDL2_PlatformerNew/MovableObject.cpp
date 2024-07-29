@@ -4,6 +4,8 @@ float MovableObject::deltaT = 0.0f;
 
 bool MovableObject::Collision(MovableObject& object, const Object& other) {
 	
+		// upravit Collision -> pomocne promenne
+
 	SDL_Rect box = { object.dstBox.x + object.vector.x * MovableObject::deltaT, object.dstBox.y + object.vector.y * MovableObject::deltaT, object.dstBox.w, object.dstBox.h };
 	
     if (box.x + box.w > other.GetDstBox().x && box.x < other.GetDstBox().x + other.GetDstBox().w
