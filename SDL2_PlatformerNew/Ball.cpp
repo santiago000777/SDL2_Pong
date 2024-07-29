@@ -68,6 +68,9 @@ void Ball::AddPoints(int points) {
 
 void Ball::HandleEvents(float delta) {
 	this->vector *= delta;
+}
+
+void Ball::Update() {
 	if (this->collision[eIndex::UP]) {
 		vector.y *= -1;
 	}
@@ -80,10 +83,7 @@ void Ball::HandleEvents(float delta) {
 	if (this->collision[eIndex::RIGHT]) {
 		vector.x *= -1;
 	}
-}
 
-void Ball::Update() {
-	
 	if (!this->collision[LEFT] && !this->collision[RIGHT] && !this->collision[UP] && !this->collision[DOWN]) {
 		this->dstBox.x += roundf(vector.x);
 		this->dstBox.y += roundf(vector.y);
@@ -138,12 +138,12 @@ void Ball::Update() {
 				this->dstBox.x += roundf(this->vector.x);
 			}
 		}
-	}
 
-	this->collision[LEFT] = false;
-	this->collision[RIGHT] = false;
-	this->collision[UP] = false;
-	this->collision[DOWN] = false;
+		this->collision[LEFT] = false;
+		this->collision[RIGHT] = false;
+		this->collision[UP] = false;
+		this->collision[DOWN] = false;
+	}
 }
 
 void Ball::ResetPoints() {

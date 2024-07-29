@@ -6,7 +6,6 @@
 #include "Renderer.h"
 #include "Brick.h"
 
-
 #define FPS		60
 
 class Game {
@@ -64,5 +63,7 @@ private:
 	bool isGameOver = false;
 
 	void Render();
-	void Update(float delta);
+	void Update();
+	void HandleEvents(float delta);
+	void Collision();
 };

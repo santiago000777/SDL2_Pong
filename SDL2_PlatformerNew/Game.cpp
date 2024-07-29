@@ -6,7 +6,6 @@ Game::Game(const std::string& windowName, int posX, int posY, int windowWidth, i
 	this->window = SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags);
 	SRenderer::Init(window);
 	
-	
 	this->windowRect = { 0, 0, windowWidth, windowHeight };
 }
 
@@ -29,10 +28,11 @@ Game::~Game() {
 
 void Game::Loop() {
 	durationUpdate = std::chrono::duration_cast<std::chrono::milliseconds>(secondUpdate - firstUpdate);
-	if (durationUpdate.count() >= updateDelta) {
+	if (durationUpdate.count() >= updateDelta/*deltaTime/4*/) {
 		firstUpdate = std::chrono::high_resolution_clock::now();
-
-		Update(/*durationPosun.count()**/1/*0*/);
+		HandleEvents(/*durationUpdate.count()*/1);
+		Collision();
+		Update();
 	}
 	secondUpdate = std::chrono::high_resolution_clock::now();
 
@@ -90,53 +90,11 @@ void Game::Render() {
 	SDL_RenderPresent(SRenderer::Get().Renderer());
 }
 
-void Game::Update(float delta) {
-		// Collision&HandleEvents
-	for (auto& ball : balls) {
-			// HandleEvents++
-		for (auto wall : walls) {
-			MovableObject::Collision(*ball, *wall);
-		}
-	}
-	for (auto& ball : balls) {
-		for (auto player : players) {
-			if (MovableObject::Collision(*ball, *player)) {
-				ball->SetOwnerId(player->GetPlayerId());
-				if (ball->GetOwnerId() == player->GetPlayerId() && ball->GetPoints() > 0) {
-					player->AddPoints(ball->GetPoints());
-					ball->ResetPoints();
-				}
-			}
-		}
-	}
-	for (auto& ball : balls) {
-		for (int i = 0; i < bricks.size(); i++) {
-			if (MovableObject::Collision(*ball, *bricks[i])) {
-				ball->AddPoints(bricks[i]->GetPoints());
-				delete bricks[i];
-				bricks.erase(bricks.begin() + i);
-			}
-		}
-	}
-		
-		// ???
+void Game::Update() {
 		// Update
 	for (auto& ball : balls) {
-			//HandleEvents--
-		ball->HandleEvents(delta);
 		ball->Update();
 	}
-		// ???
-
-		// Collision&HandleEvents
-	for (auto& player : players) {
-		player->HandleEvents(delta);
-		for (auto wall : walls) {
-			MovableObject::Collision(*player, *wall);
-		}
-	}
-
-		// Update
 	for (auto& player : players) {
 		player->Update();
 	}
@@ -154,6 +112,51 @@ void Game::Update(float delta) {
 	for (auto& player : players) {
 		if (player->IsGameOver()) {
 			isGameOver = true;
+		}
+	}
+}
+
+void Game::HandleEvents(float delta) {
+	for (auto player : players) {
+		player->HandleEvents(delta);
+	}
+	for (auto ball : balls) {
+		ball->HandleEvents(delta);
+	}
+}
+
+void Game::Collision() {
+	for (auto& ball : balls) {
+		for (auto wall : walls) {
+			MovableObject::Collision(*ball, *wall);
+		}
+	}
+
+	for (auto& ball : balls) {
+		for (auto player : players) {
+			if (MovableObject::Collision(*ball, *player)) {
+				ball->SetOwnerId(player->GetPlayerId());
+				if (ball->GetOwnerId() == player->GetPlayerId() && ball->GetPoints() > 0) {
+					player->AddPoints(ball->GetPoints());
+					ball->ResetPoints();
+				}
+			}
+		}
+	}
+
+	for (auto& ball : balls) {
+		for (int i = 0; i < bricks.size(); i++) {
+			if (MovableObject::Collision(*ball, *bricks[i])) {
+				ball->AddPoints(bricks[i]->GetPoints());
+				delete bricks[i];
+				bricks.erase(bricks.begin() + i);
+			}
+		}
+	}
+
+	for (auto& player : players) {
+		for (auto wall : walls) {
+			MovableObject::Collision(*player, *wall);
 		}
 	}
 }

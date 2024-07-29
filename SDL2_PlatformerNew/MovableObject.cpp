@@ -1,6 +1,7 @@
 #include "MovableObject.h"
 
 bool MovableObject::Collision(MovableObject& object, const Object& other) {
+	
 	SDL_Rect box = { object.dstBox.x + object.vector.x, object.dstBox.y + object.vector.y, object.dstBox.w, object.dstBox.h };
 
     if (box.x + box.w > other.GetDstBox().x && box.x < other.GetDstBox().x + other.GetDstBox().w
