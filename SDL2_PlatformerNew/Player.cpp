@@ -83,7 +83,7 @@ void Player::Update() {
 	}
 	else {
 		if (this->isDestroyble) {
-			delete this;
+			isAlive = false;
 			return;
 		}
 

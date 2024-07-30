@@ -43,6 +43,7 @@ public:
 		bricks.push_back(brick);
 	}
 
+
 	void SetBackground(const std::string& BGpath);
 	bool IsGameOver();
 private:
@@ -61,6 +62,7 @@ private:
 
 	bool isGameOver = false;
 
+	void Basket();
 	void Render();
 	void Update();
 	void HandleEvents();

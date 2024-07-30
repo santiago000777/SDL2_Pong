@@ -1,8 +1,8 @@
 #include "common.h"
 #include "Game.h"
 
-	// 1. chybna kolize u balonu + player (proti sobe) -> TODO: MovableObject::Collision()
-	// 2. pridat vyce zivotu + micu
+	// 1. chybna kolize u balonu + player (proti sobe) -> TODO: MovableObject::Collision() *
+	// 2. pridat vice zivotu + micu
 	// 3. opravit vraceni u drzeni left i right nebo up i down klavesy
 	// 4. pridat animace
 
@@ -14,7 +14,7 @@ int main(int argc, char* args[]) {
 
 	game.AddObject<Wall>({ 25, 50, 550, 30 }, "Pictures/horizontalWall.bmp", { 0, 0, 9, 7 });
 	
-	game.AddObject<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", { 0, 0, 9, 7 });
+	//game.AddObject<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", { 0, 0, 9, 7 });
 
 	game.AddObject<Player>({ 56, 750, 100, 24 }, "Pictures/paddle.bmp", { 0, 0, 25, 6 });
 
@@ -24,12 +24,20 @@ int main(int argc, char* args[]) {
 	for (int i = 0; i < 6; i++) {
 		game.AddObject<Brick>({ 120 + 64 * i, 100, 64, 20 }, "Pictures/Brick.bmp", { 0, 0, 16, 5 });
 	}
+	for (int i = 0; i < 5; i++) {
+		if (i == 2) continue;
+		game.AddObject<Brick>({ 152 + 64 * i, 120, 64, 20 }, "Pictures/Brick.bmp", { 0, 0, 16, 5 });
+	}
+	for (int i = 0; i < 4; i++) {
+		if (i == 1 || i == 2) continue;
+		game.AddObject<Brick>({ 184 + 64 * i, 140, 64, 20 }, "Pictures/Brick.bmp", { 0, 0, 16, 5 });
+	}
+	
 
 	while (!PressedKey(VK_ESCAPE) && !game.IsGameOver()) {
 		game.Loop();
 	}
 	
-
 		std::cout << "Game over!\n\n";
 
 	return 0;
@@ -44,6 +52,9 @@ int main(int argc, char* args[]) {
 	* git remote add origin <pathFromGitHub>	-> vytvoreni remote s cestou, ktera se generuje na GitHubu -> musi se rucne repo vytvorit
 	* git remote -v								-> kontrola remotu
 		...
+
+	--CLONE GITHUB REPO--
+	* git clone <pathFromGitHub>				-> kopirovani repo z github
 
 	--PULL--
 	* git log									-> zobrazeni vsech commitu

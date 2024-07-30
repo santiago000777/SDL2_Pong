@@ -22,6 +22,7 @@ public:
     SDL_Rect GetDstBox() const;
     bool IsDestroyble() const;
 
+    bool isAlive = true;
 protected:
     SDL_Rect dstBox;
     SDL_Rect srcBox;

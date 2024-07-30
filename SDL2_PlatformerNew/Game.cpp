@@ -31,7 +31,7 @@ void Game::Loop() {
 	
 	durationUpdate = std::chrono::duration_cast<std::chrono::milliseconds>(secondUpdate - firstUpdate);
 	if (durationUpdate.count() >= deltaTime/4) {
-		
+		Basket();
 		MovableObject::deltaT = durationUpdate.count();
 		std::cout << durationUpdate.count() << " ms\n";
 
@@ -62,6 +62,33 @@ void Game::SetBackground(const std::string& BGpath) {
 
 bool Game::IsGameOver() {
 	return isGameOver;
+}
+
+void Game::Basket() {
+	for (int i = 0; i < walls.size(); i++) {
+		if (!walls[i]->isAlive) {
+			delete walls[i];
+			walls.erase(walls.begin() + i);
+		}
+	}
+	for (int i = 0; i < bricks.size(); i++) {
+		if (!bricks[i]->isAlive) {
+			delete bricks[i];
+			bricks.erase(bricks.begin() + i);
+		}
+	}
+	for (int i = 0; i < balls.size(); i++) {
+		if (!balls[i]->isAlive) {
+			delete balls[i];
+			balls.erase(balls.begin() + i);
+		}
+	}
+	for (int i = 0; i < players.size(); i++) {
+		if (!players[i]->isAlive) {
+			delete players[i];
+			players.erase(players.begin() + i);
+		}
+	}
 }
 
 void Game::Render() {
@@ -98,6 +125,7 @@ void Game::Update() {
 	for (auto ball : balls) {
 		if (ball->GetDstBox().y > 820) {
 			uncatchedBalls++;
+			ball->isAlive = false;
 		}
 	}
 	for (auto& player : players) {
@@ -105,6 +133,7 @@ void Game::Update() {
 	}
 	for (auto& player : players) {
 		if (player->IsGameOver()) {
+			player->isAlive = false;
 			isGameOver = true;
 		}
 	}
@@ -143,8 +172,7 @@ void Game::Collision() {
 		for (int i = 0; i < bricks.size(); i++) {
 			if (MovableObject::Collision(*ball, *bricks[i])) {
 				ball->AddPoints(bricks[i]->GetPoints());
-				delete bricks[i];
-				bricks.erase(bricks.begin() + i);
+				bricks[i]->isAlive = false;
 			}
 		}
 	}
