@@ -11,9 +11,8 @@ public:
 	void operator=(MovableObject&& rhs) = delete;
 
 	static bool Collision(MovableObject& object, const Object& other);
-	static bool Collision(MovableObject& object, const MovableObject& other);
+	//static bool Collision(MovableObject& object, const MovableObject& other);
 
-		// ??
 	static float deltaT;
 protected:
 

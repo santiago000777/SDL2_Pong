@@ -56,24 +56,6 @@ void Game::Loop() {
 	secondFrame = std::chrono::high_resolution_clock::now();
 }
 
-/*
-	==GameLoop==
-	
-	std::chrono::time_point<std::chrono::high_resolution_clock> firstCollision, secondCollision, firstFrame, secondFrame;
-	{
-		durationCollision = std::chrono::duration_cast<std::chrono::milliseconds>(secondCollision - firstCollision);
-		if(durationCollision >= deltaTime/4) {		-> 4x rychlejsi nez vykresleni
-			firstCollision = std::chrono::high_resolution_clock::now();
-			Collision();	-> kontrola kolize u vsech objektu
-		}
-		secondCollision = std::chrono::high_resolution_clock::now();
-
-		durationFrame = std::chrono::duration_cast<std::chrono::milliseconds>(secondFrame - firstFrame);
-		if (durationFrame.count() >= deltaTime) {
-	}
-	....
-*/
-
 void Game::SetBackground(const std::string& BGpath) {
 	background = new Background(windowRect.w, windowRect.h, BGpath);
 }
@@ -153,6 +135,7 @@ void Game::Collision() {
 					ball->ResetPoints();
 				}
 			}
+			MovableObject::Collision(*player, *ball);
 		}
 	}
 
