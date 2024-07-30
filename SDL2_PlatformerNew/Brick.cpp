@@ -3,6 +3,7 @@
 Brick::Brick(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect) 
 	: Object(dstBox, path, from, windowRect) {
 	isDestroyble = true;
+
 }
 
 Brick::~Brick() {

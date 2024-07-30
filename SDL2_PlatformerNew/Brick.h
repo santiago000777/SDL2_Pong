@@ -18,5 +18,6 @@ public:
     void SetPoints(int points);
 private:
 	int points = 1;
+    int textureIndex = 1;
 };
 

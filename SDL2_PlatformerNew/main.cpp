@@ -1,6 +1,8 @@
 #include "common.h"
 #include "Game.h"
 
+// TODO: Dodelat Picture, vzdy se v ctoru musi vytvorit pomocna Picture a postupne ponastavovat srcBox a texture
+	// 0. pridat sprite sheet pro kazdy obj -> jeden dlouhy .bmp
 	// 1. chybna kolize u balonu + player (proti sobe) -> TODO: MovableObject::Collision() *
 	// 2. pridat vice zivotu + micu
 	// 3. opravit vraceni u drzeni left i right nebo up i down klavesy
@@ -19,18 +21,18 @@ int main(int argc, char* args[]) {
 	game.AddObject<Player>({ 56, 750, 100, 24 }, "Pictures/paddle.bmp", { 0, 0, 25, 6 });
 
 	const float ballScale = 3.0f;
-	game.AddObject<Ball>({ 300, 200, (int)roundf(7 * ballScale), (int)roundf(7 * ballScale) }, "Pictures/BallBmp.bmp", { 0, 0, 7, 8 });
+	game.AddObject<Ball>({ 300, 200, (int)roundf(7 * ballScale), (int)roundf(7 * ballScale) }, "Pictures/BallSpriteSheet.bmp", { 0, 0, 7, 8 });
 
 	for (int i = 0; i < 6; i++) {
-		game.AddObject<Brick>({ 120 + 64 * i, 100, 64, 20 }, "Pictures/Brick.bmp", { 0, 0, 16, 5 });
+		game.AddObject<Brick>({ 120 + 64 * i, 100, 64, 20 }, "Pictures/BrickSpriteSheet.bmp", { 0, 0, 16, 5 });
 	}
 	for (int i = 0; i < 5; i++) {
 		if (i == 2) continue;
-		game.AddObject<Brick>({ 152 + 64 * i, 120, 64, 20 }, "Pictures/Brick.bmp", { 0, 0, 16, 5 });
+		game.AddObject<Brick>({ 152 + 64 * i, 120, 64, 20 }, "Pictures/BrickSpriteSheet.bmp", { 16, 0, 16, 5 });
 	}
 	for (int i = 0; i < 4; i++) {
 		if (i == 1 || i == 2) continue;
-		game.AddObject<Brick>({ 184 + 64 * i, 140, 64, 20 }, "Pictures/Brick.bmp", { 0, 0, 16, 5 });
+		game.AddObject<Brick>({ 184 + 64 * i, 140, 64, 20 }, "Pictures/BrickSpriteSheet.bmp", { 0, 0, 16, 5 });
 	}
 	
 

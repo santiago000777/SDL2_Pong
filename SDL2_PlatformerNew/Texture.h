@@ -2,6 +2,15 @@
 #include "common.h"
 #include "Renderer.h"
 
+class Picture {	// TODO: Dodelat Picture, vzdy se v ctoru musi vytvorit pomocna Picture a postupne ponastavovat srcBox a texture
+public:
+	SDL_Texture* GetTexture() const { return tex; }
+	SDL_Rect GetSrcBox() const { return srcBox; }
+private:
+	SDL_Texture* tex;
+	SDL_Rect srcBox;
+};
+
 class Texture {
 public:
 	static SDL_Texture* Create(const std::string& path, Uint8 rTransparent, Uint8 gTransparent, Uint8 bTransparent, Uint8 aTransparent) {
@@ -19,6 +28,7 @@ public:
 		SDL_SetColorKey(surface, SDL_ENABLE, transparentColor);
 
 		SDL_Texture* texture = SDL_CreateTextureFromSurface(SRenderer::Get().Renderer(), surface);
+
 		SDL_FreeSurface(surface);
 
 		return texture;

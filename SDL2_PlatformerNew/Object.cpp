@@ -9,6 +9,7 @@ bool Object::IsDestroyble() const {
 }
 
 void Object::Render() {
+
 	SDL_RenderCopy(SRenderer::Get().Renderer(), texture.get(), &srcBox, &dstBox);
 }
 
