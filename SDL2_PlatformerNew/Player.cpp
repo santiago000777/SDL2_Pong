@@ -156,3 +156,8 @@ bool Player::IsGameOver() {
 void Player::DecreaseLives(int i) {
 	lives -= i;
 }
+
+void Player::ResetPosition() {
+	dstBox.x = 80;
+	dstBox.y = 750;
+}

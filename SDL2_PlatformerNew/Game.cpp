@@ -28,9 +28,10 @@ Game::~Game() {
 }
 
 void Game::Loop() {
+	
 	durationUpdate = std::chrono::duration_cast<std::chrono::milliseconds>(secondUpdate - firstUpdate);
 	if (durationUpdate.count() >= deltaTime/4) {
-			// ??
+		
 		MovableObject::deltaT = durationUpdate.count();
 		std::cout << durationUpdate.count() << " ms\n";
 
@@ -45,6 +46,10 @@ void Game::Loop() {
 
 	durationFrame = std::chrono::duration_cast<std::chrono::milliseconds>(secondFrame - firstFrame);
 	if (durationFrame.count() >= deltaTime) {
+		if (PressedKey(VK_SPACE)) {
+			balls[0]->ResetPosition();
+			players[0]->ResetPosition();
+		}
 		firstFrame = std::chrono::high_resolution_clock::now();
 		Render();
 	}

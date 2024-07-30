@@ -20,7 +20,8 @@ public:
     bool IsGameOver();
     void DecreaseLives(int i);
 
-    
+    void ResetPosition();
+
     int GetPlayerId() const;
     void AddPoints(int points);
 

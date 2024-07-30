@@ -23,6 +23,7 @@ public:
 	void HandleEvents();
     void Update();
     void ResetPoints();
+    void ResetPosition();
 
 protected:
     int points = 0;

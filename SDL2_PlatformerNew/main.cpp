@@ -1,10 +1,10 @@
 #include "common.h"
 #include "Game.h"
 
-
-	// chybna kolize u balonu + player + wall v rohu
-	// pridat deltaTime
-	// pridat animace
+	// 1. chybna kolize u balonu + player (proti sobe) -> TODO: MovableObject::Collision()
+	// 2. pridat vyce zivotu + micu
+	// 3. opravit vraceni u drzeni left i right nebo up i down klavesy
+	// 4. pridat animace
 
 int main(int argc, char* args[]) {
 	Game game("PONG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 604, 850, SDL_WINDOW_SHOWN); // SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED
@@ -25,11 +25,10 @@ int main(int argc, char* args[]) {
 		game.AddObject<Brick>({ 120 + 64 * i, 100, 64, 20 }, "Pictures/Brick.bmp", { 0, 0, 16, 5 });
 	}
 
-	while (!PressedKey(VK_SPACE) && !game.IsGameOver()) {
+	while (!PressedKey(VK_ESCAPE) && !game.IsGameOver()) {
 		game.Loop();
 	}
 	
-	// opravit vraceni u drzeni left i right nebo up i down klavesy
 
 		std::cout << "Game over!\n\n";
 

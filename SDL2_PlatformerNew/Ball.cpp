@@ -148,3 +148,10 @@ void Ball::Update() {
 void Ball::ResetPoints() {
 	points = 0;
 }
+
+void Ball::ResetPosition() {
+	dstBox.x = 300;
+	dstBox.y = 200;
+
+	vector = { 0.3f, 0.3f };
+}
