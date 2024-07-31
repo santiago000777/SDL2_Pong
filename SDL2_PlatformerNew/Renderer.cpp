@@ -6,6 +6,7 @@ SRenderer sRenderer;
 
 SRenderer::~SRenderer() {
 	SDL_DestroyRenderer(renderer);
+	renderer = nullptr;
 	std::cout << "Deleted Renderer\n";
 }
 
