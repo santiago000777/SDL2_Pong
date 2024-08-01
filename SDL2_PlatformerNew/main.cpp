@@ -34,11 +34,13 @@ int main(int argc, char* args[]) {
 	}
 	
 
-	while (!PressedKey(VK_ESCAPE) && !game.IsGameOver()) {
+	while (!PressedKey(VK_ESCAPE) && !game.IsEnd()) {
 		game.Loop();
 	}
-	
+	if (game.GetCountOfBricks() > 0)
 		std::cout << "Game over!\n\n";
+	else
+		std::cout << "You won!\n\n";
 
 	return 0;
 }

@@ -45,7 +45,10 @@ public:
 
 
 	void SetBackground(const std::string& BGpath);
-	bool IsGameOver();
+
+	int GetCountOfBricks() const;
+
+	bool IsEnd();
 private:
 	SDL_Window* window;
 	SDL_Rect windowRect;
@@ -60,7 +63,8 @@ private:
 	std::chrono::time_point<std::chrono::high_resolution_clock> firstFrame, secondFrame, firstUpdate, secondUpdate;
 	std::chrono::milliseconds durationFrame, durationUpdate;
 
-	bool isGameOver = false;
+	//bool isGameOver = false;
+	bool isEnd = false;
 
 	void Basket();
 	void Render();

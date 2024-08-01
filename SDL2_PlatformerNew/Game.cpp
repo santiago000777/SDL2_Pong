@@ -32,6 +32,11 @@ void Game::Loop() {
 	durationUpdate = std::chrono::duration_cast<std::chrono::milliseconds>(secondUpdate - firstUpdate);
 	if (durationUpdate.count() >= deltaTime/4) {
 		Basket();
+
+		if (bricks.size() == 0) {
+			isEnd = true;
+		}
+
 		MovableObject::deltaT = durationUpdate.count();
 		std::cout << durationUpdate.count() << " ms\n";
 
@@ -60,8 +65,12 @@ void Game::SetBackground(const std::string& BGpath) {
 	background = new Background(windowRect.w, windowRect.h, BGpath);
 }
 
-bool Game::IsGameOver() {
-	return isGameOver;
+int Game::GetCountOfBricks() const {
+	return bricks.size();
+}
+
+bool Game::IsEnd() {
+	return isEnd;
 }
 
 void Game::Basket() {
@@ -134,7 +143,7 @@ void Game::Update() {
 	for (auto& player : players) {
 		if (player->IsGameOver()) {
 			player->isAlive = false;
-			isGameOver = true;
+			isEnd = true;
 		}
 	}
 }
