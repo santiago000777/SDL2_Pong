@@ -1,6 +1,6 @@
 #pragma once
 #include "common.h"
-#include "Texture.h"
+#include "Picture.h"
 
 class Object {
 public:

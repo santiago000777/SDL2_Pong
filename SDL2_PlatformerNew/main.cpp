@@ -1,7 +1,6 @@
 #include "common.h"
 #include "Game.h"
 
-// TODO: Dodelat Picture, vzdy se v ctoru musi vytvorit pomocna Picture a postupne ponastavovat srcBox a texture
 	// 0. pridat sprite sheet pro kazdy obj -> jeden dlouhy .bmp
 	// 1. chybna kolize u balonu + player (proti sobe) -> TODO: MovableObject::Collision() *
 	// 2. pridat vice zivotu + micu
