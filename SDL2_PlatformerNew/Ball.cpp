@@ -71,21 +71,26 @@ void Ball::HandleEvents() {
 
 void Ball::Update() {
 	if (this->collision[eIndex::UP]) {
+		currentSprite = UP + 1;
 		vector.y *= -1;
 	}
 	if (this->collision[eIndex::DOWN]) {
+		currentSprite = DOWN + 1;
 		vector.y *= -1;
 	}
 	if (this->collision[eIndex::LEFT]) {
+		currentSprite = LEFT + 1;
 		vector.x *= -1;
 	}
 	if (this->collision[eIndex::RIGHT]) {
+		currentSprite = RIGHT + 1;
 		vector.x *= -1;
 	}
 
 	if (!this->collision[LEFT] && !this->collision[RIGHT] && !this->collision[UP] && !this->collision[DOWN]) {
 		this->dstBox.x += roundf(vector.x * MovableObject::deltaT);
 		this->dstBox.y += roundf(vector.y * MovableObject::deltaT);
+		currentSprite = 0;
 	}
 	else {
 		if (this->isDestroyble) {

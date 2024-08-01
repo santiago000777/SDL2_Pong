@@ -172,7 +172,10 @@ void Game::Collision() {
 		for (int i = 0; i < bricks.size(); i++) {
 			if (MovableObject::Collision(*ball, *bricks[i])) {
 				ball->AddPoints(bricks[i]->GetPoints());
-				bricks[i]->isAlive = false;
+				if (bricks[i]->GetCurrentSprite() == 1) {
+					bricks[i]->isAlive = false;
+				}
+				bricks[i]->ChangeSprite();
 			}
 		}
 	}

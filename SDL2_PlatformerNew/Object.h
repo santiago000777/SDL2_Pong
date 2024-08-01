@@ -24,6 +24,8 @@ public:
 
     bool isAlive = true;
 protected:
+    int GetCountOfSprites() const;
+
     SDL_Rect dstBox;
     SDL_Rect srcBox;
 
@@ -32,8 +34,9 @@ protected:
     SDL_Rect windowRect;
     std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Picture::DeleteTexture };
 
-    int sprites = 0;
+    int currentSprite = 0;
 private:
+    int sprites = 0;
 
 };
 

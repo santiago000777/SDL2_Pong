@@ -15,7 +15,9 @@ public:
     void operator=(Brick&& rhs) = delete;
 
 	int GetPoints() const;
+    int GetCurrentSprite() const;
     void SetPoints(int points);
+    void ChangeSprite();
 private:
 	int points = 1;
     int textureIndex = 1;
