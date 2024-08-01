@@ -1,7 +1,7 @@
 #include "Ball.h"
 
-Ball::Ball(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect) 
-	: MovableObject(dstBox, path, from, windowRect) {
+Ball::Ball(SDL_Rect dstBox, const std::string& path, int characterWidth, SDL_Rect windowRect)
+	: MovableObject(dstBox, path, characterWidth, windowRect) {
 	/*std::random_device nahodneCis;
 	std::uniform_real_distribution<float> dist(-1.0f, 1.0f);
 	std::cout << dist(nahodneCis) << ",  " << dist(nahodneCis) << "\n";

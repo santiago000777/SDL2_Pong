@@ -1,7 +1,7 @@
 #include "Brick.h"
 
-Brick::Brick(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect) 
-	: Object(dstBox, path, from, windowRect) {
+Brick::Brick(SDL_Rect dstBox, const std::string& path, int characterWidth, SDL_Rect windowRect)
+	: Object(dstBox, path, characterWidth, windowRect) {
 	isDestroyble = true;
 
 }

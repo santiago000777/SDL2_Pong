@@ -21,24 +21,24 @@ public:
 
 	void Loop();
 
-	template <typename T> void AddObject(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox);
-	template<> void AddObject<Wall>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
-		auto wall = new Wall(dstBox, path, fromBox, windowRect);
+	template <typename T> void AddObject(SDL_Rect dstBox, const std::string& path, int characterWidth);
+	template<> void AddObject<Wall>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+		auto wall = new Wall(dstBox, path, characterWidth, windowRect);
 		
 		walls.push_back(wall);
 	}
-	template<> void AddObject<Player>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
-		auto player = new Player(dstBox, path, fromBox, windowRect);
+	template<> void AddObject<Player>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+		auto player = new Player(dstBox, path, characterWidth, windowRect);
 		
 		players.push_back(player);
 	}
-	template<> void AddObject<Ball>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
-		auto ball = new Ball(dstBox, path, fromBox, windowRect);
+	template<> void AddObject<Ball>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+		auto ball = new Ball(dstBox, path, characterWidth, windowRect);
 		
 		balls.push_back(ball);
 	}
-	template<> void AddObject<Brick>(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox) {
-		auto brick = new Brick(dstBox, path, fromBox, windowRect);
+	template<> void AddObject<Brick>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+		auto brick = new Brick(dstBox, path, characterWidth, windowRect);
 
 		bricks.push_back(brick);
 	}

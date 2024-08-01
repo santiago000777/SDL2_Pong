@@ -3,7 +3,7 @@
 
 class Ball : public MovableObject {
 public:
-    Ball(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect);
+    Ball(SDL_Rect dstBox, const std::string& path, int characterWidth, SDL_Rect windowRect);
     // copy ctor (zakazany)
     Ball(const Ball& rhs) = delete;
     // move ctor (zakazany)

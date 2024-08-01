@@ -5,7 +5,7 @@
 class Object {
 public:
 	Object() = delete;
-    Object(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_Rect windowRect);
+    Object(SDL_Rect dstBox, const std::string& path, int characterWidth, SDL_Rect windowRect);
 	Object(const Object& rhs) = delete;
 	Object(Object&& rhs) = delete;
     ~Object();
@@ -30,8 +30,9 @@ protected:
     bool isDestroyble = false;
 
     SDL_Rect windowRect;
-    std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Texture::Delete };
+    std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Picture::DeleteTexture };
 
+    int sprites = 0;
 private:
 
 };

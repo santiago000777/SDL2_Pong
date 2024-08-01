@@ -5,7 +5,8 @@
 Background::Background(int width, int height, std::string path)
 	: box { 0, 0, width, height } {
 
-	texture.reset(Texture::Create(path, 255, 0, 255, 255));
+	Picture picture = Picture::Create(path, 255, 0, 255, 255);
+	texture.reset(picture.GetTexture());
 }
 
 //Background::Background(const Background& rhs) {

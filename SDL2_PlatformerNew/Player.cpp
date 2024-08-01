@@ -3,8 +3,8 @@
 
 int Player::playerCount = 0;
 
-Player::Player(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect) 
-	: MovableObject(dstBox, path, from, windowRect) {
+Player::Player(SDL_Rect dstBox, const std::string& path, int characterWidth, SDL_Rect windowRect)
+	: MovableObject(dstBox, path, characterWidth, windowRect) {
 	idPlayer = playerCount;
 	playerCount++;
 }

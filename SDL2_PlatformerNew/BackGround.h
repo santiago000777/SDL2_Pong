@@ -20,7 +20,7 @@ public:
 	void Render(SDL_Rect* windowRect);
 
 private:
-	std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Texture::Delete };
+	std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Picture::DeleteTexture };
 
 	SDL_Rect box;
 };

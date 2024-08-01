@@ -13,10 +13,14 @@ void Object::Render() {
 	SDL_RenderCopy(SRenderer::Get().Renderer(), texture.get(), &srcBox, &dstBox);
 }
 
-Object::Object(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_Rect windowRect) 
-	: dstBox(dstBox), srcBox(fromBox), windowRect(windowRect) {
+Object::Object(SDL_Rect dstBox, const std::string& path, int characterWidth, SDL_Rect windowRect)
+	: dstBox(dstBox), windowRect(windowRect) {
 
-	texture.reset(Texture::Create(path, 255, 255, 255, 255));
+	Picture picture = Picture::Create(path, 255, 255, 255, 255);
+	srcBox = picture.GetSrcBox();
+	sprites = srcBox.w / characterWidth;
+
+	texture.reset(picture.GetTexture());
 }
 
 Object::~Object() {
