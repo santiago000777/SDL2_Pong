@@ -1,10 +1,7 @@
 #include "common.h"
 #include "Game.h"
 
-	// 1. chybna kolize u balonu + player (proti sobe) -> TODO: MovableObject::Collision() *
-	// 2. pridat vice zivotu + micu
-	// 3. opravit vraceni u drzeni left i right nebo up i down klavesy
-	// 4. pridat animace
+	// 1. pridat vice zivotu + micu
 
 int main(int argc, char* args[]) {
 	Game game("PONG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 604, 850, SDL_WINDOW_SHOWN); // SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED

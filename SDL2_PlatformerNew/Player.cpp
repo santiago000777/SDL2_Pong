@@ -60,16 +60,16 @@ void Player::HandleEvents() {
 	vector.x = 0;
 	vector.y = 0;
 	if (PressedKey((short)eControls::UP)) {
-		vector.y = -1;
+		vector.y += -1;
 	}
 	if (PressedKey((short)eControls::LEFT)) {
-		vector.x = -1;
+		vector.x += -1;
 	}
 	if (PressedKey((short)eControls::DOWN)) {
-		vector.y = 1;
+		vector.y += 1;
 	}
 	if (PressedKey((short)eControls::RIGHT)) {
-		vector.x = 1;
+		vector.x += 1;
 	}
 }
 
