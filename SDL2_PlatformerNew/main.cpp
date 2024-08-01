@@ -1,6 +1,7 @@
 #include "common.h"
 #include "Game.h"
 
+// TODO: Odraz bubliny na spodni hranici, kde se odecitaji zivoty
 	// 1. pridat vice micu -> bublinou
 
 int main(int argc, char* args[]) {
@@ -71,5 +72,4 @@ int main(int argc, char* args[]) {
 	--CHECKOUT--
 	* git checkout <branch>						-> prechazeni na novou branch
 	* git checkout <commit>						-> vraceni na dany commit
-
 */

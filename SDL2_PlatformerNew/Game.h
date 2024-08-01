@@ -51,7 +51,6 @@ public:
 	bool IsEnd();
 private:
 	SDL_Window* window;
-	//SDL_Rect windowRect;
 	Background* background;
 
 	std::vector<Wall*> walls;

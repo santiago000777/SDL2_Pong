@@ -11,7 +11,6 @@ public:
 	void operator=(MovableObject&& rhs) = delete;
 
 	static bool Collision(MovableObject& object, const Object& other);
-	//static bool Collision(MovableObject& object, const MovableObject& other);
 
 	static float deltaT;
 protected:
@@ -19,5 +18,6 @@ protected:
 	bool collision[4] = { 0, 0, 0, 0 };
 	TVec2 vector;
 private:
+
 };
 
