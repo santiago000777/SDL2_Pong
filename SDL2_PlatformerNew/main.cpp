@@ -13,7 +13,7 @@ int main(int argc, char* args[]) {
 	
 	//game.AddObject<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
 
-	game.AddObject<Player>({ 56, 750, 100, 24 }, "Pictures/paddle.bmp", 25);
+	game.AddObject<Player>({ 255, 750, 100, 24 }, "Pictures/paddle.bmp", 25);
 
 	const float ballScale = 3.5f;
 	game.AddObject<Ball>({ 300, 200, (int)roundf(7 * ballScale), (int)roundf(7 * ballScale) }, "Pictures/BallSpriteSheet.bmp", 7);
