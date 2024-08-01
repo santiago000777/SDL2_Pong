@@ -63,7 +63,6 @@ private:
 	std::chrono::time_point<std::chrono::high_resolution_clock> firstFrame, secondFrame, firstUpdate, secondUpdate;
 	std::chrono::milliseconds durationFrame, durationUpdate;
 
-	//bool isGameOver = false;
 	bool isEnd = false;
 
 	void Basket();

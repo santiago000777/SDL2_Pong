@@ -15,7 +15,7 @@ int main(int argc, char* args[]) {
 
 	game.AddObject<Player>({ 56, 750, 100, 24 }, "Pictures/paddle.bmp", 25);
 
-	const float ballScale = 3.0f;
+	const float ballScale = 3.5f;
 	game.AddObject<Ball>({ 300, 200, (int)roundf(7 * ballScale), (int)roundf(7 * ballScale) }, "Pictures/BallSpriteSheet.bmp", 7);
 
 	for (int i = 0; i < 6; i++) {

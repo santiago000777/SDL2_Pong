@@ -2,12 +2,28 @@
 
 Ball::Ball(SDL_Rect dstBox, const std::string& path, int characterWidth, SDL_Rect windowRect)
 	: MovableObject(dstBox, path, characterWidth, windowRect) {
-	/*std::random_device nahodneCis;
-	std::uniform_real_distribution<float> dist(-1.0f, 1.0f);
-	std::cout << dist(nahodneCis) << ",  " << dist(nahodneCis) << "\n";
-	vector = { roundf(dist(nahodneCis)), roundf(dist(nahodneCis)) };*/
+
+	std::random_device randomNum;
+	std::uniform_real_distribution<float> dist(0.1f, 0.4f);
+
+	std::uniform_int_distribution<int> decide(0, 3);
+
 	
-	vector = { 0.3f, 0.3f };
+	if (decide(randomNum) == 0) {
+		vector = { dist(randomNum), dist(randomNum) };
+	}
+	else if(decide(randomNum) == 1) {
+		vector = { -dist(randomNum), -dist(randomNum) };
+	}
+	else if (decide(randomNum) == 2) {
+		vector = { -dist(randomNum), dist(randomNum) };
+	}
+	else {
+		vector = { dist(randomNum), -dist(randomNum) };
+	}
+	std::cout << vector.x << "  " << vector.y << "\n";
+	
+	//vector = { 0.3f, 0.3f };
 }
 
 
