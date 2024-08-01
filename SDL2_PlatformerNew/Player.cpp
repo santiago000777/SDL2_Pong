@@ -69,7 +69,7 @@ void Player::HandleEvents() {
 
 void Player::Update() {
 	if (points > 0) {
-		//std::cout << "Player - " << points << "\n";
+		std::cout << "Player - " << points << "\n";
 	}
 	if (!this->collision[LEFT] && !this->collision[RIGHT] && !this->collision[UP] && !this->collision[DOWN]) {
 		this->dstBox.x += roundf(vector.x * MovableObject::deltaT);

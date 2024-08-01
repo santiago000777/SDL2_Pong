@@ -38,12 +38,11 @@ void Game::Loop() {
 		}
 
 		MovableObject::deltaT = durationUpdate.count();
-		std::cout << durationUpdate.count() << " ms\n";
+		//std::cout << durationUpdate.count() << " ms\n";
 
 		firstUpdate = std::chrono::high_resolution_clock::now();
 
 		HandleEvents();
-
 		Collision();
 		Update();
 	}
@@ -51,6 +50,7 @@ void Game::Loop() {
 
 	durationFrame = std::chrono::duration_cast<std::chrono::milliseconds>(secondFrame - firstFrame);
 	if (durationFrame.count() >= deltaTime) {
+		
 		if (PressedKey(VK_SPACE)) {
 			balls[0]->ResetPosition();
 			players[0]->ResetPosition();
@@ -145,6 +145,15 @@ void Game::Update() {
 			player->isAlive = false;
 			isEnd = true;
 		}
+		else if (player->isAlive && uncatchedBalls > 0) {
+			for (auto ball : balls) {
+				if (!ball->isAlive) {
+					ball->ResetPosition();
+					ball->ResetPoints();
+					ball->isAlive = true;
+				}
+			}
+		}
 	}
 }
 
@@ -180,8 +189,8 @@ void Game::Collision() {
 	for (auto& ball : balls) {
 		for (int i = 0; i < bricks.size(); i++) {
 			if (MovableObject::Collision(*ball, *bricks[i])) {
-				ball->AddPoints(bricks[i]->GetPoints());
 				if (bricks[i]->GetCurrentSprite() == 1) {
+					ball->AddPoints(bricks[i]->GetPoints());
 					bricks[i]->isAlive = false;
 				}
 				bricks[i]->ChangeSprite();

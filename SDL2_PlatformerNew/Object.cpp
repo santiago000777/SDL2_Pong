@@ -20,6 +20,7 @@ void Object::Render() {
 Object::Object(SDL_Rect dstBox, const std::string& path, int characterWidth, SDL_Rect windowRect)
 	: dstBox(dstBox), windowRect(windowRect) {
 
+
 	Picture picture = Picture::Create(path, 255, 255, 255, 255);
 	srcBox = picture.GetSrcBox();
 	sprites = srcBox.w / characterWidth;

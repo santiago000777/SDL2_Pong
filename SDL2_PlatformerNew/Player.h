@@ -34,6 +34,6 @@ private:
         DOWN = 's',
         RIGHT = 'd'
     };
-    int lives = 1;
+    int lives = 2;
     int points = 0;
 };
