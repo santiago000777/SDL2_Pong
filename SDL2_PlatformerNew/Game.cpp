@@ -4,9 +4,9 @@
 Game::Game(const std::string& windowName, int posX, int posY, int windowWidth, int windowHeight, int flags) {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	this->window = SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags);
-	SRenderer::Init(window);
+	SRenderer::Init(window, {0, 0, windowWidth, windowHeight });
 	
-	this->windowRect = { 0, 0, windowWidth, windowHeight };
+	
 	firstUpdate = std::chrono::high_resolution_clock::now();
 }
 
@@ -62,7 +62,7 @@ void Game::Loop() {
 }
 
 void Game::SetBackground(const std::string& BGpath) {
-	background = new Background(windowRect.w, windowRect.h, BGpath);
+	background = new Background(BGpath);
 }
 
 int Game::GetCountOfBricks() const {
@@ -103,7 +103,7 @@ void Game::Basket() {
 void Game::Render() {
 	SDL_RenderClear(SRenderer::Get().Renderer());
 
-	background->Render(&windowRect);
+	background->Render();
 	for (auto& wall : walls) {
 		wall->Render();
 	}

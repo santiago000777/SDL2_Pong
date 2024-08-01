@@ -3,7 +3,7 @@
 class MovableObject : public Object {
 public:
 	MovableObject() = delete;
-	MovableObject(SDL_Rect dstBox, const std::string& path, int characterWidth, SDL_Rect windowRect);
+	MovableObject(SDL_Rect dstBox, const std::string& path, int characterWidth);
 	MovableObject(const MovableObject& rhs) = delete;
 	MovableObject(MovableObject&& rhs) = delete;
 	~MovableObject();

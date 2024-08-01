@@ -23,22 +23,22 @@ public:
 
 	template <typename T> void AddObject(SDL_Rect dstBox, const std::string& path, int characterWidth);
 	template<> void AddObject<Wall>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-		auto wall = new Wall(dstBox, path, characterWidth, windowRect);
+		auto wall = new Wall(dstBox, path, characterWidth);
 		
 		walls.push_back(wall);
 	}
 	template<> void AddObject<Player>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-		auto player = new Player(dstBox, path, characterWidth, windowRect);
+		auto player = new Player(dstBox, path, characterWidth);
 		
 		players.push_back(player);
 	}
 	template<> void AddObject<Ball>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-		auto ball = new Ball(dstBox, path, characterWidth, windowRect);
+		auto ball = new Ball(dstBox, path, characterWidth);
 		
 		balls.push_back(ball);
 	}
 	template<> void AddObject<Brick>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-		auto brick = new Brick(dstBox, path, characterWidth, windowRect);
+		auto brick = new Brick(dstBox, path, characterWidth);
 
 		bricks.push_back(brick);
 	}
@@ -51,7 +51,7 @@ public:
 	bool IsEnd();
 private:
 	SDL_Window* window;
-	SDL_Rect windowRect;
+	//SDL_Rect windowRect;
 	Background* background;
 
 	std::vector<Wall*> walls;

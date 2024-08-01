@@ -17,8 +17,8 @@ void Object::Render() {
 	SDL_RenderCopy(SRenderer::Get().Renderer(), texture.get(), &srcBox, &dstBox);
 }
 
-Object::Object(SDL_Rect dstBox, const std::string& path, int characterWidth, SDL_Rect windowRect)
-	: dstBox(dstBox), windowRect(windowRect) {
+Object::Object(SDL_Rect dstBox, const std::string& path, int characterWidth)
+	: dstBox(dstBox) {
 
 
 	Picture picture = Picture::Create(path, 255, 255, 255, 255);

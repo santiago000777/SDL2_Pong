@@ -1,7 +1,7 @@
 #include "common.h"
 #include "Game.h"
 
-	// 1. pridat vice zivotu + micu
+	// 1. pridat vice micu -> bublinou
 
 int main(int argc, char* args[]) {
 	Game game("PONG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 604, 850, SDL_WINDOW_SHOWN); // SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED

@@ -108,8 +108,8 @@ bool MovableObject::Collision(MovableObject& object, const Object& other) {
 //	}
 //}
 
-MovableObject::MovableObject(SDL_Rect dstBox, const std::string& path, int characterWidth, SDL_Rect windowRect)
-	: Object(dstBox, path, characterWidth, windowRect) {
+MovableObject::MovableObject(SDL_Rect dstBox, const std::string& path, int characterWidth)
+	: Object(dstBox, path, characterWidth) {
 
 }
 

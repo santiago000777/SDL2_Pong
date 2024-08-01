@@ -2,7 +2,7 @@
 #include "Object.h"
 class Brick : public Object {
 public:
-    Brick(SDL_Rect dstBox, const std::string& path, int characterWidth, SDL_Rect windowRect);
+    Brick(SDL_Rect dstBox, const std::string& path, int characterWidth);
     // copy ctor (zakazany)
     Brick(const Brick& rhs) = delete;
     // move ctor (zakazany)
