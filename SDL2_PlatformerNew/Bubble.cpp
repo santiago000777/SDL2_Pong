@@ -21,6 +21,8 @@ Bubble::Bubble(SDL_Rect dstBox, const std::string& path, int characterWidth)
 	}
 
 	std::cout << vector.x << "  " << vector.y << "\n";
+
+	std::uniform_int_distribution<int> position = ()
 }
 
 Bubble::~Bubble() {

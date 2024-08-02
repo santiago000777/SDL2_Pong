@@ -22,7 +22,7 @@ public:
 
 	void Loop();
 
-	template <typename T> void AddObject(SDL_Rect dstBox, const std::string& path, int characterWidth);
+	template <typename Ty> void AddObject(SDL_Rect dstBox, const std::string& path, int characterWidth);
 	template<> void AddObject<Wall>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
 		auto wall = new Wall(dstBox, path, characterWidth);
 		
@@ -48,7 +48,6 @@ public:
 
 		bubbles.push_back(bubble);
 	}
-
 
 	void SetBackground(const std::string& BGpath);
 
