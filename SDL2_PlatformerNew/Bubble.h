@@ -13,6 +13,7 @@ public:
 	void operator=(const Bubble& rhs) = delete;
 	void operator=(Bubble&& rhs) = delete;
 
+	void Update();
 private:
 
 };

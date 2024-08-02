@@ -11,6 +11,7 @@ public:
 	void operator=(MovableObject&& rhs) = delete;
 
 	static bool Collision(MovableObject& object, const Object& other);
+	static bool Collision(MovableObject& object, const SDL_Rect& other);
 
 	static float deltaT;
 protected:

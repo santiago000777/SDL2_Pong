@@ -5,6 +5,7 @@
 #include "Wall.h"
 #include "Renderer.h"
 #include "Brick.h"
+#include "Bubble.h"
 
 #define FPS		60
 
@@ -42,6 +43,11 @@ public:
 
 		bricks.push_back(brick);
 	}
+	template<> void AddObject<Bubble>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+		auto bubble = new Bubble(dstBox, path, characterWidth);
+
+		bubbles.push_back(bubble);
+	}
 
 
 	void SetBackground(const std::string& BGpath);
@@ -57,10 +63,13 @@ private:
 	std::vector<Ball*> balls;
 	std::vector<Player*> players;
 	std::vector<Brick*> bricks;
+	std::vector<Bubble*> bubbles;
 
 	const float deltaTime = 1000.0f / FPS;
 	std::chrono::time_point<std::chrono::high_resolution_clock> firstFrame, secondFrame, firstUpdate, secondUpdate;
 	std::chrono::milliseconds durationFrame, durationUpdate;
+
+	SDL_Rect gameOverRect { 0, 800, 600, 20 };
 
 	bool isEnd = false;
 

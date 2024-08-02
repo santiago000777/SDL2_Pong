@@ -23,6 +23,10 @@ Game::~Game() {
 	for (auto& brick : bricks) {
 		delete brick;
 	}
+	for (auto& bubble : bubbles) {
+		delete bubble;
+	}
+
 	delete background;
 	SDL_DestroyWindow(window);
 }
@@ -98,6 +102,12 @@ void Game::Basket() {
 			players.erase(players.begin() + i);
 		}
 	}
+	for (int i = 0; i < bubbles.size(); i++) {
+		if (!bubbles[i]->isAlive) {
+			delete bubbles[i];
+			bubbles.erase(bubbles.begin() + i);
+		}
+	}
 }
 
 void Game::Render() {
@@ -116,6 +126,9 @@ void Game::Render() {
 	for (auto& player : players) {
 		player->Render();
 	}
+	for (auto& bubble : bubbles) {
+		bubble->Render();
+	}
 
 	SDL_RenderPresent(SRenderer::Get().Renderer());
 }
@@ -128,11 +141,15 @@ void Game::Update() {
 	for (auto& player : players) {
 		player->Update();
 	}
+	for (auto& bubble : bubbles) {
+		bubble->Update();
+	}
+		// Bubble logic
 
 		// Game over logic
 	int uncatchedBalls = 0;
 	for (auto ball : balls) {
-		if (ball->GetDstBox().y > 820) {
+		if (MovableObject::Collision(*ball, gameOverRect)) {
 			uncatchedBalls++;
 			ball->isAlive = false;
 		}
@@ -173,6 +190,15 @@ void Game::Collision() {
 		}
 	}
 
+	for (auto& wall : walls) {
+		for (auto& bubble : bubbles) {
+			MovableObject::Collision(*bubble, *wall);
+		}
+	}
+	for (auto& bubble : bubbles) {
+		MovableObject::Collision(*bubble, gameOverRect);
+	}
+
 	for (auto& ball : balls) {
 		for (auto player : players) {
 			if (MovableObject::Collision(*ball, *player)) {
@@ -186,6 +212,7 @@ void Game::Collision() {
 		}
 	}
 
+
 	for (auto& ball : balls) {
 		for (int i = 0; i < bricks.size(); i++) {
 			if (MovableObject::Collision(*ball, *bricks[i])) {
@@ -196,6 +223,15 @@ void Game::Collision() {
 				bricks[i]->ChangeSprite();
 			}
 		}
+	}
+
+	for (auto& ball : balls) {
+		for (auto& bubble : bubbles) {
+			if (MovableObject::Collision(*bubble, *ball)) {
+				bubble->isAlive = false;
+			}
+		}
+		
 	}
 
 	for (auto& player : players) {

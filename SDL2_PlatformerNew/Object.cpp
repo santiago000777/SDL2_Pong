@@ -21,7 +21,7 @@ Object::Object(SDL_Rect dstBox, const std::string& path, int characterWidth)
 	: dstBox(dstBox) {
 
 
-	Picture picture = Picture::Create(path, 255, 255, 255, 255);
+	Picture picture = Picture::Create(path, 255, 0, 255, 255);
 	srcBox = picture.GetSrcBox();
 	sprites = srcBox.w / characterWidth;
 	srcBox.w = characterWidth;

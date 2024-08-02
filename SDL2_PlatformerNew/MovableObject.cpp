@@ -3,7 +3,6 @@
 float MovableObject::deltaT = 0.0f;
 
 
-
 bool MovableObject::Collision(MovableObject& object, const Object& other) {
 
 	SDL_Rect box1 = { object.dstBox.x + object.vector.x * MovableObject::deltaT, object.dstBox.y + object.vector.y * MovableObject::deltaT, object.dstBox.w, object.dstBox.h };
@@ -52,6 +51,54 @@ bool MovableObject::Collision(MovableObject& object, const Object& other) {
 		return true;
 	} 
 	else {
+		return false;
+	}
+}
+
+bool MovableObject::Collision(MovableObject& object, const SDL_Rect& other) {
+	SDL_Rect box1 = { object.dstBox.x + object.vector.x * MovableObject::deltaT, object.dstBox.y + object.vector.y * MovableObject::deltaT, object.dstBox.w, object.dstBox.h };
+
+	auto LeftEdge = [](const SDL_Rect& box) -> int { return box.x; };
+	auto RightEdge = [](const SDL_Rect& box) -> int { return box.x + box.w; };
+	auto UpEdge = [](const SDL_Rect& box) -> int { return box.y; };
+	auto DownEdge = [](const SDL_Rect& box) -> int { return box.y + box.h; };
+
+	if (RightEdge(box1) > LeftEdge(other) && LeftEdge(box1) < RightEdge(other)
+		&& DownEdge(box1) > UpEdge(other) && UpEdge(box1) < DownEdge(other)) {
+
+		if (abs(UpEdge(box1) - DownEdge(other)) < abs(DownEdge(box1) - UpEdge(other))) {
+
+			if (abs(UpEdge(box1) - DownEdge(other)) < abs(LeftEdge(box1) - RightEdge(other))
+				&& abs(UpEdge(box1) - DownEdge(other)) < abs(RightEdge(box1) - LeftEdge(other))) {
+				std::cout << "Up\n";
+				object.collision[UP] = true;
+			} else {
+				if (abs(LeftEdge(box1) - RightEdge(other)) < abs(RightEdge(box1) - LeftEdge(other))) {
+					std::cout << "Left\n";
+					object.collision[LEFT] = true;
+				} else {
+					std::cout << "Right\n";
+					object.collision[RIGHT] = true;
+				}
+			}
+		} else {
+			if (abs(DownEdge(box1) - UpEdge(other)) < abs(LeftEdge(box1) - RightEdge(other))
+				&& abs(DownEdge(box1) - UpEdge(other)) < abs(RightEdge(box1) - LeftEdge(other))) {
+
+				std::cout << "Down\n";
+				object.collision[DOWN] = true;
+			} else {
+				if (abs(LeftEdge(box1) - RightEdge(other)) < abs(RightEdge(box1) - LeftEdge(other))) {
+					std::cout << "Left\n";
+					object.collision[LEFT] = true;
+				} else {
+					std::cout << "Right\n";
+					object.collision[RIGHT] = true;
+				}
+			}
+		}
+		return true;
+	} else {
 		return false;
 	}
 }
