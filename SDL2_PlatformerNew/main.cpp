@@ -1,17 +1,16 @@
 #include "common.h"
 #include "Game.h"
 
-	// 1. pridat vice micu -> bublinou
-
 int main(int argc, char* args[]) {
 	Game game("PONG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 604, 850, SDL_WINDOW_SHOWN);
+
 	game.SetBackground("Pictures/veitImg.bmp");
 	game.AddObject<Wall>({ 25, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", 7);
 	game.AddObject<Wall>({ 25 + 525, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", 7);
 
 	game.AddObject<Wall>({ 25, 50, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
 	
-	game.AddObject<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
+	//game.AddObject<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
 
 	game.AddObject<Player>({ 255, 750, 100, 24 }, "Pictures/paddle.bmp", 25);
 

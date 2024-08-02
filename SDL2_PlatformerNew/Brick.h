@@ -19,7 +19,7 @@ public:
     void SetPoints(int points);
     void ChangeSprite();
 private:
-	int points = 1;
+	int points = 0;
     int textureIndex = 1;
 };
 

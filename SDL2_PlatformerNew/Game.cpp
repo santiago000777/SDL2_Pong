@@ -145,6 +145,14 @@ void Game::Update() {
 		bubble->Update();
 	}
 		// Bubble logic
+	for (auto& ball : balls) {
+		for (auto& bubble : bubbles) {
+			if (MovableObject::Collision(*bubble, *ball)) {
+				bubble->isAlive = false;
+				balls.push_back(new Ball({ bubble->GetDstBox().x, bubble->GetDstBox().y, ball->GetDstBox().w, ball->GetDstBox().h }, ball->GetPath(), ball->GetSpriteWidth()));
+			}
+		}
+	}
 
 		// Game over logic
 	int uncatchedBalls = 0;
@@ -224,14 +232,7 @@ void Game::Collision() {
 		}
 	}
 
-	for (auto& ball : balls) {
-		for (auto& bubble : bubbles) {
-			if (MovableObject::Collision(*bubble, *ball)) {
-				bubble->isAlive = false;
-				balls.push_back(new Ball({ bubble->GetDstBox().x, bubble->GetDstBox().y, ball->GetDstBox().w, ball->GetDstBox().h}, ball->GetPath(), ball->GetSpriteWidth()));
-			}
-		}
-	}
+	
 	if (balls.size() > 1) {
 		for (int j = 0; j < balls.size(); j++) {
 			for (int i = 0; i < balls.size(); i++) {

@@ -1,8 +1,6 @@
 #pragma once
 #include "MovableObject.h"
 
-	// TODO: Odraz na spodni hranici, kde se odecitaji zivoty
-
 class Bubble : public MovableObject {
 public:
 	Bubble() = delete;
