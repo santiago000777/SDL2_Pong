@@ -232,6 +232,15 @@ void Game::Collision() {
 			}
 		}
 	}
+	if (balls.size() > 1) {
+		for (int j = 0; j < balls.size(); j++) {
+			for (int i = 0; i < balls.size(); i++) {
+				if (j == i) continue;
+				MovableObject::Collision(*balls[j], *balls[i]);
+			}
+		}
+
+	}
 
 	for (auto& player : players) {
 		for (auto wall : walls) {

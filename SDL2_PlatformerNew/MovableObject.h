@@ -11,6 +11,7 @@ public:
 	void operator=(MovableObject&& rhs) = delete;
 
 	static bool Collision(MovableObject& object, const Object& other);
+	//static bool Collision(MovableObject& object, MovableObject& other);
 	static bool Collision(MovableObject& object, const SDL_Rect& other);
 
 	const std::string& GetPath() const;
