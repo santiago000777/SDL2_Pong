@@ -103,6 +103,10 @@ bool MovableObject::Collision(MovableObject& object, const SDL_Rect& other) {
 	}
 }
 
+const std::string& MovableObject::GetPath() const {
+	return path;
+}
+
 //bool MovableObject::Collision(MovableObject& object, const MovableObject& other) {
 //	SDL_Rect box1 = { object.dstBox.x + object.vector.x * MovableObject::deltaT, object.dstBox.y + object.vector.y * MovableObject::deltaT, object.dstBox.w, object.dstBox.h };
 //	SDL_Rect box2 = { other.dstBox.x + other.vector.x * MovableObject::deltaT, other.dstBox.y + other.vector.y * MovableObject::deltaT, other.dstBox.w, other.dstBox.h };
@@ -156,7 +160,7 @@ bool MovableObject::Collision(MovableObject& object, const SDL_Rect& other) {
 //}
 
 MovableObject::MovableObject(SDL_Rect dstBox, const std::string& path, int characterWidth)
-	: Object(dstBox, path, characterWidth) {
+	: Object(dstBox, path, characterWidth), path(path) {
 
 }
 

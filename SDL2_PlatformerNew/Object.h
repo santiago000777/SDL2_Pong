@@ -20,7 +20,9 @@ public:
         DOWN
     };
     SDL_Rect GetDstBox() const;
+    int GetSpriteWidth() const;
     bool IsDestroyble() const;
+    
 
     bool isAlive = true;
 protected:

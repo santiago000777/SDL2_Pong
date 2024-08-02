@@ -4,6 +4,10 @@ SDL_Rect Object::GetDstBox() const {
 	return dstBox;
 }
 
+int Object::GetSpriteWidth() const {
+	return srcBox.w;
+}
+
 bool Object::IsDestroyble() const {
 	return isDestroyble;
 }
@@ -19,7 +23,6 @@ void Object::Render() {
 
 Object::Object(SDL_Rect dstBox, const std::string& path, int characterWidth)
 	: dstBox(dstBox) {
-
 
 	Picture picture = Picture::Create(path, 255, 0, 255, 255);
 	srcBox = picture.GetSrcBox();

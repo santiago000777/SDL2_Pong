@@ -1,11 +1,10 @@
 #include "common.h"
 #include "Game.h"
 
-// TODO: Odraz bubliny na spodni hranici, kde se odecitaji zivoty
 	// 1. pridat vice micu -> bublinou
 
 int main(int argc, char* args[]) {
-	Game game("PONG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 604, 850, SDL_WINDOW_SHOWN); // SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED
+	Game game("PONG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 604, 850, SDL_WINDOW_SHOWN);
 	game.SetBackground("Pictures/veitImg.bmp");
 	game.AddObject<Wall>({ 25, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", 7);
 	game.AddObject<Wall>({ 25 + 525, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", 7);

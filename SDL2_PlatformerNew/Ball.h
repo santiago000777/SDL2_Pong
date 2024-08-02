@@ -18,6 +18,7 @@ public:
     void SetOwnerId(int id);
     int GetOwnerId() const;
     int GetPoints() const;
+    
     void AddPoints(int points);
 
 	void HandleEvents();

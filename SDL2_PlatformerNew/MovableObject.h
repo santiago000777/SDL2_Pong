@@ -13,9 +13,11 @@ public:
 	static bool Collision(MovableObject& object, const Object& other);
 	static bool Collision(MovableObject& object, const SDL_Rect& other);
 
+	const std::string& GetPath() const;
+
 	static float deltaT;
 protected:
-
+	std::string path;
 	bool collision[4] = { 0, 0, 0, 0 };
 	TVec2 vector;
 private:
