@@ -99,19 +99,23 @@ void Ball::Update() {
 
 	if (this->collision[eIndex::UP]) {
 		currentSprite = UP + 1;
-		vector.y *= -1;
+		if (vector.y < 0)
+			vector.y *= -1;
 	}
 	if (this->collision[eIndex::DOWN]) {
 		currentSprite = DOWN + 1;
-		vector.y *= -1;
+		if (vector.y > 0)
+			vector.y *= -1;
 	}
 	if (this->collision[eIndex::LEFT]) {
 		currentSprite = LEFT + 1;
-		vector.x *= -1;
+		if(vector.x < 0)
+			vector.x *= -1;
 	}
 	if (this->collision[eIndex::RIGHT]) {
 		currentSprite = RIGHT + 1;
-		vector.x *= -1;
+		if (vector.x > 0)
+			vector.x *= -1;
 	}
 
 

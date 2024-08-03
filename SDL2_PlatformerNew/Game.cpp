@@ -210,11 +210,11 @@ void Game::Collision() {
 	for (auto& ball : balls) {
 		for (auto player : players) {
 			if (MovableObject::Collision(*ball, *player)) {
-				ball->SetOwnerId(player->GetPlayerId());
-				if (ball->GetOwnerId() == player->GetPlayerId() && ball->GetPoints() > 0) {
+				if (ball->GetOwnerId() == player->GetPlayerId() && ball->GetPoints() != 0) {
 					player->AddPoints(ball->GetPoints());
 					ball->ResetPoints();
 				}
+				ball->SetOwnerId(player->GetPlayerId());
 			}
 			MovableObject::Collision(*player, *ball);
 		}

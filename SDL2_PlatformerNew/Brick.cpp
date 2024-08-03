@@ -6,7 +6,7 @@ Brick::Brick(SDL_Rect dstBox, const std::string& path, int characterWidth)
 	isDestroyble = true;
 
 	std::random_device randomNum;
-	std::uniform_int_distribution<int> randomPoints(-10, 10);
+	std::uniform_int_distribution<int> randomPoints(-10, 20);
 	points = randomPoints(randomNum);
 }
 
