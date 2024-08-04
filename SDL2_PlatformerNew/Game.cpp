@@ -172,7 +172,7 @@ void Game::Update() {
 		}
 		else if (player->isAlive && uncatchedBalls > 0) {
 			for (auto ball : balls) {
-				if (!ball->isAlive) {
+				if (!ball->isAlive && balls.size() == 1) {
 					ball->ResetPosition();
 					ball->ResetPoints();
 					ball->isAlive = true;
@@ -232,7 +232,6 @@ void Game::Collision() {
 		}
 	}
 
-	
 	if (balls.size() > 1) {
 		for (int j = 0; j < balls.size(); j++) {
 			for (int i = 0; i < balls.size(); i++) {
