@@ -8,7 +8,7 @@ public:
     Object(SDL_Rect dstBox, const std::string& path, int characterWidth);
 	Object(const Object& rhs) = delete;
 	Object(Object&& rhs) = delete;
-    ~Object();
+    virtual ~Object();  //
 	void operator=(const Object& rhs) = delete;
 	void operator=(Object&& rhs) = delete;
 

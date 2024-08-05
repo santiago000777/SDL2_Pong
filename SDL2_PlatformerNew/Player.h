@@ -9,7 +9,7 @@ public:
     // move ctor (zakazany)
     Player(Player&& rhs) = delete;
     // Destructor
-    ~Player();
+    ~Player() override;
     // copy prirazeni
     void operator=(const Player& rhs) = delete;
     // move prirazeni

@@ -8,7 +8,7 @@ public:
     // move ctor (zakazany)
     Brick(Brick&& rhs) = delete;
     // Destructor
-    ~Brick();
+    ~Brick() override;
     // copy prirazeni
     void operator=(const Brick& rhs) = delete;
     // move prirazeni

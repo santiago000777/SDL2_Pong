@@ -6,7 +6,7 @@ public:
 	MovableObject(SDL_Rect dstBox, const std::string& path, int characterWidth);
 	MovableObject(const MovableObject& rhs) = delete;
 	MovableObject(MovableObject&& rhs) = delete;
-	~MovableObject();
+	~MovableObject() override;
 	void operator=(const MovableObject& rhs) = delete;
 	void operator=(MovableObject&& rhs) = delete;
 

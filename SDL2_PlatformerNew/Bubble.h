@@ -7,7 +7,7 @@ public:
 	Bubble(SDL_Rect dstBox, const std::string& path, int characterWidth);
 	Bubble(const Bubble& rhs) = delete;
 	Bubble(Bubble&& rhs) = delete;
-	~Bubble();
+	~Bubble() override;
 	void operator=(const Bubble& rhs) = delete;
 	void operator=(Bubble&& rhs) = delete;
 

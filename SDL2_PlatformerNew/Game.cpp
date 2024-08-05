@@ -76,36 +76,19 @@ bool Game::IsEnd() {
 }
 
 void Game::Basket() {
-	for (int i = 0; i < walls.size(); i++) {
-		if (!walls[i]->isAlive) {
-			delete walls[i];
-			walls.erase(walls.begin() + i);
-		}
-	}
-	for (int i = 0; i < bricks.size(); i++) {
-		if (!bricks[i]->isAlive) {
-			delete bricks[i];
-			bricks.erase(bricks.begin() + i);
-		}
-	}
-	for (int i = 0; i < balls.size(); i++) {
-		if (!balls[i]->isAlive) {
-			delete balls[i];
-			balls.erase(balls.begin() + i);
-		}
-	}
-	for (int i = 0; i < players.size(); i++) {
-		if (!players[i]->isAlive) {
-			delete players[i];
-			players.erase(players.begin() + i);
-		}
-	}
-	for (int i = 0; i < bubbles.size(); i++) {
-		if (!bubbles[i]->isAlive) {
-			delete bubbles[i];
-			bubbles.erase(bubbles.begin() + i);
-		}
-	}
+	auto lDeleteIfIsNotAlive = [](Object* obj) {
+		if (!obj->isAlive) {
+			delete obj;
+			return true;
+		} else
+			return false;
+	};
+
+	walls.erase(std::remove_if(walls.begin(), walls.end(), lDeleteIfIsNotAlive), walls.end());
+	bricks.erase(std::remove_if(bricks.begin(), bricks.end(), lDeleteIfIsNotAlive), bricks.end());
+	balls.erase(std::remove_if(balls.begin(), balls.end(), lDeleteIfIsNotAlive), balls.end());
+	players.erase(std::remove_if(players.begin(), players.end(), lDeleteIfIsNotAlive), players.end());
+	bubbles.erase(std::remove_if(bubbles.begin(), bubbles.end(), lDeleteIfIsNotAlive), bubbles.end());
 }
 
 void Game::Render() {
@@ -147,7 +130,7 @@ void Game::Update() {
 		for (auto& bubble : bubbles) {
 			if (MovableObject::Collision(*bubble, *ball)) {
 				bubble->isAlive = false;
-				balls.push_back(new Ball({ bubble->GetDstBox().x, bubble->GetDstBox().y, ball->GetDstBox().w, ball->GetDstBox().h }, ball->GetPath(), ball->GetSpriteWidth()));
+				balls.push_back(new Ball( bubble->GetDstBox(), ball->GetPath(), ball->GetSpriteWidth()));
 			}
 		}
 	}
