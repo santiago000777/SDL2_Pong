@@ -96,12 +96,11 @@ void Game::Basket() {
 		} else
 			return false;
 	};
-
-	walls.erase(std::remove_if(walls.begin(), walls.end(), lDeleteIfIsNotAlive), walls.end());
-	bricks.erase(std::remove_if(bricks.begin(), bricks.end(), lDeleteIfIsNotAlive), bricks.end());
-	balls.erase(std::remove_if(balls.begin(), balls.end(), lDeleteIfIsNotAlive), balls.end());
-	players.erase(std::remove_if(players.begin(), players.end(), lDeleteIfIsNotAlive), players.end());
-	bubbles.erase(std::remove_if(bubbles.begin(), bubbles.end(), lDeleteIfIsNotAlive), bubbles.end());
+	std::erase_if(walls, lDeleteIfIsNotAlive);
+	std::erase_if(bricks, lDeleteIfIsNotAlive);
+	std::erase_if(balls, lDeleteIfIsNotAlive);
+	std::erase_if(players, lDeleteIfIsNotAlive);
+	std::erase_if(bubbles, lDeleteIfIsNotAlive);
 }
 
 void Game::Render() {
