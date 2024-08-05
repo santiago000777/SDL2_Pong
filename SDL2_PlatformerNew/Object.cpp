@@ -8,13 +8,9 @@ int Object::GetSpriteWidth() const {
 	return srcBox.w;
 }
 
-bool Object::IsDestroyble() const {
-	return isDestroyble;
-}
-
-int Object::GetCountOfSprites() const {
-	return sprites;
-}
+//bool Object::IsDestroyble() const {
+//	return isDestroyble;
+//}
 
 void Object::Render() {
 	srcBox.x = srcBox.w * currentSprite;
@@ -28,6 +24,7 @@ Object::Object(SDL_Rect dstBox, const std::string& path, int characterWidth)
 	srcBox = picture.GetSrcBox();
 	sprites = srcBox.w / characterWidth;
 	srcBox.w = characterWidth;
+
 	texture.reset(picture.GetTexture());
 }
 

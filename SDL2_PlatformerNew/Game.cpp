@@ -6,7 +6,6 @@ Game::Game(const std::string& windowName, int posX, int posY, int windowWidth, i
 	this->window = SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags);
 	SRenderer::Init(window, {0, 0, windowWidth, windowHeight });
 	
-	
 	firstUpdate = std::chrono::high_resolution_clock::now();
 }
 
@@ -54,7 +53,6 @@ void Game::Loop() {
 
 	durationFrame = std::chrono::duration_cast<std::chrono::milliseconds>(secondFrame - firstFrame);
 	if (durationFrame.count() >= deltaTime) {
-		
 		if (PressedKey(VK_SPACE)) {
 			balls[0]->ResetPosition();
 			players[0]->ResetPosition();
@@ -186,9 +184,6 @@ void Game::HandleEvents() {
 	for (auto player : players) {
 		player->HandleEvents();
 	}
-	for (auto ball : balls) {
-		ball->HandleEvents();
-	}
 }
 
 void Game::Collision() {
@@ -227,7 +222,9 @@ void Game::Collision() {
 					ball->AddPoints(bricks[i]->GetPoints());
 					bricks[i]->isAlive = false;
 				}
-				bricks[i]->ChangeSprite();
+				else {
+					bricks[i]->ChangeSprite();
+				}
 			}
 		}
 	}

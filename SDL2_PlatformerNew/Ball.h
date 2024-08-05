@@ -21,7 +21,6 @@ public:
     
     void AddPoints(int points);
 
-	void HandleEvents();
     void Update();
     void ResetPoints();
     void ResetPosition();

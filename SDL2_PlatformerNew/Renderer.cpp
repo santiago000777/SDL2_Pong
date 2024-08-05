@@ -8,7 +8,7 @@ SRenderer sRenderer;
 SRenderer::~SRenderer() {
 	SDL_DestroyRenderer(renderer);
 	renderer = nullptr;
-	windowRect = { 0, 0, 0, 0 };
+
 	std::cout << "Deleted Renderer\n";
 }
 

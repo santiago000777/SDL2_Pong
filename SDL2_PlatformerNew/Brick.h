@@ -16,7 +16,6 @@ public:
 
 	int GetPoints() const;
     int GetCurrentSprite() const;
-    void SetPoints(int points);
     void ChangeSprite();
 private:
 	int points = 0;

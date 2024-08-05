@@ -22,10 +22,6 @@ int Brick::GetCurrentSprite() const {
 	return currentSprite;
 }
 
-void Brick::SetPoints(int points) {
-	this->points = points;
-}
-
 void Brick::ChangeSprite() {
 	currentSprite++;
 }

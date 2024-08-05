@@ -21,12 +21,11 @@ public:
     };
     SDL_Rect GetDstBox() const;
     int GetSpriteWidth() const;
-    bool IsDestroyble() const;
+    //bool IsDestroyble() const;
     
 
     bool isAlive = true;
 protected:
-    int GetCountOfSprites() const;
 
     SDL_Rect dstBox;
     SDL_Rect srcBox;

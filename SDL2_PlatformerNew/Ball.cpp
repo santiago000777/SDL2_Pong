@@ -80,9 +80,6 @@ void Ball::AddPoints(int points) {
 	this->points += points;
 }
 
-void Ball::HandleEvents() {
-	
-}
 
 void Ball::Update() {
 
