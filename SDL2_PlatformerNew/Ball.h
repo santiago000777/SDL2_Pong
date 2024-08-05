@@ -17,8 +17,9 @@ public:
 
     void SetOwnerId(int id);
     int GetOwnerId() const;
+
     int GetPoints() const;
-    
+    void SetPoints(int points);
     void AddPoints(int points);
 
     void Update();

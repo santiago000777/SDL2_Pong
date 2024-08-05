@@ -53,14 +53,27 @@ void Game::Loop() {
 
 	durationFrame = std::chrono::duration_cast<std::chrono::milliseconds>(secondFrame - firstFrame);
 	if (durationFrame.count() >= deltaTime) {
-		if (PressedKey(VK_SPACE)) {
-			balls[0]->ResetPosition();
-			players[0]->ResetPosition();
-		}
+		
 		firstFrame = std::chrono::high_resolution_clock::now();
 		Render();
 	}
 	secondFrame = std::chrono::high_resolution_clock::now();
+}
+
+void Game::Start() {
+	int sec = 0;
+	SDL_RenderClear(SRenderer::Get().Renderer());
+	background->Render();
+	SDL_RenderPresent(SRenderer::Get().Renderer());
+
+	while (sec < 3) {
+		durationUpdate = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - firstUpdate);
+		if (durationUpdate.count() >= 1000) {
+			std::cout << sec + 1 << "...\n";
+			sec++;
+			firstUpdate = std::chrono::high_resolution_clock::now();
+		}
+	}
 }
 
 void Game::SetBackground(const std::string& BGpath) {
@@ -130,7 +143,7 @@ void Game::Update() {
 		for (auto& bubble : bubbles) {
 			if (MovableObject::Collision(*bubble, *ball)) {
 				bubble->isAlive = false;
-				balls.push_back(new Ball( bubble->GetDstBox(), ball->GetPath(), ball->GetSpriteWidth()));
+				balls.push_back(new Ball({ bubble->GetDstBox().x, bubble->GetDstBox().y, ball->GetDstBox().w, ball->GetDstBox().h }, ball->GetPath(), ball->GetSpriteWidth()));
 			}
 		}
 	}
@@ -214,12 +227,15 @@ void Game::Collision() {
 
 	if (balls.size() > 1) {
 		for (int j = 0; j < balls.size(); j++) {
-			for (int i = 0; i < balls.size(); i++) {
+			for (int i = j + 1; i < balls.size(); i++) {
 				if (j == i) continue;
-				MovableObject::Collision(*balls[j], *balls[i]);
+				if (MovableObject::Collision(*balls[j], *balls[i])) {
+					int tempPoints = balls[j]->GetPoints();
+					balls[j]->SetPoints(balls[i]->GetPoints());
+					balls[i]->SetPoints(tempPoints);
+				}
 			}
 		}
-
 	}
 
 	for (auto& player : players) {

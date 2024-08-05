@@ -12,7 +12,8 @@ public:
 
 	static bool Collision(MovableObject& object, const Object& other);
 	static bool Collision(MovableObject& object, const SDL_Rect& other);
-	static bool Collision(MovableObject& object, const MovableObject& other);
+	//static bool Collision(MovableObject& object, const MovableObject& other);
+	static bool Collision(MovableObject& object, MovableObject& other);
 
 	const std::string& GetPath() const;
 

@@ -76,6 +76,10 @@ int Ball::GetPoints() const {
 	return points;
 }
 
+void Ball::SetPoints(int points) {
+	this->points = points;
+}
+
 void Ball::AddPoints(int points) {
 	this->points += points;
 }

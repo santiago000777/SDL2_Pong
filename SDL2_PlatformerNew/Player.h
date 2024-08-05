@@ -17,7 +17,7 @@ public:
 
     void HandleEvents();
     void Update();
-    bool IsGameOver();
+    bool IsGameOver() const;
     void DecreaseLives(int i);
 
     void ResetPosition();
@@ -34,6 +34,7 @@ private:
         DOWN = 's',
         RIGHT = 'd'
     };
+
     int lives = 3;
     int points = 0;
 };

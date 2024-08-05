@@ -141,7 +141,7 @@ void Player::AddPoints(int points) {
 	this->points += points;
 }
 
-bool Player::IsGameOver() {
+bool Player::IsGameOver() const {
 	if(lives <= 0)
 		return true;
 	return false;

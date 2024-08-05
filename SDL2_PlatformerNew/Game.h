@@ -21,6 +21,7 @@ public:
 	void operator=(Game&& rhs) = delete;
 
 	void Loop();
+	void Start();
 
 	template <typename Ty> void AddObject(SDL_Rect dstBox, const std::string& path, int characterWidth);
 	template<> void AddObject<Wall>(SDL_Rect dstBox, const std::string& path, int characterWidth) {

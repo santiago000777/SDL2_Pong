@@ -1,6 +1,9 @@
 #include "common.h"
 #include "Game.h"
 
+	// TODO: Pridat bombu -> kolize kontrola (3x velikost bomby zvetsena ve stredu spritu -> ti co koliduji se smazou)
+	//       Pridat Menu
+
 int main(int argc, char* args[]) {
 	Game game("PONG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 604, 850, SDL_WINDOW_SHOWN);
 
@@ -10,7 +13,7 @@ int main(int argc, char* args[]) {
 
 	game.AddObject<Wall>({ 25, 50, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
 	
-	//game.AddObject<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
+	game.AddObject<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
 
 	game.AddObject<Player>({ 255, 750, 100, 24 }, "Pictures/paddle.bmp", 25);
 
@@ -31,6 +34,7 @@ int main(int argc, char* args[]) {
 	
 	game.AddObject<Bubble>({ 100, 200, 28, 28 }, "Pictures/BubbleSpriteSheet.bmp", 10);
 
+	game.Start();
 	while (!PressedKey(VK_ESCAPE) && !game.IsEnd()) {
 		game.Loop();
 	}
