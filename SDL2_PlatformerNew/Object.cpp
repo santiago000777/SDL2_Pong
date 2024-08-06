@@ -20,10 +20,10 @@ void Object::ChangeSprite() {
 		// vzdalenost prepony rohu od stredu kruhu je <= radius
 bool Object::Collision(const Object& object, const Circle& circle) {
 
-	auto TopLeftCorner = [](const Object& object) -> Vec2 { return { object.GetDstBox().x, object.GetDstBox().y }; };
-	auto TopRightCorner = [](const Object& object) -> Vec2 { return { object.GetDstBox().x + object.GetDstBox().w, object.GetDstBox().y }; };
-	auto BottomLeftCorner = [](const Object& object) -> Vec2 { return { object.GetDstBox().x, object.GetDstBox().y + object.GetDstBox().h }; };
-	auto BottomRightCorner = [](const Object& object) -> Vec2 { return { object.GetDstBox().x + object.GetDstBox().w, object.GetDstBox().y + object.GetDstBox().h }; };
+	auto TopLeftCorner = [](const Object& object) -> Vec2 { return { (float)object.GetDstBox().x, (float)object.GetDstBox().y }; };
+	auto TopRightCorner = [](const Object& object) -> Vec2 { return { (float)object.GetDstBox().x + (float)object.GetDstBox().w, (float)object.GetDstBox().y }; };
+	auto BottomLeftCorner = [](const Object& object) -> Vec2 { return { (float)object.GetDstBox().x, (float)object.GetDstBox().y + (float)object.GetDstBox().h }; };
+	auto BottomRightCorner = [](const Object& object) -> Vec2 { return { (float)object.GetDstBox().x + (float)object.GetDstBox().w, (float)object.GetDstBox().y + (float)object.GetDstBox().h }; };
 
 	auto LeftEdge = [](const Object& object) -> int { return object.GetDstBox().x; };
 	auto RightEdge = [](const Object& object) -> int { return object.GetDstBox().x + object.GetDstBox().w; };
@@ -39,25 +39,18 @@ bool Object::Collision(const Object& object, const Circle& circle) {
 
 		return false;
 	}
-
 	if (circle.center.x - circle.radius >= LeftEdge(object) || circle.center.x + circle.radius <= RightEdge(object)
 	|| circle.center.y - circle.radius >= UpEdge(object) || circle.center.y + circle.radius <= DownEdge(object)) {
 
 		return true;
 	}
-
 	if (Hypotenuse(TopLeftCorner(object).x - circle.center.x, TopLeftCorner(object).y - circle.center.y) <= circle.radius
-		|| Hypotenuse(TopRightCorner(object).x - circle.center.x, TopRightCorner(object).y - circle.center.y) <= circle.radius
-		|| Hypotenuse(BottomLeftCorner(object).x - circle.center.x, BottomLeftCorner(object).y - circle.center.y) <= circle.radius
-		|| Hypotenuse(BottomRightCorner(object).x - circle.center.x, BottomRightCorner(object).y - circle.center.y) <= circle.radius) {
+	|| Hypotenuse(TopRightCorner(object).x - circle.center.x, TopRightCorner(object).y - circle.center.y) <= circle.radius
+	|| Hypotenuse(BottomLeftCorner(object).x - circle.center.x, BottomLeftCorner(object).y - circle.center.y) <= circle.radius
+	|| Hypotenuse(BottomRightCorner(object).x - circle.center.x, BottomRightCorner(object).y - circle.center.y) <= circle.radius) {
 
 		return true;
 	}
-	else {
-		return false;
-	}
-
-	
 }
 
 //bool Object::IsDestroyble() const {
