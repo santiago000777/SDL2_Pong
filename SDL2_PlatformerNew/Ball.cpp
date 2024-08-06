@@ -25,6 +25,25 @@ Ball::Ball(SDL_Rect dstBox, const std::string& path, int characterWidth)
 	std::cout << vector.x << "  " << vector.y << "\n";
 }
 
+Ball::Ball(SDL_Rect dstBox, Vec2 vector, const std::string& path, int characterWidth) 
+	: MovableObject(dstBox, path, characterWidth) {
+
+	std::random_device randomNum;
+	std::uniform_real_distribution<float> dist(0.1f, 0.4f);
+
+	if (vector.x > 0) {
+		this->vector.x = dist(randomNum);
+	}
+	else {
+		this->vector.x = -dist(randomNum);
+	}
+	if (vector.y > 0) {
+		this->vector.y = dist(randomNum);
+	} else {
+		this->vector.y = -dist(randomNum);
+	}
+}
+
 
 Ball::~Ball() {
 	std::cout << "Deleted ball\n";

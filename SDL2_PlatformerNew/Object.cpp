@@ -8,6 +8,14 @@ int Object::GetSpriteWidth() const {
 	return srcBox.w;
 }
 
+int Object::GetCurrentSprite() const {
+	return currentSprite;
+}
+
+void Object::ChangeSprite() {
+	currentSprite++;
+}
+
 //bool Object::IsDestroyble() const {
 //	return isDestroyble;
 //}

@@ -142,7 +142,7 @@ void Game::Update() {
 		for (auto& bubble : bubbles) {
 			if (MovableObject::Collision(*bubble, *ball)) {
 				bubble->isAlive = false;
-				balls.push_back(new Ball({ bubble->GetDstBox().x, bubble->GetDstBox().y, ball->GetDstBox().w, ball->GetDstBox().h }, ball->GetPath(), ball->GetSpriteWidth()));
+				balls.push_back(new Ball({ bubble->GetDstBox().x, bubble->GetDstBox().y, ball->GetDstBox().w, ball->GetDstBox().h }, bubble->GetVector(), ball->GetPath(), ball->GetSpriteWidth()));
 			}
 		}
 	}

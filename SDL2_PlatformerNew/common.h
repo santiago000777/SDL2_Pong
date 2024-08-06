@@ -34,20 +34,20 @@ static bool PressedKey(short key) {
 	return true;
 }
 
-struct TVec2 {
+struct Vec2 {
 public:
 	float x { 0 }, y { 0 };
 
 public:
-	TVec2() {}
-	TVec2(float x, float y)
+	Vec2() {}
+	Vec2(float x, float y)
 		: x(x), y(y) {
 	}
-	void operator+=(const TVec2& vec) {
+	void operator+=(const Vec2& vec) {
 		this->x += vec.x;
 		this->y += vec.y;
 	}
-	TVec2& operator+(TVec2 vec) {
+	Vec2& operator+(Vec2 vec) {
 		vec += *this;
 		return vec;
 	}
@@ -57,33 +57,33 @@ public:
 	}
 };
 
-struct TVec4 {
+struct Vec4 {
 public:
 	int x { 0 }, y { 0 }, w { 0 }, h { 0 };
 
 public:
-	TVec4() {}
-	TVec4(int x, int y, int w, int h)
+	Vec4() {}
+	Vec4(int x, int y, int w, int h)
 		: x(x), y(y), w(w), h(h) {
 	}
 
-	void operator+=(const TVec4& vec) {
+	void operator+=(const Vec4& vec) {
 		this->x += vec.x;
 		this->y += vec.y;
 	}
-	TVec4& operator+(TVec4 vec) {
+	Vec4& operator+(Vec4 vec) {
 		vec += *this;
 		return vec;
 	}
 };
 
-struct TColor {
+struct Color {
 public:
 	unsigned char r, g, b, a;
 
 public:
-	TColor() = default;
-	TColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char alfa)
+	Color() = default;
+	Color(unsigned char red, unsigned char green, unsigned char blue, unsigned char alfa)
 		: r(red), g(green), b(blue), a(alfa) {
 	}
 };

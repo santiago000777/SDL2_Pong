@@ -18,10 +18,3 @@ int Brick::GetPoints() const {
 	return points;
 }
 
-int Brick::GetCurrentSprite() const {
-	return currentSprite;
-}
-
-void Brick::ChangeSprite() {
-	currentSprite++;
-}

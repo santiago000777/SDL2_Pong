@@ -12,16 +12,16 @@ public:
 
 	static bool Collision(MovableObject& object, const Object& other);
 	static bool Collision(MovableObject& object, const SDL_Rect& other);
-	//static bool Collision(MovableObject& object, const MovableObject& other);
 	static bool Collision(MovableObject& object, MovableObject& other);
 
 	const std::string& GetPath() const;
+	const Vec2 GetVector() const;
 
 	static float deltaT;
 protected:
 	std::string path;
 	bool collision[4] = { 0, 0, 0, 0 };
-	TVec2 vector;
+	Vec2 vector;
 private:
 
 };
