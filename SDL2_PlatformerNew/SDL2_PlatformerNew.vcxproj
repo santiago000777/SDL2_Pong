@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Bubble.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -149,8 +150,10 @@
   <ItemGroup>
     <ClInclude Include="Background.h" />
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="Bomb.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Bubble.h" />
+    <ClInclude Include="Circle.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="MovableObject.h" />

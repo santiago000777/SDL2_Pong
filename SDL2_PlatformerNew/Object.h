@@ -1,6 +1,7 @@
 #pragma once
 #include "common.h"
 #include "Picture.h"
+#include "Circle.h"
 
 class Object {
 public:
@@ -24,6 +25,8 @@ public:
     int GetSpriteWidth() const;
     int GetCurrentSprite() const;
     void ChangeSprite();
+
+    static bool Collision(const Object& object, const Circle& circle);
 
     bool isAlive = true;
 protected:
