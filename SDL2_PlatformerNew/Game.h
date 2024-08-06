@@ -59,7 +59,7 @@ private:
 	SDL_Window* window;
 	Background* background;
 
-	std::vector<Wall*> walls;
+	std::vector<Wall*> walls;//
 	std::vector<Ball*> balls;
 	std::vector<Player*> players;
 	std::vector<Brick*> bricks;

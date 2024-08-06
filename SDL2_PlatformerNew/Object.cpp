@@ -72,7 +72,3 @@ Object::Object(SDL_Rect dstBox, const std::string& path, int characterWidth)
 
 	texture.reset(picture.GetTexture());
 }
-
-Object::~Object() {
-
-}

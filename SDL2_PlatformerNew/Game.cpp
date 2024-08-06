@@ -3,7 +3,7 @@
 
 Game::Game(const std::string& windowName, int posX, int posY, int windowWidth, int windowHeight, int flags) {
 	SDL_Init(SDL_INIT_EVERYTHING);
-	this->window = SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags);
+	this->window = SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags);//
 	SRenderer::Init(window, {0, 0, windowWidth, windowHeight });
 	
 	firstUpdate = std::chrono::high_resolution_clock::now();
@@ -89,7 +89,7 @@ bool Game::IsEnd() {
 }
 
 void Game::Basket() {
-	auto lDeleteIfIsNotAlive = [](Object* obj) {
+	auto lDeleteIfIsNotAlive = [](Object* obj) {//
 		if (!obj->isAlive) {
 			delete obj;
 			return true;
