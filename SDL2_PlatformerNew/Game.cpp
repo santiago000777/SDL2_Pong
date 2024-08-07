@@ -1,35 +1,21 @@
 #include "common.h"
 #include "Game.h"
 
-Game::Game(const std::string& windowName, int posX, int posY, int windowWidth, int windowHeight, int flags) {
-	SDL_Init(SDL_INIT_EVERYTHING);
-	//this->window = SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags);//
-	//this->window = 
-	window.reset(SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags));
-	SRenderer::Init(window.get(), {0, 0, windowWidth, windowHeight});
-	
-	firstUpdate = std::chrono::high_resolution_clock::now();
-}
+const float Game::deltaTime = 1000.0f / FPS;
+std::unique_ptr<SDL_Window, void(*)(SDL_Window*)> Game::window { nullptr, SDL_DestroyWindow };
+SDL_Rect Game::gameOverRect { 0, 800, 600, 20 };
+bool Game::isEnd = false;
+Game sGame;
 
 Game::~Game() {
-	/*for (auto& wall : walls) {
-		delete wall;
-	}
-	for (auto& ball : balls) {
-		delete ball;
-	}
-	for (auto& player : players) {
-		delete player;
-	}
-	for (auto& brick : bricks) {
-		delete brick;
-	}
-	for (auto& bubble : bubbles) {
-		delete bubble;
-	}
+}
 
-	delete background;
-	SDL_DestroyWindow(window);*/
+void Game::Init(const std::string& windowName, int posX, int posY, int windowWidth, int windowHeight, int flags) {
+	SDL_Init(SDL_INIT_EVERYTHING);
+	window.reset(SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags));
+	SRenderer::Init(window.get(), {0, 0, windowWidth, windowHeight});
+		
+	firstUpdate = std::chrono::high_resolution_clock::now();
 }
 
 void Game::Loop() {
@@ -78,11 +64,15 @@ void Game::Start() {
 	}
 }
 
+const Game& Game::Get() {
+	return sGame;
+}
+
 void Game::SetBackground(const std::string& BGpath) {
 	background = std::make_unique<Background>(BGpath);
 }
 
-int Game::GetCountOfBricks() const {
+int Game::CountOfBricks() const {
 	return bricks.size();
 }
 
@@ -142,7 +132,6 @@ void Game::Update() {
 			if (MovableObject::Collision(*bubble, *ball)) {
 				bubble->isAlive = false;
 				SDL_Rect pom = { bubble->GetDstBox().x, bubble->GetDstBox().y, ball->GetDstBox().w, ball->GetDstBox().h };
-				//balls.push_back(new Ball({ bubble->GetDstBox().x, bubble->GetDstBox().y, ball->GetDstBox().w, ball->GetDstBox().h }, bubble->GetVector(), ball->GetPath(), ball->GetSpriteWidth()));
 				balls.push_back(std::make_unique<Ball>(pom, ball->GetPath(), ball->GetSpriteWidth()));
 			}
 		}

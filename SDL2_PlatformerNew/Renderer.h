@@ -11,9 +11,9 @@ public:
 	void operator=(SRenderer&& rhs) = delete;
 
 	static void Init(SDL_Window* window, SDL_Rect rect);
-	static SRenderer& Get();
-	const SDL_Rect& WindowRect();
-	SDL_Renderer* Renderer();
+	static const SRenderer& Get();
+	SDL_Rect& WindowRect() const;
+	SDL_Renderer* Renderer() const;
 
 private:
 	static SDL_Renderer* renderer;

@@ -12,8 +12,7 @@
 
 class Game {
 public:
-	Game(const std::string& windowName = "Window", int posX = SDL_WINDOWPOS_CENTERED,
-		 int posY = SDL_WINDOWPOS_CENTERED, int windowWidth = 800, int windowHeight = 600, int flags = SDL_WINDOW_SHOWN);
+	Game() {}
 	Game(const Game& rhs) = delete;
 	Game(Game&& rhs) = delete;
 	~Game();
@@ -21,75 +20,62 @@ public:
 	void operator=(const Game& rhs) = delete;
 	void operator=(Game&& rhs) = delete;
 
-	void Loop();
-	void Start();
+	static void Init(const std::string& windowName = "Window", int posX = SDL_WINDOWPOS_CENTERED,
+					 int posY = SDL_WINDOWPOS_CENTERED, int windowWidth = 800, int windowHeight = 600, int flags = SDL_WINDOW_SHOWN);
+	static void Loop();
+	static void Start();
 
-	template <typename Ty> void AddObject(SDL_Rect dstBox, const std::string& path, int characterWidth);
-	template<> void AddObject<Wall>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-		//auto wall = new Wall(dstBox, path, characterWidth);
-		
-		//walls.push_back(wall);
+	template <typename Ty> 
+	static void AddObject(SDL_Rect dstBox, const std::string& path, int characterWidth);
+	template<> static void AddObject<Wall>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
 		walls.push_back(std::make_unique<Wall>(dstBox, path, characterWidth));
 	}
-	template<> void AddObject<Player>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-		//auto player = new Player(dstBox, path, characterWidth);
-		
-		//players.push_back(player);
+	template<> static void AddObject<Player>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
 		players.push_back(std::make_unique<Player>(dstBox, path, characterWidth));
 	}
-	template<> void AddObject<Ball>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-		//auto ball = new Ball(dstBox, path, characterWidth);
-		
-		//balls.push_back(ball);
+	template<> static void AddObject<Ball>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
 		balls.push_back(std::make_unique<Ball>(dstBox, path, characterWidth));
 	}
-	template<> void AddObject<Brick>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-		//auto brick = new Brick(dstBox, path, characterWidth);
-
-		//bricks.push_back(brick);
+	template<> static void AddObject<Brick>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
 		bricks.push_back(std::make_unique<Brick>(dstBox, path, characterWidth));
 	}
-	template<> void AddObject<Bubble>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-		//auto bubble = new Bubble(dstBox, path, characterWidth);
-
-		//bubbles.push_back(bubble);
+	template<> static void AddObject<Bubble>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
 		bubbles.push_back(std::make_unique<Bubble>(dstBox, path, characterWidth));
 	}
-	template<> void AddObject<Bomb>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+	template<> static void AddObject<Bomb>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
 		bombs.push_back(std::make_unique<Bomb>(dstBox, path, characterWidth));
 	}
 
-	void SetBackground(const std::string& BGpath);
+	static const Game& Get();
+	static void SetBackground(const std::string& BGpath);
 
-	int GetCountOfBricks() const;
+	int CountOfBricks() const;
 
-	bool IsEnd();
+	static bool IsEnd();
 private:
-		//std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Picture::DeleteTexture };
-	std::unique_ptr<SDL_Window, void(*)(SDL_Window*)> window { nullptr, SDL_DestroyWindow };
-	//SDL_Window* window;
-	std::unique_ptr<Background> background;
-	//Background* background;
+	static std::unique_ptr<SDL_Window, void(*)(SDL_Window*)> window;
+		// musim je definovat v .cpp
+	static std::unique_ptr<Background> background;
 
-	std::vector<std::unique_ptr<Wall>> walls;//
-	std::vector<std::unique_ptr<Ball>> balls;
-	std::vector<std::unique_ptr<Player>> players;
-	std::vector<std::unique_ptr<Brick>> bricks;
-	std::vector<std::unique_ptr<Bubble>> bubbles;
+	static std::vector<std::unique_ptr<Wall>> walls;
+	static std::vector<std::unique_ptr<Ball>> balls;
+	static std::vector<std::unique_ptr<Player>> players;
+	static std::vector<std::unique_ptr<Brick>> bricks;
+	static std::vector<std::unique_ptr<Bubble>> bubbles;
 
-	std::vector<std::unique_ptr<Bomb>> bombs;
+	static std::vector<std::unique_ptr<Bomb>> bombs;
 
-	const float deltaTime = 1000.0f / FPS;
-	std::chrono::time_point<std::chrono::high_resolution_clock> firstFrame, secondFrame, firstUpdate, secondUpdate;
-	std::chrono::milliseconds durationFrame, durationUpdate;
+	static const float deltaTime;
+	static std::chrono::time_point<std::chrono::high_resolution_clock> firstFrame, secondFrame, firstUpdate, secondUpdate;
+	static std::chrono::milliseconds durationFrame, durationUpdate;
 
-	SDL_Rect gameOverRect { 0, 800, 600, 20 };
+	static SDL_Rect gameOverRect;
 
-	bool isEnd = false;
+	static bool isEnd;
 
-	void Basket();
-	void Render();
-	void Update();
-	void HandleEvents();
-	void Collision();
+	static void Basket();
+	static void Render();
+	static void Update();
+	static void HandleEvents();
+	static void Collision();
 };

@@ -19,14 +19,14 @@ void SRenderer::Init(SDL_Window* window, SDL_Rect rect) {
 	}
 }
 
-SRenderer& SRenderer::Get() {
+const SRenderer& SRenderer::Get() {
 	return sRenderer;
 }
 
-const SDL_Rect& SRenderer::WindowRect() {
+SDL_Rect& SRenderer::WindowRect() const {
 	return windowRect;
 }
 
-SDL_Renderer* SRenderer::Renderer() {
+SDL_Renderer* SRenderer::Renderer() const {
 	return renderer;
 }
