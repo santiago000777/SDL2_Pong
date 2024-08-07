@@ -16,7 +16,14 @@ public:
 	void operator=(Bomb&& rhs) = delete;
 	// Destructor
 	~Bomb() override;
+
+	SDL_Rect GetRange() const;
+	void AddPoints(int p);
+	int GetPoints() const;
+
+	bool canDetonate = false;
 private:
-	Circle range;
+	SDL_Rect range;
+	int collectedPoints = 0;
 };
 

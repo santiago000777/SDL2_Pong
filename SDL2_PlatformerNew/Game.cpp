@@ -3,14 +3,16 @@
 
 Game::Game(const std::string& windowName, int posX, int posY, int windowWidth, int windowHeight, int flags) {
 	SDL_Init(SDL_INIT_EVERYTHING);
-	this->window = SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags);//
-	SRenderer::Init(window, {0, 0, windowWidth, windowHeight });
+	//this->window = SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags);//
+	//this->window = 
+	window.reset(SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags));
+	SRenderer::Init(window.get(), {0, 0, windowWidth, windowHeight});
 	
 	firstUpdate = std::chrono::high_resolution_clock::now();
 }
 
 Game::~Game() {
-	for (auto& wall : walls) {
+	/*for (auto& wall : walls) {
 		delete wall;
 	}
 	for (auto& ball : balls) {
@@ -27,7 +29,7 @@ Game::~Game() {
 	}
 
 	delete background;
-	SDL_DestroyWindow(window);
+	SDL_DestroyWindow(window);*/
 }
 
 void Game::Loop() {
@@ -77,7 +79,7 @@ void Game::Start() {
 }
 
 void Game::SetBackground(const std::string& BGpath) {
-	background = new Background(BGpath);
+	background = std::make_unique<Background>(BGpath);
 }
 
 int Game::GetCountOfBricks() const {
@@ -89,18 +91,12 @@ bool Game::IsEnd() {
 }
 
 void Game::Basket() {
-	auto lDeleteIfIsNotAlive = [](Object* obj) {//
-		if (!obj->isAlive) {
-			delete obj;
-			return true;
-		} else
-			return false;
-	};
-	std::erase_if(walls, lDeleteIfIsNotAlive);
-	std::erase_if(bricks, lDeleteIfIsNotAlive);
-	std::erase_if(balls, lDeleteIfIsNotAlive);
-	std::erase_if(players, lDeleteIfIsNotAlive);
-	std::erase_if(bubbles, lDeleteIfIsNotAlive);
+	std::erase_if(walls, [](const std::unique_ptr<Wall>& obj) { return !obj->isAlive; });
+	std::erase_if(bricks, [](const std::unique_ptr<Brick>& obj) { return !obj->isAlive; });
+	std::erase_if(balls, [](const std::unique_ptr<Ball>& obj) { return !obj->isAlive; });
+	std::erase_if(players, [](const std::unique_ptr<Player>& obj) { return !obj->isAlive; });
+	std::erase_if(bubbles, [](const std::unique_ptr<Bubble>& obj) { return !obj->isAlive; });
+	std::erase_if(bombs, [](const std::unique_ptr<Bomb>& obj) { return !obj->isAlive; });
 }
 
 void Game::Render() {
@@ -122,6 +118,9 @@ void Game::Render() {
 	for (auto& bubble : bubbles) {
 		bubble->Render();
 	}
+	for (auto& bomb : bombs) {
+		bomb->Render();
+	}
 
 	SDL_RenderPresent(SRenderer::Get().Renderer());
 }
@@ -142,14 +141,45 @@ void Game::Update() {
 		for (auto& bubble : bubbles) {
 			if (MovableObject::Collision(*bubble, *ball)) {
 				bubble->isAlive = false;
-				balls.push_back(new Ball({ bubble->GetDstBox().x, bubble->GetDstBox().y, ball->GetDstBox().w, ball->GetDstBox().h }, bubble->GetVector(), ball->GetPath(), ball->GetSpriteWidth()));
+				SDL_Rect pom = { bubble->GetDstBox().x, bubble->GetDstBox().y, ball->GetDstBox().w, ball->GetDstBox().h };
+				//balls.push_back(new Ball({ bubble->GetDstBox().x, bubble->GetDstBox().y, ball->GetDstBox().w, ball->GetDstBox().h }, bubble->GetVector(), ball->GetPath(), ball->GetSpriteWidth()));
+				balls.push_back(std::make_unique<Ball>(pom, ball->GetPath(), ball->GetSpriteWidth()));
+			}
+		}
+	}
+
+		// Bomb logic
+	for (auto& ball : balls) {
+		for (auto& bomb : bombs) {
+			if (MovableObject::Collision(*ball, *bomb)) {
+				bomb->canDetonate = true;
+				bomb->ChangeSprite();
+				if(bomb->isAlive)
+					bomb->isAlive = false;
+			}
+		}
+	}
+
+	for (auto& bomb : bombs) {
+		for (auto& brick : bricks) {
+			if (bomb->canDetonate && MovableObject::Collision(*brick, bomb->GetRange())) {
+				bomb->AddPoints(brick->GetPoints());
+				brick->isAlive = false;
+			}
+		}
+	}
+
+	for (auto& ball : balls) {
+		for (auto& bomb : bombs) {
+			if (bomb->canDetonate) {
+				ball->AddPoints(bomb->GetPoints());
 			}
 		}
 	}
 
 		// Game over logic
 	int uncatchedBalls = 0;
-	for (auto ball : balls) {
+	for (auto& ball : balls) {
 		if (MovableObject::Collision(*ball, gameOverRect)) {
 			uncatchedBalls++;
 			ball->isAlive = false;
@@ -164,7 +194,7 @@ void Game::Update() {
 			isEnd = true;
 		}
 		else if (player->isAlive && uncatchedBalls > 0) {
-			for (auto ball : balls) {
+			for (auto& ball : balls) {
 				if (!ball->isAlive && balls.size() == 1) {
 					ball->ResetPosition();
 					ball->ResetPoints();
@@ -176,14 +206,14 @@ void Game::Update() {
 }
 
 void Game::HandleEvents() {
-	for (auto player : players) {
+	for (auto& player : players) {
 		player->HandleEvents();
 	}
 }
 
 void Game::Collision() {
 	for (auto& ball : balls) {
-		for (auto wall : walls) {
+		for (auto& wall : walls) {
 			MovableObject::Collision(*ball, *wall);
 		}
 	}
@@ -198,7 +228,7 @@ void Game::Collision() {
 	}
 
 	for (auto& ball : balls) {
-		for (auto player : players) {
+		for (auto& player : players) {
 			if (MovableObject::Collision(*ball, *player)) {
 				if (ball->GetOwnerId() == player->GetPlayerId() && ball->GetPoints() != 0) {
 					player->AddPoints(ball->GetPoints());
@@ -238,7 +268,7 @@ void Game::Collision() {
 	}
 
 	for (auto& player : players) {
-		for (auto wall : walls) {
+		for (auto& wall : walls) {
 			MovableObject::Collision(*player, *wall);
 		}
 	}

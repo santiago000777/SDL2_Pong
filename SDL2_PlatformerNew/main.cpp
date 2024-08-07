@@ -1,6 +1,7 @@
 #include "common.h"
 #include "Game.h"
 
+// Nefunkcni erase_if !!! -> Basket()
 	// TODO: Pridat bombu -> kolize kontrola (3x velikost bomby zvetsena ve stredu spritu -> ti co koliduji se smazou)
 	//       Pridat Menu
 
@@ -23,10 +24,15 @@ int main(int argc, char* args[]) {
 	for (int i = 0; i < 6; i++) {
 		game.AddObject<Brick>({ 120 + 64 * i, 100, 64, 20 }, "Pictures/BrickSpriteSheet.bmp", 16);
 	}
+	//game.AddObject<Bomb>({ 100, 100, 20, 20 }, "Pictures/BombSpriteSheet.bmp", 7);
 	for (int i = 0; i < 5; i++) {
-		if (i == 2) continue;
+		if (i == 2) {
+			game.AddObject<Bomb>({ 174 + 64 * i, 122, 20, 20 }, "Pictures/BombSpriteSheet.bmp", 7);
+			continue;
+		}
 		game.AddObject<Brick>({ 152 + 64 * i, 120, 64, 20 }, "Pictures/BrickSpriteSheet.bmp", 16);
 	}
+
 	for (int i = 0; i < 4; i++) {
 		if (i == 1 || i == 2) continue;
 		game.AddObject<Brick>({ 184 + 64 * i, 140, 64, 20 }, "Pictures/BrickSpriteSheet.bmp", 16);

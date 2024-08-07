@@ -103,6 +103,47 @@ bool MovableObject::Collision(MovableObject& object, const SDL_Rect& other) {
 	}
 }
 
+bool MovableObject::Collision(const Object& object, const SDL_Rect& other) {
+	
+	auto LeftEdge = [](const SDL_Rect& box) -> int { return box.x; };
+	auto RightEdge = [](const SDL_Rect& box) -> int { return box.x + box.w; };
+	auto UpEdge = [](const SDL_Rect& box) -> int { return box.y; };
+	auto DownEdge = [](const SDL_Rect& box) -> int { return box.y + box.h; };
+
+	if (RightEdge(object.GetDstBox()) > LeftEdge(other) && LeftEdge(object.GetDstBox()) < RightEdge(other)
+		&& DownEdge(object.GetDstBox()) > UpEdge(other) && UpEdge(object.GetDstBox()) < DownEdge(other)) {
+
+		if (abs(UpEdge(object.GetDstBox()) - DownEdge(other)) < abs(DownEdge(object.GetDstBox()) - UpEdge(other))) {
+
+			if (abs(UpEdge(object.GetDstBox()) - DownEdge(other)) < abs(LeftEdge(object.GetDstBox()) - RightEdge(other))
+				&& abs(UpEdge(object.GetDstBox()) - DownEdge(other)) < abs(RightEdge(object.GetDstBox()) - LeftEdge(other))) {
+				std::cout << "Up\n";
+			} else {
+				if (abs(LeftEdge(object.GetDstBox()) - RightEdge(other)) < abs(RightEdge(object.GetDstBox()) - LeftEdge(other))) {
+					std::cout << "Left\n";
+				} else {
+					std::cout << "Right\n";
+				}
+			}
+		} else {
+			if (abs(DownEdge(object.GetDstBox()) - UpEdge(other)) < abs(LeftEdge(object.GetDstBox()) - RightEdge(other))
+				&& abs(DownEdge(object.GetDstBox()) - UpEdge(other)) < abs(RightEdge(object.GetDstBox()) - LeftEdge(other))) {
+
+				std::cout << "Down\n";
+			} else {
+				if (abs(LeftEdge(object.GetDstBox()) - RightEdge(other)) < abs(RightEdge(object.GetDstBox()) - LeftEdge(other))) {
+					std::cout << "Left\n";
+				} else {
+					std::cout << "Right\n";
+				}
+			}
+		}
+		return true;
+	} else {
+		return false;
+	}
+}
+
 const std::string& MovableObject::GetPath() const {
 	return path;
 }
