@@ -1,6 +1,6 @@
 #pragma once
 #include "common.h"
-#include "Renderer.h"
+#include "IRenderer.h"
 
 class Picture {
 public:
@@ -19,7 +19,7 @@ public:
 		rhs.tex = nullptr;
 	}
 
-	static Picture&& Create(const std::string& path, Uint8 rTransparent, Uint8 gTransparent, Uint8 bTransparent, Uint8 aTransparent) {// value
+	static Picture/*&&*/ Create(const std::string& path, Uint8 rTransparent, Uint8 gTransparent, Uint8 bTransparent, Uint8 aTransparent) {// 
 		if (path.empty()) {
 			std::cout << "Textura nema prirazenou cestu, cesta je prazdna";
 			BREAK();
@@ -33,11 +33,15 @@ public:
 		Uint32 transparentColor = SDL_MapRGBA(surface->format, rTransparent, gTransparent, bTransparent, aTransparent);
 		SDL_SetColorKey(surface, SDL_ENABLE, transparentColor);
 
-		SDL_Texture* texture = SDL_CreateTextureFromSurface(SRenderer::Get().Renderer(), surface);
+		//SDL_Texture* texture = SDL_CreateTextureFromSurface(SRenderer::Get().Renderer(), surface);
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(Renderer::Get().Renderer(), surface);
 		SDL_Rect srcBox = { 0, 0, surface->w, surface->h };
 
 		SDL_FreeSurface(surface);
-		return { texture, srcBox };
+
+		Picture picture { texture, srcBox };
+		
+		return std::move(picture);
 	}
 
 	static void DeleteTexture(SDL_Texture* tex) {

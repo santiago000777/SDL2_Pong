@@ -1,22 +1,22 @@
 #pragma once
+#include "IRenderer.h"
 
-class SRenderer {
+class SRenderer : public IRenderer {
 public:
 	SRenderer() {}
 	SRenderer(const SRenderer& rhs) = delete;
 	SRenderer(SRenderer&& rhs) = delete;
-	~SRenderer();
+	~SRenderer()/* override*/;
 
 	void operator=(const SRenderer& rhs) = delete;
 	void operator=(SRenderer&& rhs) = delete;
 
-	static void Init(SDL_Window* window, SDL_Rect rect);
-	static const SRenderer& Get();
-	SDL_Rect& WindowRect() const;
-	SDL_Renderer* Renderer() const;
+	void Init(SDL_Window* window, SDL_Rect rect) override;
+	const SDL_Rect& WindowRect() const override;
+	SDL_Renderer* Renderer() const override;
 
 private:
-	static SDL_Renderer* renderer;
-	static SDL_Rect windowRect;
+	SDL_Renderer* renderer = nullptr;
+	SDL_Rect windowRect { 0, 0, 0, 0 };
 	SDL_Window* window;
 };

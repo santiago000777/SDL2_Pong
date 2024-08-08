@@ -3,7 +3,7 @@
 #include "Ball.h"
 #include "Background.h"
 #include "Wall.h"
-#include "Renderer.h"
+#include "IRenderer.h"
 #include "Brick.h"
 #include "Bubble.h"
 #include "Bomb.h"

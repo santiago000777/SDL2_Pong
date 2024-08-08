@@ -28,7 +28,7 @@ Game::~Game() {
 void Game::Init(const std::string& windowName, int posX, int posY, int windowWidth, int windowHeight, int flags) {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	window.reset(SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags));
-	SRenderer::Init(window.get(), { 0, 0, windowWidth, windowHeight });
+	Renderer::Get().Init(window.get(), { 0, 0, windowWidth, windowHeight });
 
 	firstUpdate = std::chrono::high_resolution_clock::now();
 }
@@ -65,9 +65,9 @@ void Game::Loop() {
 
 void Game::Start() {
 	int sec = 0;
-	SDL_RenderClear(SRenderer::Get().Renderer());
+	SDL_RenderClear(Renderer::Get().Renderer());
 	background->Render();
-	SDL_RenderPresent(SRenderer::Get().Renderer());
+	SDL_RenderPresent(Renderer::Get().Renderer());
 
 	while (sec < 3) {
 		durationUpdate = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - firstUpdate);
@@ -105,7 +105,7 @@ void Game::Basket() {
 }
 
 void Game::Render() {
-	SDL_RenderClear(SRenderer::Get().Renderer());
+	SDL_RenderClear(Renderer::Get().Renderer());
 
 	background->Render();
 	for (auto& wall : walls) {
@@ -127,7 +127,7 @@ void Game::Render() {
 		bomb->Render();
 	}
 
-	SDL_RenderPresent(SRenderer::Get().Renderer());
+	SDL_RenderPresent(Renderer::Get().Renderer());
 }
 
 void Game::Update() {

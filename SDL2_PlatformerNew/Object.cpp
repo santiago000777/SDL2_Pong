@@ -59,7 +59,7 @@ bool Object::Collision(const Object& object, const Circle& circle) {
 
 void Object::Render() {
 	srcBox.x = srcBox.w * currentSprite;
-	SDL_RenderCopy(SRenderer::Get().Renderer(), texture.get(), &srcBox, &dstBox);
+	SDL_RenderCopy(Renderer::Get().Renderer(), texture.get(), &srcBox, &dstBox);
 }
 
 Object::Object(SDL_Rect dstBox, const std::string& path, int characterWidth)

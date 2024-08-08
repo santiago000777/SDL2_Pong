@@ -45,5 +45,5 @@ Background::~Background() {
 }
 
 void Background::Render() {
-	SDL_RenderCopy(SRenderer::Get().Renderer(), texture.get(), nullptr, &SRenderer::Get().WindowRect());
+	SDL_RenderCopy(Renderer::Get().Renderer(), texture.get(), nullptr, &Renderer::Get().WindowRect());
 }

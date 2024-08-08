@@ -1,9 +1,10 @@
 #include "common.h"
 #include "Renderer.h"
 
-SDL_Renderer* SRenderer::renderer = nullptr;
-SDL_Rect SRenderer::windowRect { 0, 0, 0, 0 };
 SRenderer sRenderer;
+IRenderer& Renderer::Get() {
+	return sRenderer;
+}
 
 SRenderer::~SRenderer() {
 	SDL_DestroyRenderer(renderer);
@@ -19,14 +20,11 @@ void SRenderer::Init(SDL_Window* window, SDL_Rect rect) {
 	}
 }
 
-const SRenderer& SRenderer::Get() {
-	return sRenderer;
-}
-
-SDL_Rect& SRenderer::WindowRect() const {
+const SDL_Rect& SRenderer::WindowRect() const {
 	return windowRect;
 }
 
 SDL_Renderer* SRenderer::Renderer() const {
 	return renderer;
 }
+
