@@ -43,7 +43,7 @@ void Game::Loop() {
 			isEnd = true;
 		}
 
-		MovableObject::deltaT = durationUpdate.count();
+		MovableObject::deltaT = (float)durationUpdate.count();
 		//std::cout << durationUpdate.count() << " ms\n";
 
 		firstUpdate = std::chrono::high_resolution_clock::now();
