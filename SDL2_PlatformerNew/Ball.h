@@ -1,49 +1,34 @@
 #pragma once
-#include "Player.h"
-#include "Wall.h"
+#include "MovableObject.h"
 
-class Ball {
+class Ball : public MovableObject {
 public:
-    Ball(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect);
+    Ball(SDL_Rect dstBox, const std::string& path, int characterWidth);
+    Ball(SDL_Rect dstBox, Vec2 vector, const std::string& path, int characterWidth);
     // copy ctor (zakazany)
     Ball(const Ball& rhs) = delete;
     // move ctor (zakazany)
     Ball(Ball&& rhs) = delete;
     // Destructor
-    ~Ball();
+    ~Ball() override;
     // copy prirazeni
     void operator=(const Ball& rhs) = delete;
     // move prirazeni
     void operator=(Ball&& rhs) = delete;
 
-	void HandleEvents();
+    void SetOwnerId(int id);
+    int GetOwnerId() const;
 
-    void Render();
-    bool IsDestroyble();
-    void Update(float delta);
-    enum eIndex : int {
-        LEFT = 0,
-        RIGHT,
-        UP,
-        DOWN
-    };
-    SDL_Rect GetDstBox() const;
+    int GetPoints() const;
+    void SetPoints(int points);
+    void AddPoints(int points);
 
-    void Collision(Player* player , float delta);
-    void Collision(Wall* wall, float delta);
+    void Update();
+    void ResetPoints();
+    void ResetPosition();
 
 protected:
-    TVec2 vector;
-    SDL_Rect dstBox;
-    SDL_Rect srcBox;
-
-    bool collision[4] = { 0, 0, 0, 0 };
-    bool isDestroyble = false;
-
-    SDL_Rect windowRect;
-    std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Texture::Delete };
-
-
-    
+    int points = 0;
+    int playerOwnerId = -1;
 };
 

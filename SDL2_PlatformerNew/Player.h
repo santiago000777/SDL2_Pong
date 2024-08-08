@@ -1,57 +1,40 @@
 #pragma once
-#include "Wall.h"
+#include "MovableObject.h"
 
-class Player {
+class Player : public MovableObject {
 public:
-    Player(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect);
+    Player(SDL_Rect dstBox, const std::string& path, int characterWidth);
     // copy ctor (zakazany)
     Player(const Player& rhs) = delete;
     // move ctor (zakazany)
     Player(Player&& rhs) = delete;
     // Destructor
-    ~Player();
+    ~Player() override;
     // copy prirazeni
     void operator=(const Player& rhs) = delete;
     // move prirazeni
     void operator=(Player&& rhs) = delete;
 
     void HandleEvents();
-
-    void Render();
-    bool IsDestroyble();
-    void Update(float delta);
-    enum class eIndex : int {
-        LEFT = 0,
-        RIGHT,
-        UP,
-        DOWN
-    };
-    SDL_Rect GetDstBox() const;
-    bool IsGameOver();
+    void Update();
+    bool IsGameOver() const;
     void DecreaseLives(int i);
-    void Collision(Wall* wall, float delta);
 
-protected:
-    TVec2 vector;
-    SDL_Rect dstBox;
-    SDL_Rect srcBox;
+    void ResetPosition();
 
-    bool collision[4];
-    bool isDestroyble = false;
+    int GetPlayerId() const;
+    void AddPoints(int points);
 
-    SDL_Rect windowRect;
-    std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Texture::Delete };
-
-
-    
-    
 private:
+    int idPlayer;
+    static int playerCount;
     enum class eControls : short {
         UP = 'w',
         LEFT = 'a',
         DOWN = 's',
         RIGHT = 'd'
     };
-    int lives = 1;
-};
 
+    int lives = 3;
+    int points = 0;
+};

@@ -2,10 +2,10 @@
 #include "Background.h"
 #include "Renderer.h"
 
-Background::Background(int width, int height, std::string path)
-	: box { 0, 0, width, height } {
+Background::Background(std::string path) {
 
-	texture.reset(Texture::Create(path, 255, 0, 255, 255));
+	Picture picture = Picture::Create(path, 255, 0, 255, 255);
+	texture.reset(picture.GetTexture());
 }
 
 //Background::Background(const Background& rhs) {
@@ -44,6 +44,6 @@ Background::~Background() {
 	std::cout << "Deleted background\n";
 }
 
-void Background::Render(SDL_Rect* windowRect) {
-	SDL_RenderCopy(SRenderer::Get().Renderer(), texture.get(), nullptr, windowRect);
+void Background::Render() {
+	SDL_RenderCopy(SRenderer::Get().Renderer(), texture.get(), nullptr, &SRenderer::Get().WindowRect());
 }

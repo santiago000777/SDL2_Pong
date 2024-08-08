@@ -1,17 +1,18 @@
 #include "Brick.h"
 
-Brick::Brick(SDL_Rect dstBox, const std::string& path, SDL_Rect from, SDL_Rect windowRect) 
-	: Object(dstBox, path, from, windowRect) {
+Brick::Brick(SDL_Rect dstBox, const std::string& path, int characterWidth)
+	: Object(dstBox, path, characterWidth) {
+
 	isDestroyble = true;
+
+	points = 1;
 }
 
 Brick::~Brick() {
-	std::cout << "Deleted brick\n";
+	std::cout << "Deleted brick - " << points << " points\n";
 }
 
-void Brick::SetPoints() {
-	std::random_device randomNum;
-	std::uniform_int_distribution<int> dist(-20, 100);
-	points = dist(randomNum);
+int Brick::GetPoints() const {
+	return points;
 }
 

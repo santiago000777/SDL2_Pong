@@ -1,46 +1,46 @@
 #pragma once
-#include "Texture.h"
-#include "Background.h"
+#include "common.h"
+#include "Picture.h"
+#include "Circle.h"
 
 class Object {
 public:
-	Object() {}
-	Object(SDL_Rect dstBox, const std::string& path, SDL_Rect fromBox, SDL_Rect windowRect);
+	Object() = delete;
+    Object(SDL_Rect dstBox, const std::string& path, int characterWidth);
 	Object(const Object& rhs) = delete;
 	Object(Object&& rhs) = delete;
-	~Object();
-
+    virtual ~Object() = default;
 	void operator=(const Object& rhs) = delete;
 	void operator=(Object&& rhs) = delete;
 
+    void Render();
+    enum eIndex : int {
+        LEFT = 0,
+        RIGHT,
+        UP,
+        DOWN
+    };
+    SDL_Rect GetDstBox() const;
 
-	virtual void Render();
-	bool IsDestroyble();
-	virtual void HandleEvents();
-	virtual void Update(std::vector<Object*>* otherObjects, float delta);
-	enum eIndex : int {
-		LEFT = 0,
-		RIGHT,
-		UP,
-		DOWN
-	};
-	TVec2 GetPosition() const;
+    int GetSpriteWidth() const;
+    int GetCurrentSprite() const;
+    void ChangeSprite();
 
+    static bool Collision(const Object& object, const Circle& circle);
 
+    bool isAlive = true;
 protected:
-	TVec2 vector;
-	SDL_Rect dstBox;
-	SDL_Rect srcBox;
 
-	bool collision[4];
-	bool isDestroyble = false;
+    SDL_Rect dstBox;
+    SDL_Rect srcBox;
 
-	SDL_Rect windowRect;
-	std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Texture::Delete};
+    bool isDestroyble = false;
 
-	
+    std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Picture::DeleteTexture };
+
+    int currentSprite = 0;
 private:
-	void CollisionPoint(std::vector<Object*>* otherObjects, float delta);
+    int sprites = 0;
 
 };
 
