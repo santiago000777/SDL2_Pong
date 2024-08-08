@@ -4,7 +4,7 @@
 
 class Picture {
 public:
-	
+
 	Picture(const Picture& rhs) = delete;
 	Picture(Picture&& rhs) {
 		this->srcBox = rhs.srcBox;
@@ -34,7 +34,7 @@ public:
 		SDL_SetColorKey(surface, SDL_ENABLE, transparentColor);
 
 		SDL_Texture* texture = SDL_CreateTextureFromSurface(SRenderer::Get().Renderer(), surface);
-		SDL_Rect srcBox = {0, 0, surface->w, surface->h};
+		SDL_Rect srcBox = { 0, 0, surface->w, surface->h };
 
 		SDL_FreeSurface(surface);
 		return { texture, srcBox };
@@ -53,7 +53,7 @@ public:
 
 	~Picture() {
 	}
-	
+
 private:
 	Picture(SDL_Texture* tex, SDL_Rect srcBox)
 		: tex(tex), srcBox(srcBox) {

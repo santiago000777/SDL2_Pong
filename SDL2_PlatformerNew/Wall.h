@@ -15,4 +15,3 @@ public:
     // move prirazeni
     void operator=(Wall&& rhs) = delete;
 };
-

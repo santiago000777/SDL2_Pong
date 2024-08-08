@@ -28,22 +28,22 @@ Game::~Game() {
 void Game::Init(const std::string& windowName, int posX, int posY, int windowWidth, int windowHeight, int flags) {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	window.reset(SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags));
-	SRenderer::Init(window.get(), {0, 0, windowWidth, windowHeight});
-		
+	SRenderer::Init(window.get(), { 0, 0, windowWidth, windowHeight });
+
 	firstUpdate = std::chrono::high_resolution_clock::now();
 }
 
 void Game::Loop() {
-	
+
 	durationUpdate = std::chrono::duration_cast<std::chrono::milliseconds>(secondUpdate - firstUpdate);
-	if (durationUpdate.count() >= deltaTime/4) {
+	if (durationUpdate.count() >= deltaTime / 4) {
 		Basket();
 
 		if (bricks.size() == 0) {
 			isEnd = true;
 		}
 
-		MovableObject::deltaT = durationUpdate.count();
+		MovableObject::deltaT = (float)durationUpdate.count();
 		//std::cout << durationUpdate.count() << " ms\n";
 
 		firstUpdate = std::chrono::high_resolution_clock::now();
@@ -56,7 +56,7 @@ void Game::Loop() {
 
 	durationFrame = std::chrono::duration_cast<std::chrono::milliseconds>(secondFrame - firstFrame);
 	if (durationFrame.count() >= deltaTime) {
-		
+
 		firstFrame = std::chrono::high_resolution_clock::now();
 		Render();
 	}
@@ -131,7 +131,7 @@ void Game::Render() {
 }
 
 void Game::Update() {
-		// Update
+	// Update
 	for (auto& ball : balls) {
 		ball->Update();
 	}
@@ -141,7 +141,7 @@ void Game::Update() {
 	for (auto& bubble : bubbles) {
 		bubble->Update();
 	}
-		// Bubble logic
+	// Bubble logic
 	for (auto& ball : balls) {
 		for (auto& bubble : bubbles) {
 			if (MovableObject::Collision(*bubble, *ball)) {
@@ -152,13 +152,13 @@ void Game::Update() {
 		}
 	}
 
-		// Bomb logic
+	// Bomb logic
 	for (auto& ball : balls) {
 		for (auto& bomb : bombs) {
 			if (MovableObject::Collision(*ball, *bomb)) {
 				bomb->canDetonate = true;
 				bomb->ChangeSprite();
-				if(bomb->isAlive)
+				if (bomb->isAlive)
 					bomb->isAlive = false;
 			}
 		}
@@ -181,7 +181,7 @@ void Game::Update() {
 		}
 	}
 
-		// Game over logic
+	// Game over logic
 	int uncatchedBalls = 0;
 	for (auto& ball : balls) {
 		if (MovableObject::Collision(*ball, gameOverRect)) {
@@ -196,8 +196,7 @@ void Game::Update() {
 		if (player->IsGameOver()) {
 			player->isAlive = false;
 			isEnd = true;
-		}
-		else if (player->isAlive && uncatchedBalls > 0) {
+		} else if (player->isAlive && uncatchedBalls > 0) {
 			for (auto& ball : balls) {
 				if (!ball->isAlive && balls.size() == 1) {
 					ball->ResetPosition();
@@ -250,8 +249,7 @@ void Game::Collision() {
 				if (bricks[i]->GetCurrentSprite() == 1) {
 					ball->AddPoints(bricks[i]->GetPoints());
 					bricks[i]->isAlive = false;
-				}
-				else {
+				} else {
 					bricks[i]->ChangeSprite();
 				}
 			}

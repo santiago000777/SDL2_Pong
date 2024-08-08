@@ -1,7 +1,7 @@
 #pragma once
 #include "Object.h"
 #include "Circle.h"
-	
+
 // 20x20
 class Bomb : public Object {
 public:
@@ -26,4 +26,3 @@ private:
 	SDL_Rect range;
 	int collectedPoints = 0;
 };
-

@@ -1,8 +1,8 @@
 #include "Bomb.h"
 
-Bomb::Bomb(SDL_Rect dstBox, const std::string& path, int characterWidth) 
+Bomb::Bomb(SDL_Rect dstBox, const std::string& path, int characterWidth)
 	: Object(dstBox, path, characterWidth) {
-	
+
 	range.x = dstBox.x - dstBox.w;
 	range.y = dstBox.y - dstBox.h;
 

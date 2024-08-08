@@ -1,6 +1,5 @@
 #include "Object.h"
 
-
 SDL_Rect Object::GetDstBox() const {
 	return dstBox;
 }
@@ -33,22 +32,22 @@ bool Object::Collision(const Object& object, const Circle& circle) {
 
 	auto Hypotenuse = [](float a, float b) -> float {
 		return sqrtf(powf(fabsf(a), 2.0f) + powf(fabsf(b), 2.0f));
-	};
+		};
 
 	if (circle.center.x + circle.radius < LeftEdge(object) || circle.center.x - circle.radius > RightEdge(object)
-	|| circle.center.y + circle.radius < UpEdge(object) || circle.center.y - circle.radius > DownEdge(object)) {
+		|| circle.center.y + circle.radius < UpEdge(object) || circle.center.y - circle.radius > DownEdge(object)) {
 
 		return false;
 	}
 	if (circle.center.x - circle.radius >= LeftEdge(object) || circle.center.x + circle.radius <= RightEdge(object)
-	|| circle.center.y - circle.radius >= UpEdge(object) || circle.center.y + circle.radius <= DownEdge(object)) {
+		|| circle.center.y - circle.radius >= UpEdge(object) || circle.center.y + circle.radius <= DownEdge(object)) {
 
 		return true;
 	}
 	if (Hypotenuse(TopLeftCorner(object).x - circle.center.x, TopLeftCorner(object).y - circle.center.y) <= circle.radius
-	|| Hypotenuse(TopRightCorner(object).x - circle.center.x, TopRightCorner(object).y - circle.center.y) <= circle.radius
-	|| Hypotenuse(BottomLeftCorner(object).x - circle.center.x, BottomLeftCorner(object).y - circle.center.y) <= circle.radius
-	|| Hypotenuse(BottomRightCorner(object).x - circle.center.x, BottomRightCorner(object).y - circle.center.y) <= circle.radius) {
+		|| Hypotenuse(TopRightCorner(object).x - circle.center.x, TopRightCorner(object).y - circle.center.y) <= circle.radius
+		|| Hypotenuse(BottomLeftCorner(object).x - circle.center.x, BottomLeftCorner(object).y - circle.center.y) <= circle.radius
+		|| Hypotenuse(BottomRightCorner(object).x - circle.center.x, BottomRightCorner(object).y - circle.center.y) <= circle.radius) {
 
 		return true;
 	}

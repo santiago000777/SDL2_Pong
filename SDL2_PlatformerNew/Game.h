@@ -12,7 +12,7 @@
 
 class Game {
 public:
-	Game(){}
+	Game() {}
 	Game(const Game& rhs) = delete;
 	Game(Game&& rhs) = delete;
 	~Game();
@@ -25,7 +25,7 @@ public:
 	static void Loop();
 	static void Start();
 
-	template <typename Ty> 
+	template <typename Ty>
 	static void AddObject(SDL_Rect dstBox, const std::string& path, int characterWidth);
 	template<> static void AddObject<Wall>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
 		walls.push_back(std::make_unique<Wall>(dstBox, path, characterWidth));

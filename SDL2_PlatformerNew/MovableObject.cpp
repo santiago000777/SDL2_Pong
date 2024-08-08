@@ -5,7 +5,7 @@ float MovableObject::deltaT = 0.0f;
 
 bool MovableObject::Collision(MovableObject& object, const Object& other) {
 
-	SDL_Rect box1 = { object.dstBox.x + object.vector.x * MovableObject::deltaT, object.dstBox.y + object.vector.y * MovableObject::deltaT, object.dstBox.w, object.dstBox.h };
+	SDL_Rect box1 = { object.dstBox.x + (int)roundf(object.vector.x * MovableObject::deltaT), object.dstBox.y + (int)roundf(object.vector.y * MovableObject::deltaT), object.dstBox.w, object.dstBox.h };
 	SDL_Rect box2 = { other.GetDstBox().x, other.GetDstBox().y, other.GetDstBox().w, other.GetDstBox().h };
 
 	auto LeftEdge = [](const SDL_Rect& box) -> int { return box.x; };
@@ -13,14 +13,14 @@ bool MovableObject::Collision(MovableObject& object, const Object& other) {
 	auto UpEdge = [](const SDL_Rect& box) -> int { return box.y; };
 	auto DownEdge = [](const SDL_Rect& box) -> int { return box.y + box.h; };
 
-    if (RightEdge(box1) > LeftEdge(box2) && LeftEdge(box1) < RightEdge(box2)
-	&& DownEdge(box1) > UpEdge(box2) && UpEdge(box1) < DownEdge(box2)) { 
+	if (RightEdge(box1) > LeftEdge(box2) && LeftEdge(box1) < RightEdge(box2)
+		&& DownEdge(box1) > UpEdge(box2) && UpEdge(box1) < DownEdge(box2)) {
 
 		if (abs(UpEdge(box1) - DownEdge(box2)) < abs(DownEdge(box1) - UpEdge(box2))) {
 
 			if (abs(UpEdge(box1) - DownEdge(box2)) < abs(LeftEdge(box1) - RightEdge(box2))
-			&& abs(UpEdge(box1) - DownEdge(box2)) < abs(RightEdge(box1) - LeftEdge(box2))) {
-				std::cout << "Up\n"; 
+				&& abs(UpEdge(box1) - DownEdge(box2)) < abs(RightEdge(box1) - LeftEdge(box2))) {
+				std::cout << "Up\n";
 				object.collision[UP] = true;
 			} else {
 				if (abs(LeftEdge(box1) - RightEdge(box2)) < abs(RightEdge(box1) - LeftEdge(box2))) {
@@ -31,10 +31,9 @@ bool MovableObject::Collision(MovableObject& object, const Object& other) {
 					object.collision[RIGHT] = true;
 				}
 			}
-		} 
-		else {
+		} else {
 			if (abs(DownEdge(box1) - UpEdge(box2)) < abs(LeftEdge(box1) - RightEdge(box2))
-			&& abs(DownEdge(box1) - UpEdge(box2)) < abs(RightEdge(box1) - LeftEdge(box2))) {
+				&& abs(DownEdge(box1) - UpEdge(box2)) < abs(RightEdge(box1) - LeftEdge(box2))) {
 
 				std::cout << "Down\n";
 				object.collision[DOWN] = true;
@@ -49,14 +48,13 @@ bool MovableObject::Collision(MovableObject& object, const Object& other) {
 			}
 		}
 		return true;
-	} 
-	else {
+	} else {
 		return false;
 	}
 }
 
 bool MovableObject::Collision(MovableObject& object, const SDL_Rect& other) {
-	SDL_Rect box1 = { object.dstBox.x + object.vector.x * MovableObject::deltaT, object.dstBox.y + object.vector.y * MovableObject::deltaT, object.dstBox.w, object.dstBox.h };
+	SDL_Rect box1 = { object.dstBox.x + (int)roundf(object.vector.x * MovableObject::deltaT), object.dstBox.y + (int)roundf(object.vector.y * MovableObject::deltaT), object.dstBox.w, object.dstBox.h };
 
 	auto LeftEdge = [](const SDL_Rect& box) -> int { return box.x; };
 	auto RightEdge = [](const SDL_Rect& box) -> int { return box.x + box.w; };
@@ -104,7 +102,7 @@ bool MovableObject::Collision(MovableObject& object, const SDL_Rect& other) {
 }
 
 bool MovableObject::Collision(const Object& object, const SDL_Rect& other) {
-	
+
 	auto LeftEdge = [](const SDL_Rect& box) -> int { return box.x; };
 	auto RightEdge = [](const SDL_Rect& box) -> int { return box.x + box.w; };
 	auto UpEdge = [](const SDL_Rect& box) -> int { return box.y; };
@@ -153,8 +151,8 @@ const Vec2 MovableObject::GetVector() const {
 }
 
 bool MovableObject::Collision(MovableObject& object, MovableObject& other) {
-	SDL_Rect box1 = { object.dstBox.x + object.vector.x * MovableObject::deltaT, object.dstBox.y + object.vector.y * MovableObject::deltaT, object.dstBox.w, object.dstBox.h };
-	SDL_Rect box2 = { other.dstBox.x + other.vector.x * MovableObject::deltaT, other.dstBox.y + other.vector.y * MovableObject::deltaT, other.dstBox.w, other.dstBox.h };
+	SDL_Rect box1 = { object.dstBox.x + (int)roundf(object.vector.x * MovableObject::deltaT), object.dstBox.y + (int)roundf(object.vector.y * MovableObject::deltaT), object.dstBox.w, object.dstBox.h };
+	SDL_Rect box2 = { other.dstBox.x + (int)roundf(other.vector.x * MovableObject::deltaT), other.dstBox.y + (int)roundf(other.vector.y * MovableObject::deltaT), other.dstBox.w, other.dstBox.h };
 
 	auto LeftEdge = [](const SDL_Rect& box) -> int { return box.x; };
 	auto RightEdge = [](const SDL_Rect& box) -> int { return box.x + box.w; };

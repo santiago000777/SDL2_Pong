@@ -31,4 +31,3 @@ protected:
     int points = 0;
     int playerOwnerId = -1;
 };
-

@@ -11,7 +11,7 @@ public:
 	// move ctor (zakazany)
 	Background(Background&& rhs) = delete;
 	// copy prirazeni
-	void operator=(const Background& rhs) = delete; 
+	void operator=(const Background& rhs) = delete;
 	// move prirazeni
 	void operator=(Background&& rhs) = delete;
 	// Destructor
@@ -22,4 +22,3 @@ public:
 private:
 	std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Picture::DeleteTexture };
 };
-

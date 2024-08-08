@@ -1,6 +1,5 @@
 #include "Ball.h"
 
-
 Ball::Ball(SDL_Rect dstBox, const std::string& path, int characterWidth)
 	: MovableObject(dstBox, path, characterWidth) {
 
@@ -9,24 +8,21 @@ Ball::Ball(SDL_Rect dstBox, const std::string& path, int characterWidth)
 
 	std::uniform_int_distribution<int> decide(0, 3);
 
-	
+
 	if (decide(randomNum) == 0) {
 		vector = { dist(randomNum), dist(randomNum) };
-	}
-	else if(decide(randomNum) == 1) {
+	} else if (decide(randomNum) == 1) {
 		vector = { -dist(randomNum), -dist(randomNum) };
-	}
-	else if (decide(randomNum) == 2) {
+	} else if (decide(randomNum) == 2) {
 		vector = { -dist(randomNum), dist(randomNum) };
-	}
-	else {
+	} else {
 		vector = { dist(randomNum), -dist(randomNum) };
 	}
-	
+
 	std::cout << vector.x << "  " << vector.y << "\n";
 }
 
-Ball::Ball(SDL_Rect dstBox, Vec2 vector, const std::string& path, int characterWidth) 
+Ball::Ball(SDL_Rect dstBox, Vec2 vector, const std::string& path, int characterWidth)
 	: MovableObject(dstBox, path, characterWidth) {
 
 	std::random_device randomNum;
@@ -34,8 +30,7 @@ Ball::Ball(SDL_Rect dstBox, Vec2 vector, const std::string& path, int characterW
 
 	if (vector.x > 0) {
 		this->vector.x = dist(randomNum);
-	}
-	else {
+	} else {
 		this->vector.x = -dist(randomNum);
 	}
 	if (vector.y > 0) {
@@ -108,8 +103,8 @@ void Ball::AddPoints(int points) {
 void Ball::Update() {
 
 	if (!this->collision[LEFT] && !this->collision[RIGHT] && !this->collision[UP] && !this->collision[DOWN]) {
-		this->dstBox.x += roundf(vector.x * MovableObject::deltaT);
-		this->dstBox.y += roundf(vector.y * MovableObject::deltaT);
+		this->dstBox.x += (int)roundf(vector.x * MovableObject::deltaT);
+		this->dstBox.y += (int)roundf(vector.y * MovableObject::deltaT);
 		currentSprite = 0;
 		return;
 	}
@@ -130,7 +125,7 @@ void Ball::Update() {
 	}
 	if (this->collision[eIndex::LEFT]) {
 		currentSprite = LEFT + 1;
-		if(vector.x < 0)
+		if (vector.x < 0)
 			vector.x *= -1;
 	}
 	if (this->collision[eIndex::RIGHT]) {
@@ -143,45 +138,45 @@ void Ball::Update() {
 	if (this->collision[LEFT]) {
 
 		if (this->vector.x > 0 && !this->collision[RIGHT])
-			this->dstBox.x += roundf(this->vector.x * MovableObject::deltaT);
+			this->dstBox.x += (int)roundf(this->vector.x * MovableObject::deltaT);
 
 		if (this->vector.y < 0 && !this->collision[UP]
 			|| this->vector.y > 0 && !this->collision[DOWN]) {
 
-			this->dstBox.y += roundf(this->vector.y * MovableObject::deltaT);
+			this->dstBox.y += (int)roundf(this->vector.y * MovableObject::deltaT);
 		}
 	}
 	if (this->collision[RIGHT]) {
 
 		if (this->vector.x < 0 && !this->collision[LEFT]) {
-			this->dstBox.x += roundf(this->vector.x * MovableObject::deltaT);
+			this->dstBox.x += (int)roundf(this->vector.x * MovableObject::deltaT);
 		}
 		if (this->vector.y < 0 && !this->collision[UP]
 			|| this->vector.y > 0 && !this->collision[DOWN]) {
 
-			this->dstBox.y += roundf(this->vector.y * MovableObject::deltaT);
+			this->dstBox.y += (int)roundf(this->vector.y * MovableObject::deltaT);
 		}
 	}
 	if (this->collision[UP]) {
 
 		if (this->vector.y > 0 && !this->collision[DOWN])
-			this->dstBox.y += roundf(this->vector.y * MovableObject::deltaT);
+			this->dstBox.y += (int)roundf(this->vector.y * MovableObject::deltaT);
 
 		if (this->vector.x < 0 && !this->collision[LEFT]
 			|| this->vector.x > 0 && !this->collision[RIGHT]) {
 
-			this->dstBox.x += roundf(this->vector.x * MovableObject::deltaT);
+			this->dstBox.x += (int)roundf(this->vector.x * MovableObject::deltaT);
 		}
 	}
 	if (this->collision[DOWN]) {
 
 		if (this->vector.y < 0 && !this->collision[UP])
-			this->dstBox.y += roundf(this->vector.y * MovableObject::deltaT);
+			this->dstBox.y += (int)roundf(this->vector.y * MovableObject::deltaT);
 
 		if (this->vector.x < 0 && !this->collision[LEFT]
 			|| this->vector.x > 0 && !this->collision[RIGHT]) {
 
-			this->dstBox.x += roundf(this->vector.x * MovableObject::deltaT);
+			this->dstBox.x += (int)roundf(this->vector.x * MovableObject::deltaT);
 		}
 	}
 

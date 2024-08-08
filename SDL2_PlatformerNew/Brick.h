@@ -14,9 +14,8 @@ public:
     // move prirazeni
     void operator=(Brick&& rhs) = delete;
 
-	int GetPoints() const;
-    
-private:
-	int points = 0;
-};
+    int GetPoints() const;
 
+private:
+    int points = 0;
+};

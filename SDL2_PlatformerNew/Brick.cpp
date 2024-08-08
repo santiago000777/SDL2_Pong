@@ -15,4 +15,3 @@ Brick::~Brick() {
 int Brick::GetPoints() const {
 	return points;
 }
-

@@ -23,7 +23,7 @@
 #define BREAK	__debugbreak
 #define PI		3.14159265359
 
-	// SDL2
+// SDL2
 #include "SDL.h"
 
 static bool PressedKey(short key) {

@@ -5,13 +5,13 @@
 
 class Object {
 public:
-	Object() = delete;
+    Object() = delete;
     Object(SDL_Rect dstBox, const std::string& path, int characterWidth);
-	Object(const Object& rhs) = delete;
-	Object(Object&& rhs) = delete;
+    Object(const Object& rhs) = delete;
+    Object(Object&& rhs) = delete;
     virtual ~Object() = default;
-	void operator=(const Object& rhs) = delete;
-	void operator=(Object&& rhs) = delete;
+    void operator=(const Object& rhs) = delete;
+    void operator=(Object&& rhs) = delete;
 
     void Render();
     enum eIndex : int {
@@ -43,4 +43,3 @@ private:
     int sprites = 0;
 
 };
-
