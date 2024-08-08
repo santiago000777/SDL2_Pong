@@ -12,7 +12,7 @@
 
 class Game {
 public:
-	Game() {}
+	Game(){}
 	Game(const Game& rhs) = delete;
 	Game(Game&& rhs) = delete;
 	~Game();
@@ -54,7 +54,6 @@ public:
 	static bool IsEnd();
 private:
 	static std::unique_ptr<SDL_Window, void(*)(SDL_Window*)> window;
-		// musim je definovat v .cpp
 	static std::unique_ptr<Background> background;
 
 	static std::vector<std::unique_ptr<Wall>> walls;
@@ -62,8 +61,8 @@ private:
 	static std::vector<std::unique_ptr<Player>> players;
 	static std::vector<std::unique_ptr<Brick>> bricks;
 	static std::vector<std::unique_ptr<Bubble>> bubbles;
-
 	static std::vector<std::unique_ptr<Bomb>> bombs;
+
 
 	static const float deltaTime;
 	static std::chrono::time_point<std::chrono::high_resolution_clock> firstFrame, secondFrame, firstUpdate, secondUpdate;

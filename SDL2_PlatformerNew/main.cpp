@@ -1,7 +1,7 @@
 #include "common.h"
 #include "Game.h"
 
-	// TODO: Definovat vectory objektu v Game.cpp
+	// TODO: 
 	// Pridat kruhovou kolizi na Bomb
 	//       Pridat Menu
 

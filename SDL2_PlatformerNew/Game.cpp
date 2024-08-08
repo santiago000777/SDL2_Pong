@@ -1,13 +1,28 @@
 #include "common.h"
 #include "Game.h"
 
+
 const float Game::deltaTime = 1000.0f / FPS;
 std::unique_ptr<SDL_Window, void(*)(SDL_Window*)> Game::window { nullptr, SDL_DestroyWindow };
 SDL_Rect Game::gameOverRect { 0, 800, 600, 20 };
 bool Game::isEnd = false;
+
+std::unique_ptr<Background> Game::background;
+
+std::vector<std::unique_ptr<Wall>> Game::walls;
+std::vector<std::unique_ptr<Ball>> Game::balls;
+std::vector<std::unique_ptr<Player>> Game::players;
+std::vector<std::unique_ptr<Brick>> Game::bricks;
+std::vector<std::unique_ptr<Bubble>> Game::bubbles;
+std::vector<std::unique_ptr<Bomb>> Game::bombs;
+
+std::chrono::time_point<std::chrono::high_resolution_clock> Game::firstFrame, Game::secondFrame, Game::firstUpdate, Game::secondUpdate;
+std::chrono::milliseconds Game::durationFrame, Game::durationUpdate;
+
 Game sGame;
 
 Game::~Game() {
+
 }
 
 void Game::Init(const std::string& windowName, int posX, int posY, int windowWidth, int windowHeight, int flags) {
