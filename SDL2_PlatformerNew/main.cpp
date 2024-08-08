@@ -1,8 +1,8 @@
 #include "common.h"
 #include "Game.h"
 
-// TODO: 
-// Pridat kruhovou kolizi na Bomb
+// TODO: Pridat Text
+//		 Pridat kruhovou kolizi na Bomb
 //       Pridat Menu
 
 int main(int argc, char* args[]) {

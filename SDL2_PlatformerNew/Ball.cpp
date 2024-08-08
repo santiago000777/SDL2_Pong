@@ -58,7 +58,6 @@ Ball::~Ball() {
 //	*this->background = *rhs.background;
 //	memcpy(this->collision, rhs.collision, 4 * sizeof(bool));
 //}
-
 //void Ball::operator=(Ball&& rhs) {
 //	this->dstBox = rhs.dstBox;
 //	this->srcBox = rhs.srcBox;

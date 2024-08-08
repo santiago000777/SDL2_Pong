@@ -26,7 +26,9 @@ public:
 	static void Start();
 
 	template <typename Ty>
-	static void AddObject(SDL_Rect dstBox, const std::string& path, int characterWidth);
+	static void AddObject(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+		
+	}
 	template<> static void AddObject<Wall>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
 		walls.push_back(std::make_unique<Wall>(dstBox, path, characterWidth));
 	}
@@ -46,7 +48,7 @@ public:
 		bombs.push_back(std::make_unique<Bomb>(dstBox, path, characterWidth));
 	}
 
-	static const Game& Get();
+	static const Game& Get();//
 	static void SetBackground(const std::string& BGpath);
 
 	int CountOfBricks() const;

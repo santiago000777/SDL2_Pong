@@ -19,7 +19,7 @@ public:
 		rhs.tex = nullptr;
 	}
 
-	static Picture&& Create(const std::string& path, Uint8 rTransparent, Uint8 gTransparent, Uint8 bTransparent, Uint8 aTransparent) {
+	static Picture&& Create(const std::string& path, Uint8 rTransparent, Uint8 gTransparent, Uint8 bTransparent, Uint8 aTransparent) {// value
 		if (path.empty()) {
 			std::cout << "Textura nema prirazenou cestu, cesta je prazdna";
 			BREAK();

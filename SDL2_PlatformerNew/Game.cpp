@@ -22,7 +22,7 @@ std::chrono::milliseconds Game::durationFrame, Game::durationUpdate;
 Game sGame;
 
 Game::~Game() {
-
+	SDL_Quit();
 }
 
 void Game::Init(const std::string& windowName, int posX, int posY, int windowWidth, int windowHeight, int flags) {
