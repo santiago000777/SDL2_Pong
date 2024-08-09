@@ -26,11 +26,11 @@ public:
 	void Loop() override;
 	void Start() override;
 
-	void SetBackground(const std::string& BGpath) override;
 	int CountOfBricks() const override;
 	bool IsEnd() override;
 
 	
+	void SetBackground(const std::string& BGpath);
 private:
 	std::unique_ptr<SDL_Window, void(*)(SDL_Window*)> window { nullptr, SDL_DestroyWindow };
 	std::unique_ptr<Background> background;
@@ -50,12 +50,26 @@ private:
 	SDL_Rect gameOverRect;
 	bool isEnd;
 
-	void AddWall(SDL_Rect dstBox, const std::string& path, int characterWidth) override;
-	void AddPlayer(SDL_Rect dstBox, const std::string& path, int characterWidth) override;
-	void AddBall(SDL_Rect dstBox, const std::string& path, int characterWidth) override;
-	void AddBrick(SDL_Rect dstBox, const std::string& path, int characterWidth) override;
-	void AddBubble(SDL_Rect dstBox, const std::string& path, int characterWidth) override;
-	void AddBomb(SDL_Rect dstBox, const std::string& path, int characterWidth) override;
+	template <typename Ty> void Add(SDL_Rect dstBox, const std::string& path, int characterWidth);
+	template<> void Add<Wall>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+		walls.push_back(std::make_unique<Wall>(dstBox, path, characterWidth));
+	}
+	template<> void Add<Player>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+
+		players.push_back(std::make_unique<Player>(dstBox, path, characterWidth));
+	}
+	template<> void Add<Ball>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+		balls.push_back(std::make_unique<Ball>(dstBox, path, characterWidth));
+	}
+	template<> void Add<Brick>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+		bricks.push_back(std::make_unique<Brick>(dstBox, path, characterWidth));
+	}
+	template<> void Add<Bubble>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+		bubbles.push_back(std::make_unique<Bubble>(dstBox, path, characterWidth));
+	}
+	template<> void Add<Bomb>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+		bombs.push_back(std::make_unique<Bomb>(dstBox, path, characterWidth));
+	}
 
 	void Basket();
 	void Render();

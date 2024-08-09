@@ -17,6 +17,40 @@ void SGame::Init(const std::string& windowName, int posX, int posY, int windowWi
 	window.reset(SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags));
 	Renderer::Get().Init(window.get(), { 0, 0, windowWidth, windowHeight });
 
+
+		// Init objects
+
+	SetBackground("Pictures/veitImg.bmp");
+	Add<Wall>({ 25, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", 7);
+	Add<Wall>({ 25 + 525, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", 7);
+	Add<Wall>({ 25, 50, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
+	//Add<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
+
+	Add<Player>({ 255, 750, 100, 24 }, "Pictures/paddle.bmp", 25);
+
+	const float ballScale = 3.5f;
+	Add<Ball>({ 300, 200, (int)roundf(7 * ballScale), (int)roundf(7 * ballScale) }, "Pictures/BallSpriteSheet.bmp", 7);
+
+	for (int i = 0; i < 6; i++) {
+		Add<Brick>({ 120 + 64 * i, 100, 64, 20 }, "Pictures/BrickSpriteSheet.bmp", 16);
+	}
+	for (int i = 0; i < 5; i++) {
+		if (i == 2) {
+			Add<Bomb>({ 174 + 64 * i, 122, 20, 20 }, "Pictures/BombSpriteSheet.bmp", 7);
+			continue;
+		}
+		Add<Brick>({ 152 + 64 * i, 120, 64, 20 }, "Pictures/BrickSpriteSheet.bmp", 16);
+	}
+
+	for (int i = 0; i < 4; i++) {
+		if (i == 1 || i == 2) continue;
+		Add<Brick>({ 184 + 64 * i, 140, 64, 20 }, "Pictures/BrickSpriteSheet.bmp", 16);
+	}
+
+	Add<Bubble>({ 100, 200, 28, 28 }, "Pictures/BubbleSpriteSheet.bmp", 10);
+
+
+
 	firstUpdate = std::chrono::high_resolution_clock::now();
 }
 
@@ -75,31 +109,12 @@ int SGame::CountOfBricks() const {
 }
 
 bool SGame::IsEnd() {
-	return isEnd;
-}
-
-void SGame::AddWall(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-	walls.push_back(std::make_unique<Wall>(dstBox, path, characterWidth));
-}
-
-void SGame::AddPlayer(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-	players.push_back(std::make_unique<Player>(dstBox, path, characterWidth));
-}
-
-void SGame::AddBall(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-	balls.push_back(std::make_unique<Ball>(dstBox, path, characterWidth));
-}
-
-void SGame::AddBrick(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-	bricks.push_back(std::make_unique<Brick>(dstBox, path, characterWidth));
-}
-
-void SGame::AddBubble(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-	bubbles.push_back(std::make_unique<Bubble>(dstBox, path, characterWidth));
-}
-
-void SGame::AddBomb(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-	bombs.push_back(std::make_unique<Bomb>(dstBox, path, characterWidth));
+	if (isEnd || PressedKey(VK_ESCAPE)) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 void SGame::Basket() {
