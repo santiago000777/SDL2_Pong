@@ -153,7 +153,7 @@ void SGame::Render() {
 }
 
 void SGame::Update() {
-	// Update
+		// Update
 	for (auto& ball : balls) {
 		ball->Update();
 	}
@@ -163,7 +163,8 @@ void SGame::Update() {
 	for (auto& bubble : bubbles) {
 		bubble->Update();
 	}
-	// Bubble logic
+
+		// Bubble logic
 	for (auto& ball : balls) {
 		for (auto& bubble : bubbles) {
 			if (MovableObject::Collision(*bubble, *ball)) {
@@ -174,7 +175,7 @@ void SGame::Update() {
 		}
 	}
 
-	// Bomb logic
+		// Bomb logic
 	for (auto& ball : balls) {
 		for (auto& bomb : bombs) {
 			if (MovableObject::Collision(*ball, *bomb)) {
@@ -203,7 +204,7 @@ void SGame::Update() {
 		}
 	}
 
-	// SGame over logic
+		// Game over logic
 	int uncatchedBalls = 0;
 	for (auto& ball : balls) {
 		if (MovableObject::Collision(*ball, gameOverRect)) {

@@ -47,8 +47,8 @@ private:
 	std::chrono::time_point<std::chrono::high_resolution_clock> firstFrame, secondFrame, firstUpdate, secondUpdate;
 	std::chrono::milliseconds durationFrame, durationUpdate;
 
-	SDL_Rect gameOverRect;
-	bool isEnd;
+	SDL_Rect gameOverRect = { 0, 800, 600, 20 };
+	bool isEnd = false;
 
 	template <typename Ty> void Add(SDL_Rect dstBox, const std::string& path, int characterWidth);
 	template<> void Add<Wall>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
