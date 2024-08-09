@@ -12,6 +12,7 @@ SGame::~SGame() {
 }
 
 void SGame::Init(const std::string& windowName, int posX, int posY, int windowWidth, int windowHeight, int flags) {
+	
 	SDL_Init(SDL_INIT_EVERYTHING);
 	window.reset(SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags));
 	Renderer::Get().Init(window.get(), { 0, 0, windowWidth, windowHeight });

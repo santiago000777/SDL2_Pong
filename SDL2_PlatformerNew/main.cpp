@@ -5,6 +5,8 @@
 //		 Pridat kruhovou kolizi na Bomb
 //       Pridat Menu
 
+
+
 int main(int argc, char* args[]) {
 	Game::Get().Init("PONG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 604, 850, SDL_WINDOW_SHOWN);
 	

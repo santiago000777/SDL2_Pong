@@ -20,5 +20,5 @@ public:
 	void Render();
 
 private:
-	std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Picture::DeleteTexture };
+	std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, DeleteTexture };
 };

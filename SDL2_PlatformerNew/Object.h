@@ -36,7 +36,7 @@ protected:
 
     bool isDestroyble = false;
 
-    std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, Picture::DeleteTexture };
+    std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, DeleteTexture };
 
     int currentSprite = 0;
 private:

@@ -4,8 +4,8 @@
 
 Background::Background(std::string path) {
 
-	Picture picture = Picture::Create(path, 255, 0, 255, 255);
-	texture.reset(picture.GetTexture());
+	auto [tex, _] = CreateTexture(path, 255, 0, 255, 255);
+	texture.reset(tex);
 }
 
 //Background::Background(const Background& rhs) {

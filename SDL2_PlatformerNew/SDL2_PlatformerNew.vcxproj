@@ -140,6 +140,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MovableObject.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Picture.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Wall.cpp" />

@@ -53,10 +53,6 @@ bool Object::Collision(const Object& object, const Circle& circle) {
 	}
 }
 
-//bool Object::IsDestroyble() const {
-//	return isDestroyble;
-//}
-
 void Object::Render() {
 	srcBox.x = srcBox.w * currentSprite;
 	SDL_RenderCopy(Renderer::Get().Renderer(), texture.get(), &srcBox, &dstBox);
@@ -65,10 +61,11 @@ void Object::Render() {
 Object::Object(SDL_Rect dstBox, const std::string& path, int characterWidth)
 	: dstBox(dstBox) {
 
-	Picture picture = Picture::Create(path, 255, 0, 255, 255);
-	srcBox = picture.GetSrcBox();
+	SDL_Texture* picture;
+	std::tie(picture, srcBox) = CreateTexture(path, 255, 0, 255, 255);
+
 	sprites = srcBox.w / characterWidth;
 	srcBox.w = characterWidth;
 
-	texture.reset(picture.GetTexture());
+	texture.reset(picture);
 }
