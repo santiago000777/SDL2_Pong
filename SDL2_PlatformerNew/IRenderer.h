@@ -17,6 +17,7 @@ protected:
 	~IRenderer(){}
 	//virtual ~IRenderer() = 0;
 	IRenderer(){}
+	
 };
 
 namespace Renderer {

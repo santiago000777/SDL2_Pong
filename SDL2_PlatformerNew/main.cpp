@@ -1,47 +1,47 @@
 #include "common.h"
-#include "Game.h"
+#include "IGame.h"
 
 // TODO: Pridat Text
 //		 Pridat kruhovou kolizi na Bomb
 //       Pridat Menu
 
 int main(int argc, char* args[]) {
-	Game::Init("PONG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 604, 850, SDL_WINDOW_SHOWN);
+	Game::Get().Init("PONG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 604, 850, SDL_WINDOW_SHOWN);
+	
+	Game::Get().SetBackground("Pictures/veitImg.bmp");
+	Game::Get().Add<Wall>({ 25, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", 7);
+	Game::Get().Add<Wall>({ 25 + 525, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", 7);
 
-	Game::SetBackground("Pictures/veitImg.bmp");
-	Game::AddObject<Wall>({ 25, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", 7);
-	Game::AddObject<Wall>({ 25 + 525, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", 7);
+	Game::Get().Add<Wall>({ 25, 50, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
 
-	Game::AddObject<Wall>({ 25, 50, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
+	Game::Get().Add<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
 
-	Game::AddObject<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
-
-	Game::AddObject<Player>({ 255, 750, 100, 24 }, "Pictures/paddle.bmp", 25);
+	Game::Get().Add<Player>({ 255, 750, 100, 24 }, "Pictures/paddle.bmp", 25);
 
 	const float ballScale = 3.5f;
-	Game::AddObject<Ball>({ 300, 200, (int)roundf(7 * ballScale), (int)roundf(7 * ballScale) }, "Pictures/BallSpriteSheet.bmp", 7);
+	Game::Get().Add<Ball>({ 300, 200, (int)roundf(7 * ballScale), (int)roundf(7 * ballScale) }, "Pictures/BallSpriteSheet.bmp", 7);
 
 	for (int i = 0; i < 6; i++) {
-		Game::AddObject<Brick>({ 120 + 64 * i, 100, 64, 20 }, "Pictures/BrickSpriteSheet.bmp", 16);
+		Game::Get().Add<Brick>({ 120 + 64 * i, 100, 64, 20 }, "Pictures/BrickSpriteSheet.bmp", 16);
 	}
 	for (int i = 0; i < 5; i++) {
 		if (i == 2) {
-			Game::AddObject<Bomb>({ 174 + 64 * i, 122, 20, 20 }, "Pictures/BombSpriteSheet.bmp", 7);
+			Game::Get().Add<Bomb>({ 174 + 64 * i, 122, 20, 20 }, "Pictures/BombSpriteSheet.bmp", 7);
 			continue;
 		}
-		Game::AddObject<Brick>({ 152 + 64 * i, 120, 64, 20 }, "Pictures/BrickSpriteSheet.bmp", 16);
+		Game::Get().Add<Brick>({ 152 + 64 * i, 120, 64, 20 }, "Pictures/BrickSpriteSheet.bmp", 16);
 	}
 
 	for (int i = 0; i < 4; i++) {
 		if (i == 1 || i == 2) continue;
-		Game::AddObject<Brick>({ 184 + 64 * i, 140, 64, 20 }, "Pictures/BrickSpriteSheet.bmp", 16);
+		Game::Get().Add<Brick>({ 184 + 64 * i, 140, 64, 20 }, "Pictures/BrickSpriteSheet.bmp", 16);
 	}
 
-	Game::AddObject<Bubble>({ 100, 200, 28, 28 }, "Pictures/BubbleSpriteSheet.bmp", 10);
+	Game::Get().Add<Bubble>({ 100, 200, 28, 28 }, "Pictures/BubbleSpriteSheet.bmp", 10);
 
-	Game::Start();
-	while (!PressedKey(VK_ESCAPE) && !Game::IsEnd()) {
-		Game::Loop();
+	Game::Get().Start();
+	while (!PressedKey(VK_ESCAPE) && !Game::Get().IsEnd()) {
+		Game::Get().Loop();
 	}
 	if (Game::Get().CountOfBricks() > 0)
 		std::cout << "Game over!\n\n";

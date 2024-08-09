@@ -15,6 +15,7 @@ public:
 	const SDL_Rect& WindowRect() const override;
 	SDL_Renderer* Renderer() const override;
 
+	
 private:
 	SDL_Renderer* renderer = nullptr;
 	SDL_Rect windowRect { 0, 0, 0, 0 };

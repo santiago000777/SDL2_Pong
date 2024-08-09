@@ -1,31 +1,17 @@
 #include "common.h"
 #include "Game.h"
 
+SGame sGame;
 
-const float Game::deltaTime = 1000.0f / FPS;
-std::unique_ptr<SDL_Window, void(*)(SDL_Window*)> Game::window { nullptr, SDL_DestroyWindow };
-SDL_Rect Game::gameOverRect { 0, 800, 600, 20 };
-bool Game::isEnd = false;
+IGame& Game::Get() {
+	return sGame;
+}
 
-std::unique_ptr<Background> Game::background;
-
-std::vector<std::unique_ptr<Wall>> Game::walls;
-std::vector<std::unique_ptr<Ball>> Game::balls;
-std::vector<std::unique_ptr<Player>> Game::players;
-std::vector<std::unique_ptr<Brick>> Game::bricks;
-std::vector<std::unique_ptr<Bubble>> Game::bubbles;
-std::vector<std::unique_ptr<Bomb>> Game::bombs;
-
-std::chrono::time_point<std::chrono::high_resolution_clock> Game::firstFrame, Game::secondFrame, Game::firstUpdate, Game::secondUpdate;
-std::chrono::milliseconds Game::durationFrame, Game::durationUpdate;
-
-Game sGame;
-
-Game::~Game() {
+SGame::~SGame() {
 	SDL_Quit();
 }
 
-void Game::Init(const std::string& windowName, int posX, int posY, int windowWidth, int windowHeight, int flags) {
+void SGame::Init(const std::string& windowName, int posX, int posY, int windowWidth, int windowHeight, int flags) {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	window.reset(SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags));
 	Renderer::Get().Init(window.get(), { 0, 0, windowWidth, windowHeight });
@@ -33,7 +19,7 @@ void Game::Init(const std::string& windowName, int posX, int posY, int windowWid
 	firstUpdate = std::chrono::high_resolution_clock::now();
 }
 
-void Game::Loop() {
+void SGame::Loop() {
 
 	durationUpdate = std::chrono::duration_cast<std::chrono::milliseconds>(secondUpdate - firstUpdate);
 	if (durationUpdate.count() >= deltaTime / 4) {
@@ -63,7 +49,7 @@ void Game::Loop() {
 	secondFrame = std::chrono::high_resolution_clock::now();
 }
 
-void Game::Start() {
+void SGame::Start() {
 	int sec = 0;
 	SDL_RenderClear(Renderer::Get().Renderer());
 	background->Render();
@@ -79,23 +65,43 @@ void Game::Start() {
 	}
 }
 
-const Game& Game::Get() {
-	return sGame;
-}
-
-void Game::SetBackground(const std::string& BGpath) {
+void SGame::SetBackground(const std::string& BGpath) {
 	background = std::make_unique<Background>(BGpath);
 }
 
-int Game::CountOfBricks() const {
+int SGame::CountOfBricks() const {
 	return bricks.size();
 }
 
-bool Game::IsEnd() {
+bool SGame::IsEnd() {
 	return isEnd;
 }
 
-void Game::Basket() {
+void SGame::AddWall(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+	walls.push_back(std::make_unique<Wall>(dstBox, path, characterWidth));
+}
+
+void SGame::AddPlayer(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+	players.push_back(std::make_unique<Player>(dstBox, path, characterWidth));
+}
+
+void SGame::AddBall(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+	balls.push_back(std::make_unique<Ball>(dstBox, path, characterWidth));
+}
+
+void SGame::AddBrick(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+	bricks.push_back(std::make_unique<Brick>(dstBox, path, characterWidth));
+}
+
+void SGame::AddBubble(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+	bubbles.push_back(std::make_unique<Bubble>(dstBox, path, characterWidth));
+}
+
+void SGame::AddBomb(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+	bombs.push_back(std::make_unique<Bomb>(dstBox, path, characterWidth));
+}
+
+void SGame::Basket() {
 	std::erase_if(walls, [](const std::unique_ptr<Wall>& obj) { return !obj->isAlive; });
 	std::erase_if(bricks, [](const std::unique_ptr<Brick>& obj) { return !obj->isAlive; });
 	std::erase_if(balls, [](const std::unique_ptr<Ball>& obj) { return !obj->isAlive; });
@@ -104,7 +110,7 @@ void Game::Basket() {
 	std::erase_if(bombs, [](const std::unique_ptr<Bomb>& obj) { return !obj->isAlive; });
 }
 
-void Game::Render() {
+void SGame::Render() {
 	SDL_RenderClear(Renderer::Get().Renderer());
 
 	background->Render();
@@ -130,7 +136,7 @@ void Game::Render() {
 	SDL_RenderPresent(Renderer::Get().Renderer());
 }
 
-void Game::Update() {
+void SGame::Update() {
 	// Update
 	for (auto& ball : balls) {
 		ball->Update();
@@ -181,7 +187,7 @@ void Game::Update() {
 		}
 	}
 
-	// Game over logic
+	// SGame over logic
 	int uncatchedBalls = 0;
 	for (auto& ball : balls) {
 		if (MovableObject::Collision(*ball, gameOverRect)) {
@@ -208,13 +214,13 @@ void Game::Update() {
 	}
 }
 
-void Game::HandleEvents() {
+void SGame::HandleEvents() {
 	for (auto& player : players) {
 		player->HandleEvents();
 	}
 }
 
-void Game::Collision() {
+void SGame::Collision() {
 	for (auto& ball : balls) {
 		for (auto& wall : walls) {
 			MovableObject::Collision(*ball, *wall);
