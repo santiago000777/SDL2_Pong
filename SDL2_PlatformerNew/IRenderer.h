@@ -14,8 +14,8 @@ public:
 	virtual SDL_Renderer* Renderer() const = 0;
 
 protected:
-	//virtual ~IRenderer() = 0;
 	~IRenderer(){}
+	//virtual ~IRenderer() = 0;
 	IRenderer(){}
 };
 

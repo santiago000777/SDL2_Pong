@@ -33,7 +33,6 @@ public:
 		Uint32 transparentColor = SDL_MapRGBA(surface->format, rTransparent, gTransparent, bTransparent, aTransparent);
 		SDL_SetColorKey(surface, SDL_ENABLE, transparentColor);
 
-		//SDL_Texture* texture = SDL_CreateTextureFromSurface(SRenderer::Get().Renderer(), surface);
 		SDL_Texture* texture = SDL_CreateTextureFromSurface(Renderer::Get().Renderer(), surface);
 		SDL_Rect srcBox = { 0, 0, surface->w, surface->h };
 
@@ -41,7 +40,7 @@ public:
 
 		Picture picture { texture, srcBox };
 		
-		return std::move(picture);
+		return picture;
 	}
 
 	static void DeleteTexture(SDL_Texture* tex) {

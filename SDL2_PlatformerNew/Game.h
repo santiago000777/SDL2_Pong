@@ -1,4 +1,5 @@
 #pragma once
+//#include "IGame.h"
 #include "Player.h"
 #include "Ball.h"
 #include "Background.h"
@@ -10,7 +11,7 @@
 
 #define FPS		60
 
-class Game {
+class Game/* : IGame*/ {
 public:
 	Game() {}
 	Game(const Game& rhs) = delete;
@@ -26,9 +27,7 @@ public:
 	static void Start();
 
 	template <typename Ty>
-	static void AddObject(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-		
-	}
+	static void AddObject(SDL_Rect dstBox, const std::string& path, int characterWidth);
 	template<> static void AddObject<Wall>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
 		walls.push_back(std::make_unique<Wall>(dstBox, path, characterWidth));
 	}
@@ -48,10 +47,10 @@ public:
 		bombs.push_back(std::make_unique<Bomb>(dstBox, path, characterWidth));
 	}
 
-	static const Game& Get();//
+	static const Game& Get();
 	static void SetBackground(const std::string& BGpath);
 
-	int CountOfBricks() const;
+	int CountOfBricks() const;//x
 
 	static bool IsEnd();
 private:
@@ -74,9 +73,9 @@ private:
 
 	static bool isEnd;
 
-	static void Basket();
-	static void Render();
-	static void Update();
-	static void HandleEvents();
-	static void Collision();
+	static void Basket();//x
+	static void Render();//x
+	static void Update();//x
+	static void HandleEvents();//x
+	static void Collision();//x
 };
