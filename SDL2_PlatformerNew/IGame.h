@@ -45,16 +45,16 @@ public:
 		AddBomb(dstBox, path, characterWidth);
 	}
 
-protected:
-	IGame() {}
-	~IGame() {}
-
 	virtual void AddWall(SDL_Rect dstBox, const std::string& path, int characterWidth) = 0;
 	virtual void AddPlayer(SDL_Rect dstBox, const std::string& path, int characterWidth) = 0;
 	virtual void AddBall(SDL_Rect dstBox, const std::string& path, int characterWidth) = 0;
 	virtual void AddBrick(SDL_Rect dstBox, const std::string& path, int characterWidth) = 0;
 	virtual void AddBubble(SDL_Rect dstBox, const std::string& path, int characterWidth) = 0;
 	virtual void AddBomb(SDL_Rect dstBox, const std::string& path, int characterWidth) = 0;
+protected:
+	IGame() {}
+	~IGame() {}
+
 };
 
 namespace Game {

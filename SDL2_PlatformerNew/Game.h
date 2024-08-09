@@ -30,6 +30,7 @@ public:
 	int CountOfBricks() const override;
 	bool IsEnd() override;
 
+	
 private:
 	std::unique_ptr<SDL_Window, void(*)(SDL_Window*)> window { nullptr, SDL_DestroyWindow };
 	std::unique_ptr<Background> background;
@@ -47,7 +48,6 @@ private:
 	std::chrono::milliseconds durationFrame, durationUpdate;
 
 	SDL_Rect gameOverRect;
-
 	bool isEnd;
 
 	void AddWall(SDL_Rect dstBox, const std::string& path, int characterWidth) override;
