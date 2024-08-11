@@ -55,28 +55,24 @@ bool MovableObject::Collision(MovableObject& object, const Object& other) {
 
 bool MovableObject::Collision(MovableObject& object, const SDL_Rect& other) {
 	Vec4f box1 = { object.box.x + object.vector.x * MovableObject::deltaT, object.box.y + object.vector.y * MovableObject::deltaT, object.box.w, object.box.h };
+	Vec4f box2 = { (float)other.x, (float)other.y, (float)other.w, (float)other.h };
 
-	auto LeftEdgeI = [](const SDL_Rect& box) -> int { return box.x; };
-	auto RightEdgeI = [](const SDL_Rect& box) -> int { return box.x + box.w; };
-	auto UpEdgeI = [](const SDL_Rect& box) -> int { return box.y; };
-	auto DownEdgeI = [](const SDL_Rect& box) -> int { return box.y + box.h; };
+	auto LeftEdge = [](const Vec4f& box) -> float { return box.x; };
+	auto RightEdge = [](const Vec4f& box) -> float { return box.x + box.w; };
+	auto UpEdge = [](const Vec4f& box) -> float { return box.y; };
+	auto DownEdge = [](const Vec4f& box) -> float { return box.y + box.h; };
 
-	auto LeftEdgeF = [](const Vec4f& box) -> float { return box.x; };
-	auto RightEdgeF = [](const Vec4f& box) -> float { return box.x + box.w; };
-	auto UpEdgeF = [](const Vec4f& box) -> float { return box.y; };
-	auto DownEdgeF = [](const Vec4f& box) -> float { return box.y + box.h; };
+	if (RightEdge(box1) > LeftEdge(box2) && LeftEdge(box1) < RightEdge(box2)
+		&& DownEdge(box1) > UpEdge(box2) && UpEdge(box1) < DownEdge(box2)) {
 
-	if (RightEdgeF(box1) > LeftEdgeI(other) && LeftEdgeF(box1) < RightEdgeI(other)
-		&& DownEdgeF(box1) > UpEdgeI(other) && UpEdgeF(box1) < DownEdgeI(other)) {
+		if (abs(UpEdge(box1) - DownEdge(box2)) < abs(DownEdge(box1) - UpEdge(box2))) {
 
-		if (abs(UpEdgeF(box1) - DownEdgeI(other)) < abs(DownEdgeF(box1) - UpEdgeI(other))) {
-
-			if (abs(UpEdgeF(box1) - DownEdgeI(other)) < abs(LeftEdgeF(box1) - RightEdgeI(other))
-				&& abs(UpEdgeF(box1) - DownEdgeI(other)) < abs(RightEdgeF(box1) - LeftEdgeI(other))) {
+			if (abs(UpEdge(box1) - DownEdge(box2)) < abs(LeftEdge(box1) - RightEdge(box2))
+				&& abs(UpEdge(box1) - DownEdge(box2)) < abs(RightEdge(box1) - LeftEdge(box2))) {
 				std::cout << "Up\n";
 				object.collision[UP] = true;
 			} else {
-				if (abs(LeftEdgeF(box1) - RightEdgeI(other)) < abs(RightEdgeF(box1) - LeftEdgeI(other))) {
+				if (abs(LeftEdge(box1) - RightEdge(box2)) < abs(RightEdge(box1) - LeftEdge(box2))) {
 					std::cout << "Left\n";
 					object.collision[LEFT] = true;
 				} else {
@@ -85,13 +81,13 @@ bool MovableObject::Collision(MovableObject& object, const SDL_Rect& other) {
 				}
 			}
 		} else {
-			if (abs(DownEdgeF(box1) - UpEdgeI(other)) < abs(LeftEdgeF(box1) - RightEdgeI(other))
-				&& abs(DownEdgeF(box1) - UpEdgeI(other)) < abs(RightEdgeF(box1) - LeftEdgeI(other))) {
+			if (abs(DownEdge(box1) - UpEdge(box2)) < abs(LeftEdge(box1) - RightEdge(box2))
+				&& abs(DownEdge(box1) - UpEdge(box2)) < abs(RightEdge(box1) - LeftEdge(box2))) {
 
 				std::cout << "Down\n";
 				object.collision[DOWN] = true;
 			} else {
-				if (abs(LeftEdgeF(box1) - RightEdgeI(other)) < abs(RightEdgeF(box1) - LeftEdgeI(other))) {
+				if (abs(LeftEdge(box1) - RightEdge(box2)) < abs(RightEdge(box1) - LeftEdge(box2))) {
 					std::cout << "Left\n";
 					object.collision[LEFT] = true;
 				} else {
