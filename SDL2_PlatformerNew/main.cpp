@@ -1,17 +1,18 @@
 #include "common.h"
 #include "IGame.h"
-
+// ERROR -> musim vnitrne pocitat pozici bez zaokrouhleni -> zaokrouhlit az pri vykresleni
 // TODO: Pridat Text
 //		 Pridat kruhovou kolizi na Bomb
 //       Pridat Menu
 
 int main(int argc, char* args[]) {
 	Game::Get().Init("PONG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 604, 850, SDL_WINDOW_SHOWN);
-
 	Game::Get().Start();
+
 	while (!Game::Get().IsEnd()) {
 		Game::Get().Loop();
 	}
+
 	if (Game::Get().CountOfBricks() > 0) {
 		std::cout << "Game over!\n\n";
 	}

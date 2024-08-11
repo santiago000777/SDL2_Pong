@@ -6,7 +6,7 @@
 class Object {
 public:
     Object() = delete;
-    Object(SDL_Rect dstBox, const std::string& path, int characterWidth);
+    Object(Vec4f box, const std::string& path, int characterWidth);
     Object(const Object& rhs) = delete;
     Object(Object&& rhs) = delete;
     virtual ~Object() = default;
@@ -20,7 +20,7 @@ public:
         UP,
         DOWN
     };
-    SDL_Rect GetDstBox() const;
+    Vec4f GetBox() const;
 
     int GetSpriteWidth() const;
     int GetCurrentSprite() const;
@@ -31,7 +31,7 @@ public:
     bool isAlive = true;
 protected:
 
-    SDL_Rect dstBox;
+    Vec4f box;
     SDL_Rect srcBox;
 
     bool isDestroyble = false;

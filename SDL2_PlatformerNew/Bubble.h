@@ -4,7 +4,7 @@
 class Bubble : public MovableObject {
 public:
 	Bubble() = delete;
-	Bubble(SDL_Rect dstBox, const std::string& path, int characterWidth);
+	Bubble(Vec4f box, const std::string& path, int characterWidth);
 	Bubble(const Bubble& rhs) = delete;
 	Bubble(Bubble&& rhs) = delete;
 	~Bubble() override;

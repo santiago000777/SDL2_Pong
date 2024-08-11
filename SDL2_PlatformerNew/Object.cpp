@@ -1,7 +1,7 @@
 #include "Object.h"
 
-SDL_Rect Object::GetDstBox() const {
-	return dstBox;
+Vec4f Object::GetBox() const {
+	return box;
 }
 
 int Object::GetSpriteWidth() const {
@@ -20,15 +20,15 @@ void Object::ChangeSprite() {
 		// vzdalenost prepony rohu od stredu kruhu je <= radius
 bool Object::Collision(const Object& object, const Circle& circle) {
 
-	auto TopLeftCorner = [](const Object& object) -> Vec2 { return { (float)object.GetDstBox().x, (float)object.GetDstBox().y }; };
-	auto TopRightCorner = [](const Object& object) -> Vec2 { return { (float)object.GetDstBox().x + (float)object.GetDstBox().w, (float)object.GetDstBox().y }; };
-	auto BottomLeftCorner = [](const Object& object) -> Vec2 { return { (float)object.GetDstBox().x, (float)object.GetDstBox().y + (float)object.GetDstBox().h }; };
-	auto BottomRightCorner = [](const Object& object) -> Vec2 { return { (float)object.GetDstBox().x + (float)object.GetDstBox().w, (float)object.GetDstBox().y + (float)object.GetDstBox().h }; };
+	auto TopLeftCorner = [](const Object& object) -> Vec2 { return { object.GetBox().x, object.GetBox().y }; };
+	auto TopRightCorner = [](const Object& object) -> Vec2 { return { object.GetBox().x + object.GetBox().w, object.GetBox().y }; };
+	auto BottomLeftCorner = [](const Object& object) -> Vec2 { return { object.GetBox().x, object.GetBox().y + object.GetBox().h }; };
+	auto BottomRightCorner = [](const Object& object) -> Vec2 { return { object.GetBox().x + object.GetBox().w, object.GetBox().y + object.GetBox().h }; };
 
-	auto LeftEdge = [](const Object& object) -> int { return object.GetDstBox().x; };
-	auto RightEdge = [](const Object& object) -> int { return object.GetDstBox().x + object.GetDstBox().w; };
-	auto UpEdge = [](const Object& object) -> int { return object.GetDstBox().y; };
-	auto DownEdge = [](const Object& object) -> int { return object.GetDstBox().y + object.GetDstBox().h; };
+	auto LeftEdge = [](const Object& object) -> float { return object.GetBox().x; };
+	auto RightEdge = [](const Object& object) -> float { return object.GetBox().x + object.GetBox().w; };
+	auto UpEdge = [](const Object& object) -> float { return object.GetBox().y; };
+	auto DownEdge = [](const Object& object) -> float { return object.GetBox().y + object.GetBox().h; };
 
 	auto Hypotenuse = [](float a, float b) -> float {
 		return sqrtf(powf(fabsf(a), 2.0f) + powf(fabsf(b), 2.0f));
@@ -55,11 +55,13 @@ bool Object::Collision(const Object& object, const Circle& circle) {
 
 void Object::Render() {
 	srcBox.x = srcBox.w * currentSprite;
-	SDL_RenderCopy(Renderer::Get().Renderer(), texture.get(), &srcBox, &dstBox);
+	SDL_Rect roundedBox = box.Get();
+	SDL_RenderCopy(Renderer::Get().Renderer(), texture.get(), &srcBox, &roundedBox);
 }
 
-Object::Object(SDL_Rect dstBox, const std::string& path, int characterWidth)
-	: dstBox(dstBox) {
+Object::Object(Vec4f box, const std::string& path, int characterWidth)
+	: box(box) {
+
 
 	SDL_Texture* picture;
 	std::tie(picture, srcBox) = CreateTexture(path, 255, 0, 255, 255);

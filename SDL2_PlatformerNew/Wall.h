@@ -3,7 +3,7 @@
 
 class Wall : public Object {
 public:
-    Wall(SDL_Rect dstBox, const std::string& path, int characterWidth);
+    Wall(Vec4f box, const std::string& path, int characterWidth);
     // copy ctor (zakazany)
     Wall(const Wall& rhs) = delete;
     // move ctor (zakazany)

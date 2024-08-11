@@ -5,7 +5,7 @@
 // 20x20
 class Bomb : public Object {
 public:
-	Bomb(SDL_Rect dstBox, const std::string& path, int characterWidth);
+	Bomb(Vec4f box, const std::string& path, int characterWidth);
 	// copy ctor (zakazany)
 	Bomb(const Bomb& rhs) = delete;
 	// move ctor (zakazany)

@@ -52,23 +52,34 @@ private:
 
 	template <typename Ty> void Add(SDL_Rect dstBox, const std::string& path, int characterWidth);
 	template<> void Add<Wall>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-		walls.push_back(std::make_unique<Wall>(dstBox, path, characterWidth));
+		Vec4f box = { (float)dstBox.x, (float)dstBox.y, (float)dstBox.w, (float)dstBox.h };
+
+		walls.push_back(std::make_unique<Wall>(box, path, characterWidth));
 	}
 	template<> void Add<Player>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
+		Vec4f box = { (float)dstBox.x, (float)dstBox.y, (float)dstBox.w, (float)dstBox.h };
 
-		players.push_back(std::make_unique<Player>(dstBox, path, characterWidth));
+		players.push_back(std::make_unique<Player>(box, path, characterWidth));
 	}
 	template<> void Add<Ball>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-		balls.push_back(std::make_unique<Ball>(dstBox, path, characterWidth));
+		Vec4f box = { (float)dstBox.x, (float)dstBox.y, (float)dstBox.w, (float)dstBox.h };
+
+		balls.push_back(std::make_unique<Ball>(box, path, characterWidth));
 	}
 	template<> void Add<Brick>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-		bricks.push_back(std::make_unique<Brick>(dstBox, path, characterWidth));
+		Vec4f box = { (float)dstBox.x, (float)dstBox.y, (float)dstBox.w, (float)dstBox.h };
+
+		bricks.push_back(std::make_unique<Brick>(box, path, characterWidth));
 	}
 	template<> void Add<Bubble>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-		bubbles.push_back(std::make_unique<Bubble>(dstBox, path, characterWidth));
+		Vec4f box = { (float)dstBox.x, (float)dstBox.y, (float)dstBox.w, (float)dstBox.h };
+
+		bubbles.push_back(std::make_unique<Bubble>(box, path, characterWidth));
 	}
 	template<> void Add<Bomb>(SDL_Rect dstBox, const std::string& path, int characterWidth) {
-		bombs.push_back(std::make_unique<Bomb>(dstBox, path, characterWidth));
+		Vec4f box = { (float)dstBox.x, (float)dstBox.y, (float)dstBox.w, (float)dstBox.h };
+
+		bombs.push_back(std::make_unique<Bomb>(box, path, characterWidth));
 	}
 
 	void Basket();

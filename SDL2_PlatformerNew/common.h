@@ -57,23 +57,28 @@ public:
 	}
 };
 
-struct Vec4 {
+struct Vec4f {
 public:
-	int x { 0 }, y { 0 }, w { 0 }, h { 0 };
+	float x { 0.0f }, y { 0.0f }, w { 0.0f }, h { 0.0f };
 
 public:
-	Vec4() {}
-	Vec4(int x, int y, int w, int h)
+	Vec4f() {}
+	Vec4f(float x, float y, float w, float h)
 		: x(x), y(y), w(w), h(h) {
 	}
 
-	void operator+=(const Vec4& vec) {
-		this->x += vec.x;
-		this->y += vec.y;
+	Vec4f(const Vec4f& vec)
+		: x(vec.x), y(vec.y), w(vec.w), h(vec.h) {
 	}
-	Vec4& operator+(Vec4 vec) {
-		vec += *this;
-		return vec;
+	void operator=(const Vec4f& vec) {
+		x = vec.x;
+		y = vec.y;
+		w = vec.w;
+		h = vec.h;
+	}
+
+	SDL_Rect Get() const {
+		return { (int)roundf(this->x), (int)roundf(this->y), (int)roundf(this->w), (int)roundf(this->h) };
 	}
 };
 

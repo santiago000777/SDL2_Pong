@@ -1,13 +1,13 @@
 #include "Bomb.h"
 
-Bomb::Bomb(SDL_Rect dstBox, const std::string& path, int characterWidth)
-	: Object(dstBox, path, characterWidth) {
+Bomb::Bomb(Vec4f box, const std::string& path, int characterWidth)
+	: Object(box, path, characterWidth) {
 
-	range.x = dstBox.x - dstBox.w;
-	range.y = dstBox.y - dstBox.h;
+	range.x = int(box.x - box.w);
+	range.y = int(box.y - box.h);
 
-	range.w = dstBox.w * 4;
-	range.h = dstBox.h * 4;
+	range.w = int(box.w * 4);
+	range.h = int(box.h * 4);
 }
 
 Bomb::~Bomb() {

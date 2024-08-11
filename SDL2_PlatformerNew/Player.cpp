@@ -3,8 +3,8 @@
 
 int Player::playerCount = 0;
 
-Player::Player(SDL_Rect dstBox, const std::string& path, int characterWidth)
-	: MovableObject(dstBox, path, characterWidth) {
+Player::Player(Vec4f box, const std::string& path, int characterWidth)
+	: MovableObject(box, path, characterWidth) {
 	idPlayer = playerCount;
 	playerCount++;
 }
@@ -72,8 +72,8 @@ void Player::Update() {
 	std::cout << "Player - " << points << "\n";
 
 	if (!this->collision[LEFT] && !this->collision[RIGHT] && !this->collision[UP] && !this->collision[DOWN]) {
-		this->dstBox.x += (int)roundf(vector.x * MovableObject::deltaT);
-		this->dstBox.y += (int)roundf(vector.y * MovableObject::deltaT);
+		this->box.x += vector.x * MovableObject::deltaT;
+		this->box.y += vector.y * MovableObject::deltaT;
 		currentSprite = 0;
 		return;
 	}
@@ -85,45 +85,45 @@ void Player::Update() {
 	if (this->collision[LEFT]) {
 
 		if (this->vector.x > 0 && !this->collision[RIGHT])
-			this->dstBox.x += (int)roundf(this->vector.x * MovableObject::deltaT);
+			this->box.x += this->vector.x * MovableObject::deltaT;
 
 		if (this->vector.y < 0 && !this->collision[UP]
 			|| this->vector.y > 0 && !this->collision[DOWN]) {
 
-			this->dstBox.y += (int)roundf(this->vector.y * MovableObject::deltaT);
+			this->box.y += this->vector.y * MovableObject::deltaT;
 		}
 	}
 	if (this->collision[RIGHT]) {
 
 		if (this->vector.x < 0 && !this->collision[LEFT]) {
-			this->dstBox.x += (int)roundf(this->vector.x * MovableObject::deltaT);
+			this->box.x += this->vector.x * MovableObject::deltaT;
 		}
 		if (this->vector.y < 0 && !this->collision[UP]
 			|| this->vector.y > 0 && !this->collision[DOWN]) {
 
-			this->dstBox.y += (int)roundf(this->vector.y * MovableObject::deltaT);
+			this->box.y += this->vector.y * MovableObject::deltaT;
 		}
 	}
 	if (this->collision[UP]) {
 
 		if (this->vector.y > 0 && !this->collision[DOWN])
-			this->dstBox.y += (int)roundf(this->vector.y * MovableObject::deltaT);
+			this->box.y += this->vector.y * MovableObject::deltaT;
 
 		if (this->vector.x < 0 && !this->collision[LEFT]
 			|| this->vector.x > 0 && !this->collision[RIGHT]) {
 
-			this->dstBox.x += (int)roundf(this->vector.x * MovableObject::deltaT);
+			this->box.x += this->vector.x * MovableObject::deltaT;
 		}
 	}
 	if (this->collision[DOWN]) {
 
 		if (this->vector.y < 0 && !this->collision[UP])
-			this->dstBox.y += (int)roundf(this->vector.y * MovableObject::deltaT);
+			this->box.y += this->vector.y * MovableObject::deltaT;
 
 		if (this->vector.x < 0 && !this->collision[LEFT]
 			|| this->vector.x > 0 && !this->collision[RIGHT]) {
 
-			this->dstBox.x += (int)roundf(this->vector.x * MovableObject::deltaT);
+			this->box.x += this->vector.x * MovableObject::deltaT;
 		}
 	}
 
@@ -152,6 +152,6 @@ void Player::DecreaseLives(int i) {
 }
 
 void Player::ResetPosition() {
-	dstBox.x = 255;
-	dstBox.y = 750;
+	box.x = 255.0f;
+	box.y = 750.0f;
 }

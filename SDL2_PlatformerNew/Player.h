@@ -3,7 +3,7 @@
 
 class Player : public MovableObject {
 public:
-    Player(SDL_Rect dstBox, const std::string& path, int characterWidth);
+    Player(Vec4f box, const std::string& path, int characterWidth);
     // copy ctor (zakazany)
     Player(const Player& rhs) = delete;
     // move ctor (zakazany)

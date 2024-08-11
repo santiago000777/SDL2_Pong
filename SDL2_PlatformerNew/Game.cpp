@@ -24,7 +24,8 @@ void SGame::Init(const std::string& windowName, int posX, int posY, int windowWi
 	Add<Wall>({ 25, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", 7);
 	Add<Wall>({ 25 + 525, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", 7);
 	Add<Wall>({ 25, 50, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
-	//Add<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
+
+	Add<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
 
 	Add<Player>({ 255, 750, 100, 24 }, "Pictures/paddle.bmp", 25);
 
@@ -169,8 +170,9 @@ void SGame::Update() {
 		for (auto& bubble : bubbles) {
 			if (MovableObject::Collision(*bubble, *ball)) {
 				bubble->isAlive = false;
-				SDL_Rect pom = { bubble->GetDstBox().x, bubble->GetDstBox().y, ball->GetDstBox().w, ball->GetDstBox().h };
-				balls.push_back(std::make_unique<Ball>(pom, ball->GetPath(), ball->GetSpriteWidth()));
+				Vec4f pom = { bubble->GetBox().x, bubble->GetBox().y, ball->GetBox().w, ball->GetBox().h };
+				bubble->Update();
+				balls.push_back(std::make_unique<Ball>(pom, bubble->GetVector(), ball->GetPath(), ball->GetSpriteWidth()));
 			}
 		}
 	}
