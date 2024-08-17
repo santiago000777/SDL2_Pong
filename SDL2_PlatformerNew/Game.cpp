@@ -13,11 +13,22 @@ SGame::~SGame() {
 
 void SGame::Init(const std::string& windowName, int posX, int posY, int windowWidth, int windowHeight, int flags) {
 	
+		// Init SDL2
 	SDL_Init(SDL_INIT_EVERYTHING);
 	window.reset(SDL_CreateWindow(windowName.c_str(), posX, posY, windowWidth, windowHeight, flags));
 	Renderer::Get().Init(window.get(), { 0, 0, windowWidth, windowHeight });
 
+		// Init SDL_ttf
 
+	TTF_Init();
+	font.reset(TTF_OpenFont("Fonts/PressStart2P-Regular.ttf", 8));
+		// Init Texts
+
+	scoreText.Init("Score:", font.get(), { 50, 10, 128, 32 }, textColor);
+	scoreNumber.Init("0", font.get(), { 178, 10, 16, 32 }, textColor);
+	livesText.Init("Lives:", font.get(), { 50, 810, 128, 32 }, textColor);
+
+	
 		// Init objects
 
 	SetBackground("Pictures/veitImg.bmp");
@@ -25,9 +36,11 @@ void SGame::Init(const std::string& windowName, int posX, int posY, int windowWi
 	Add<Wall>({ 25 + 525, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", 7);
 	Add<Wall>({ 25, 50, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
 
-	Add<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
+	//Add<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
 
 	Add<Player>({ 255, 750, 100, 24 }, "Pictures/paddle.bmp", 25);
+		// Init Text
+	livesNumber.Init(std::to_string(players[0]->GetLives()), font.get(), {178, 810, 16, 32}, textColor);
 
 	const float ballScale = 3.5f;
 	Add<Ball>({ 300, 200, (int)roundf(7 * ballScale), (int)roundf(7 * ballScale) }, "Pictures/BallSpriteSheet.bmp", 7);
@@ -131,6 +144,14 @@ void SGame::Render() {
 	SDL_RenderClear(Renderer::Get().Renderer());
 
 	background->Render();
+
+		// Render -> score
+	scoreText.Render();
+	scoreNumber.Render();
+
+	livesText.Render();
+	livesNumber.Render();
+
 	for (auto& wall : walls) {
 		wall->Render();
 	}
@@ -215,8 +236,14 @@ void SGame::Update() {
 		}
 	}
 	for (auto& player : players) {
-		player->DecreaseLives(uncatchedBalls);
+		if (uncatchedBalls > 0) {
+			player->DecreaseLives(uncatchedBalls);
+		}
 	}
+	if (uncatchedBalls > 0) {
+		livesNumber.ChangeText(std::to_string(players[0]->GetLives()));
+	}
+
 	for (auto& player : players) {
 		if (player->IsGameOver()) {
 			player->isAlive = false;
@@ -260,6 +287,10 @@ void SGame::Collision() {
 			if (MovableObject::Collision(*ball, *player)) {
 				if (ball->GetOwnerId() == player->GetPlayerId() && ball->GetPoints() != 0) {
 					player->AddPoints(ball->GetPoints());
+					if (player->GetPlayerId() == 0) {
+						scoreNumber.ChangeText(std::to_string(player->GetPoints()));
+					}
+
 					ball->ResetPoints();
 				}
 				ball->SetOwnerId(player->GetPlayerId());

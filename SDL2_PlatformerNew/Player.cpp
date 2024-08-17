@@ -137,6 +137,14 @@ int Player::GetPlayerId() const {
 	return idPlayer;
 }
 
+int Player::GetLives() const {
+	return lives;
+}
+
+int Player::GetPoints() const {
+	return points;
+}
+
 void Player::AddPoints(int points) {
 	this->points += points;
 }

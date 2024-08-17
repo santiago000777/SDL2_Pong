@@ -8,6 +8,7 @@
 #include "Brick.h"
 #include "Bubble.h"
 #include "Bomb.h"
+#include "Text.h"
 
 #define FPS		60
 
@@ -49,6 +50,12 @@ private:
 
 	SDL_Rect gameOverRect = { 0, 800, 600, 20 };
 	bool isEnd = false;
+
+	std::unique_ptr<TTF_Font, void(*)(TTF_Font*)> font { nullptr, TTF_CloseFont };
+	SDL_Color textColor = { 255, 255, 255, 255 };
+
+	Text scoreText, scoreNumber;
+	Text livesText, livesNumber;
 
 	template <typename Ty> void Add(SDL_Rect dstBox, const std::string& path, int characterWidth);
 	template<> void Add<Wall>(SDL_Rect dstBox, const std::string& path, int characterWidth) {

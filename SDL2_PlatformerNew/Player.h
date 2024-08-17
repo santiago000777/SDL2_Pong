@@ -23,6 +23,8 @@ public:
     void ResetPosition();
 
     int GetPlayerId() const;
+    int GetLives() const;
+    int GetPoints() const;
     void AddPoints(int points);
 
 private:
