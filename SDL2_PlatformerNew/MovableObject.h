@@ -22,7 +22,7 @@ public:
 protected:
 	std::string path;
 	bool collision[4] = { 0, 0, 0, 0 };
-	Vec2 vector;
+	Vec2 vector;//s
 private:
 
 };

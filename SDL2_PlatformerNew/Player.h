@@ -37,6 +37,6 @@ private:
         RIGHT = 'd'
     };
 
-    int lives = 3;
-    int points = 0;
+    int lives = 3;//s
+    int points = 0;//s
 };

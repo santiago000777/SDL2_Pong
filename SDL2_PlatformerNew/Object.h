@@ -31,15 +31,14 @@ public:
     bool isAlive = true;
 protected:
 
-    Vec4f box;
+    Vec4f box;//s
     SDL_Rect srcBox;
 
     bool isDestroyble = false;
 
     std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> texture { nullptr, DeleteTexture };
 
-    int currentSprite = 0;
+    int currentSprite = 0;//s
 private:
     int sprites = 0;
-
 };

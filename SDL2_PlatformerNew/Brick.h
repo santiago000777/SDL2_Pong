@@ -17,5 +17,5 @@ public:
     int GetPoints() const;
 
 private:
-    int points = 0;
+    int points = 0;//s
 };

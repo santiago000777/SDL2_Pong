@@ -38,8 +38,8 @@ private:
 
 	std::vector<std::unique_ptr<Wall>> walls;
 	std::vector<std::unique_ptr<Ball>> balls;
-	std::vector<std::unique_ptr<Player>> players;
-	std::vector<std::unique_ptr<Brick>> bricks;
+	std::vector<std::unique_ptr<Player>> players;//s + size
+	std::vector<std::unique_ptr<Brick>> bricks;//s + size
 	std::vector<std::unique_ptr<Bubble>> bubbles;
 	std::vector<std::unique_ptr<Bomb>> bombs;
 
