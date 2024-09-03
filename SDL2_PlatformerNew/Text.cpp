@@ -28,6 +28,5 @@ void Text::ChangeText(std::string text) {
 }
 
 Text::~Text() {
-
 	std::cout << "Deleted Text\n";
 }
