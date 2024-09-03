@@ -17,6 +17,7 @@ void File::Open(MODE mode) {
 		case MODE::READ: {
 			file.open(fileName, std::ios::in | std::ios::binary);
 			currentMode = MODE::READ;
+			position = 0;
 			break;
 		}
 		case MODE::WRITE: {

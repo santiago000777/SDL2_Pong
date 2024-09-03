@@ -56,7 +56,7 @@ public:
 		file.write((char*)value.data(), size);
 	}
 	template<typename T>
-	void Save(const std::vector<T>& v, int count, int elementSize = sizeof(T)) {
+	void Save(const std::vector<T>& v, int elementSize = sizeof(T)) {
 		if (currentMode != MODE::WRITE) {
 			std::cout << "Opacny mod\n";
 			return;
@@ -65,7 +65,9 @@ public:
 			std::cout << "Nelze otevrit\n";
 			return;
 		}
-		for (int i = 0; i < count; i++) {
+
+		Save(v.size());
+		for (int i = 0; i < v.size(); i++) {
 			file.write((char*)&v[i], elementSize);
 		}
 	}
@@ -116,7 +118,7 @@ public:
 		position += size;
 	}
 	template<typename T>
-	void Load(std::vector<T>& v, int count, int elementSize = sizeof(T)) {
+	void Load(std::vector<T>& v, int elementSize = sizeof(T)) {
 		if (currentMode != MODE::READ) {
 			std::cout << "Opacny mod\n";
 			return;
@@ -126,8 +128,11 @@ public:
 			return;
 		}
 
-		v.resize(count);
-		for (int i = 0; i < count; i++) {
+		size_t size;
+		Load(size);
+		v.resize(size);
+
+		for (int i = 0; i < size; i++) {
 			file.seekg(position);
 			file.read((char*)&v[i], elementSize);
 			position += elementSize;
@@ -140,3 +145,4 @@ private:
 	std::string fileName;
 	std::fstream file;
 };
+
