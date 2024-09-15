@@ -43,7 +43,7 @@ public:
 		}
 		file.write((char*)&value, size);
 	}
-	template<> void Save(const std::string& value, int size) {
+	void Save(const std::string& value) {
 		if (currentMode != MODE::WRITE) {
 			std::cout << "Opacny mod\n";
 			return;
@@ -52,8 +52,8 @@ public:
 			std::cout << "Nelze otevrit\n";
 			return;
 		}
-
-		file.write((char*)value.data(), size);
+		Save(value.size());
+		file.write((char*)value.data(), value.size());
 	}
 	template<typename T>
 	void Save(const std::vector<T>& v, int elementSize = sizeof(T)) {
@@ -102,7 +102,7 @@ public:
 		file.read((char*)&value, size);
 		position += size;
 	}
-	template<> void Load(std::string& s, int size) {
+	void Load(std::string& s) {
 		if (currentMode != MODE::READ) {
 			std::cout << "Opacny mod\n";
 			return;
@@ -112,7 +112,10 @@ public:
 			return;
 		}
 
+		size_t size;
+		Load(size);
 		s.resize(size);
+
 		file.seekg(position);
 		file.read((char*)s.data(), size);
 		position += size;

@@ -9,6 +9,7 @@ File::~File() {
 	if (file.is_open()) {
 		file.close();
 	}
+	std::cout << "Deleted file\n";
 }
 
 void File::Open(MODE mode) {
@@ -39,9 +40,11 @@ void File::Close() {
 }
 
 void File::Clear() {
-	if (currentMode != MODE::WRITE) {
-		Open(MODE::WRITE);
+	if (file.is_open()) {
+		file.close();
 	}
+	file.open(fileName, std::ios::out | std::ios::binary);
+
 	if (!file.is_open()) {
 		std::cout << "Nelze otevrit - mazani\n";
 		return;
