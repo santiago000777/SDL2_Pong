@@ -34,7 +34,7 @@ int main(int argc, char* args[]) {
 		...
 
 	--CLONE GITHUB REPO--
-	* git clone <pathFromGitHub>				-> kopirovani repo z github
+	* git clone <pathFromGitHub> <path>			-> kopirovani repo z github do <path> (musi byt obsazeno .vcxproj)
 
 	--PULL--
 	* git log									-> zobrazeni vsech commitu
@@ -45,6 +45,8 @@ int main(int argc, char* args[]) {
 
 	* git add <path>							-> pridani daneho souboru, ktery se zmenil, ke commitu
 	* git add .									-> pridani vsech souboru, ktery se zmenil, ke commitu
+	* git add SLOZKA/\*.<koncovka>				-> pridani vsech souboru s .<koncovka> ze slozky SLOZKA
+	*
 	* git rm -r --cached <path>					-> odebrani zmeny
 
 	* git commit -m "<msg>"						-> commit se zpravou
