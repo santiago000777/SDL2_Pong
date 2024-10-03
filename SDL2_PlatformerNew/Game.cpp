@@ -65,37 +65,36 @@ void SGame::Init(const std::string& windowName, int posX, int posY, int windowWi
 
 
 
-	firstUpdate = std::chrono::high_resolution_clock::now();
+	updateTimer.SetFirst();
 }
 
 void SGame::Loop() {
-
-	durationUpdate = std::chrono::duration_cast<std::chrono::milliseconds>(secondUpdate - firstUpdate);
-	if (durationUpdate.count() >= deltaTime / 4) {
+	updateTimer.CalculateDuration();
+	if (updateTimer.GetDuration_ms() >= deltaTime / 4) {
 		Basket();
 
 		if (bricks.size() == 0) {
 			isEnd = true;
 		}
 
-		MovableObject::deltaT = (float)durationUpdate.count();
+		MovableObject::deltaT = (float)updateTimer.GetDuration_ms();
 		//std::cout << durationUpdate.count() << " ms\n";
 
-		firstUpdate = std::chrono::high_resolution_clock::now();
+		updateTimer.SetFirst();
 
 		HandleEvents();
 		Collision();
 		Update();
 	}
-	secondUpdate = std::chrono::high_resolution_clock::now();
+	updateTimer.SetSecond();
 
-	durationFrame = std::chrono::duration_cast<std::chrono::milliseconds>(secondFrame - firstFrame);
-	if (durationFrame.count() >= deltaTime) {
-
-		firstFrame = std::chrono::high_resolution_clock::now();
+	frameTimer.CalculateDuration();
+	if (frameTimer.GetDuration_ms() >= deltaTime) {
+		
+		frameTimer.SetFirst();
 		Render();
 	}
-	secondFrame = std::chrono::high_resolution_clock::now();
+	frameTimer.SetSecond();
 }
 
 void SGame::Start() {
@@ -104,12 +103,14 @@ void SGame::Start() {
 	background->Render();
 	SDL_RenderPresent(Renderer::Get().Renderer());
 
+
 	while (sec < 3) {
-		durationUpdate = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - firstUpdate);
-		if (durationUpdate.count() >= 1000) {
+		updateTimer.SetSecond();
+		updateTimer.CalculateDuration();
+		if (updateTimer.GetDuration_ms() >= 1000) {
 			std::cout << sec + 1 << "...\n";
 			sec++;
-			firstUpdate = std::chrono::high_resolution_clock::now();
+			updateTimer.SetFirst();
 		}
 	}
 }
@@ -157,6 +158,7 @@ void SGame::Render() {
 	}
 	for (auto& brick : bricks) {
 		brick->Render();
+		
 	}
 	for (auto& ball : balls) {
 		ball->Render();
@@ -330,4 +332,8 @@ void SGame::Collision() {
 			MovableObject::Collision(*player, *wall);
 		}
 	}
+}
+
+void SGame::SaveLoad() {
+
 }

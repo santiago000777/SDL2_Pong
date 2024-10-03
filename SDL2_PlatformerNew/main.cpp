@@ -1,7 +1,7 @@
 #include "common.h"
 #include "IGame.h"
-// ERROR -> musim vnitrne pocitat pozici bez zaokrouhleni -> zaokrouhlit az pri vykresleni
-// TODO: Pridat Text
+
+// TODO: 
 //		 Pridat kruhovou kolizi na Bomb
 //       Pridat Menu
 

@@ -9,6 +9,7 @@
 #include "Bubble.h"
 #include "Bomb.h"
 #include "Text.h"
+#include "Timer.h"
 
 #define FPS		60
 
@@ -45,8 +46,10 @@ private:
 
 
 	const float deltaTime = 1000.0f / FPS;
-	std::chrono::time_point<std::chrono::high_resolution_clock> firstFrame, secondFrame, firstUpdate, secondUpdate;
-	std::chrono::milliseconds durationFrame, durationUpdate;
+	/*std::chrono::time_point<std::chrono::high_resolution_clock> firstFrame, secondFrame, firstUpdate, secondUpdate;
+	std::chrono::milliseconds durationFrame, durationUpdate;*/
+	Timer frameTimer, updateTimer, fileTimer;
+
 
 	SDL_Rect gameOverRect = { 0, 800, 600, 20 };
 	bool isEnd = false;
@@ -94,4 +97,5 @@ private:
 	void Update();
 	void HandleEvents();
 	void Collision();
+	void SaveLoad();
 };
