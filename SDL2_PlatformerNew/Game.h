@@ -97,5 +97,7 @@ private:
 	void Update();
 	void HandleEvents();
 	void Collision();
-	void SaveLoad();
+	void FileHandle();
+	void Save();
+	void Load();
 };

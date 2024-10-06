@@ -71,6 +71,22 @@ public:
 			file.write((char*)&v[i], elementSize);
 		}
 	}
+	template<typename T>
+	void Save(const std::vector<std::unique_ptr<T>>& v, int elementSize = sizeof(T)) {
+		if (currentMode != MODE::WRITE) {
+			std::cout << "Opacny mod\n";
+			return;
+		}
+		if (!file.is_open()) {
+			std::cout << "Nelze otevrit\n";
+			return;
+		}
+
+		Save(v.size());
+		for (int i = 0; i < v.size(); i++) {
+			file.write((char*)v[i].get(), elementSize);
+		}
+	}
 
 
 	template<typename T>
@@ -138,6 +154,29 @@ public:
 		for (int i = 0; i < size; i++) {
 			file.seekg(position);
 			file.read((char*)&v[i], elementSize);
+			position += elementSize;
+		}
+	}
+	template<typename T>
+	void Load(std::vector<std::unique_ptr<T>>& v, int elementSize = sizeof(T)) {
+		if (currentMode != MODE::READ) {
+			std::cout << "Opacny mod\n";
+			return;
+		}
+		if (!file.is_open()) {
+			std::cout << "Nelze otevrit\n";
+			return;
+		}
+
+		size_t size;
+		Load(size);
+		v.reserve(size);
+
+		T pom;
+		for (int i = 0; i < size; i++) {
+			file.seekg(position);
+			file.read((char*)&pom, elementSize);
+			v.emplace_back(std::make_unique<T>(pom));
 			position += elementSize;
 		}
 	}

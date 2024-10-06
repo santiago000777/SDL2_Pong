@@ -66,9 +66,13 @@ void SGame::Init(const std::string& windowName, int posX, int posY, int windowWi
 
 
 	updateTimer.SetFirst();
+	frameTimer.SetFirst();
+	fileTimer.SetFirst();
 }
 
 void SGame::Loop() {
+
+		// UPDATE
 	updateTimer.CalculateDuration();
 	if (updateTimer.GetDuration_ms() >= deltaTime / 4) {
 		Basket();
@@ -78,7 +82,6 @@ void SGame::Loop() {
 		}
 
 		MovableObject::deltaT = (float)updateTimer.GetDuration_ms();
-		//std::cout << durationUpdate.count() << " ms\n";
 
 		updateTimer.SetFirst();
 
@@ -88,6 +91,7 @@ void SGame::Loop() {
 	}
 	updateTimer.SetSecond();
 
+		// FRAME
 	frameTimer.CalculateDuration();
 	if (frameTimer.GetDuration_ms() >= deltaTime) {
 		
@@ -95,6 +99,14 @@ void SGame::Loop() {
 		Render();
 	}
 	frameTimer.SetSecond();
+
+		// FILEHANDLE
+	fileTimer.CalculateDuration();
+	if (fileTimer.GetDuration_ms() >= 10000) {
+		FileHandle();
+		fileTimer.SetFirst();
+	}
+	fileTimer.SetSecond();
 }
 
 void SGame::Start() {
@@ -104,7 +116,7 @@ void SGame::Start() {
 	SDL_RenderPresent(Renderer::Get().Renderer());
 
 
-	while (sec < 3) {
+	while (sec < 4) {
 		updateTimer.SetSecond();
 		updateTimer.CalculateDuration();
 		if (updateTimer.GetDuration_ms() >= 1000) {
@@ -334,6 +346,19 @@ void SGame::Collision() {
 	}
 }
 
-void SGame::SaveLoad() {
+void SGame::FileHandle() {
+	if (PressedKey('s')) {
+		Save();
+	}
+	if (PressedKey('l')) {
+		Load();
+	}
+}
+
+void SGame::Save() {
+
+}
+
+void SGame::Load() {
 
 }
