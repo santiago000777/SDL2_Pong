@@ -1,12 +1,15 @@
 #pragma once
 #include "Object.h"
+#include "File.h"
+
 class Brick : public Object {
 public:
+    Brick(){}
     Brick(Vec4f box, const std::string& path, int characterWidth);
     // copy ctor (zakazany)
     Brick(const Brick& rhs) = delete;
     // move ctor (zakazany)
-    Brick(Brick&& rhs) = delete;
+    Brick(Brick&& rhs);
     // Destructor
     ~Brick() override;
     // copy prirazeni
@@ -16,6 +19,8 @@ public:
 
     int GetPoints() const;
 
+    void Save(File& file);
+    void Load(File& file);
 private:
-    int points = 0;//s
+    int points = 1;
 };

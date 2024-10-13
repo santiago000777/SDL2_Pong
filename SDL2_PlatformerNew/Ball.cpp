@@ -40,6 +40,24 @@ Ball::Ball(Vec4f box, Vec2 vector, const std::string& path, int characterWidth)
 	}
 }
 
+//Ball::Ball(const Ball& rhs) {
+//	this->srcBox = rhs.srcBox;
+//	this->isDestroyble = rhs.isDestroyble;
+//	this->vector = rhs.vector;
+//	this->
+//	memcpy(this->collision, rhs.collision, 4 * sizeof(bool));
+//}
+
+
+Ball::Ball(Ball&& rhs) 
+	: MovableObject(std::move(rhs)) {
+
+	points = rhs.points;
+	playerOwnerId = rhs.playerOwnerId;
+	path = "Pictures/BallSpriteSheet.bmp";
+	auto [tex, _] = CreateTexture(path, 255, 0, 255, 255);
+	texture.reset(tex);
+}
 
 Ball::~Ball() {
 	std::cout << "Deleted ball\n";
@@ -209,4 +227,26 @@ void Ball::ResetPosition() {
 		vector = { dist(randomNum), -dist(randomNum) };
 	}
 	std::cout << vector.x << "  " << vector.y << "\n";
+}
+
+void Ball::Save(File& file) {
+	file.Save(srcBox);
+	file.Save(box);
+	file.Save(currentSprite);
+
+	file.Save(vector);
+
+	file.Save(points);
+	file.Save(playerOwnerId);
+}
+
+void Ball::Load(File& file) {
+	file.Load(srcBox);
+	file.Load(box);
+	file.Load(currentSprite);
+
+	file.Load(vector);
+
+	file.Load(points);
+	file.Load(playerOwnerId);
 }

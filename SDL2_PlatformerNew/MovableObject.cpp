@@ -143,10 +143,6 @@ bool MovableObject::Collision(const Object& object, const SDL_Rect& other) {
 	}
 }
 
-const std::string& MovableObject::GetPath() const {
-	return path;
-}
-
 const Vec2 MovableObject::GetVector() const {
 	return vector;
 }
@@ -207,8 +203,17 @@ bool MovableObject::Collision(MovableObject& object, MovableObject& other) {
 }
 
 MovableObject::MovableObject(Vec4f box, const std::string& path, int characterWidth)
-	: Object(box, path, characterWidth), path(path) {
+	: Object(box, path, characterWidth) {
 
+}
+
+MovableObject::MovableObject(MovableObject&& rhs) 
+	: Object(std::move(rhs)) {
+
+	vector = rhs.vector;
+	
+	memcpy(collision, rhs.collision, 4 * sizeof(bool));
+	
 }
 
 MovableObject::~MovableObject() {

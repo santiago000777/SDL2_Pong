@@ -10,6 +10,7 @@
 #include "Bomb.h"
 #include "Text.h"
 #include "Timer.h"
+#include "File.h"
 
 #define FPS		60
 
@@ -39,17 +40,16 @@ private:
 
 	std::vector<std::unique_ptr<Wall>> walls;
 	std::vector<std::unique_ptr<Ball>> balls;
-	std::vector<std::unique_ptr<Player>> players;//s + size
-	std::vector<std::unique_ptr<Brick>> bricks;//s + size
+	std::vector<std::unique_ptr<Player>> players;
+	std::vector<std::unique_ptr<Brick>> bricks;
 	std::vector<std::unique_ptr<Bubble>> bubbles;
 	std::vector<std::unique_ptr<Bomb>> bombs;
-
+	
 
 	const float deltaTime = 1000.0f / FPS;
-	/*std::chrono::time_point<std::chrono::high_resolution_clock> firstFrame, secondFrame, firstUpdate, secondUpdate;
-	std::chrono::milliseconds durationFrame, durationUpdate;*/
 	Timer frameTimer, updateTimer, fileTimer;
-
+	File file {"data.bin"};
+	
 
 	SDL_Rect gameOverRect = { 0, 800, 600, 20 };
 	bool isEnd = false;

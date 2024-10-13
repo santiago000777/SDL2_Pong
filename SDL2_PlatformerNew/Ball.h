@@ -1,14 +1,16 @@
 #pragma once
 #include "MovableObject.h"
+#include "File.h"
 
 class Ball : public MovableObject {
 public:
+    Ball(){}
     Ball(Vec4f box, const std::string& path, int characterWidth);
     Ball(Vec4f box, Vec2 vector, const std::string& path, int characterWidth);
     // copy ctor (zakazany)
     Ball(const Ball& rhs) = delete;
     // move ctor (zakazany)
-    Ball(Ball&& rhs) = delete;
+    Ball(Ball&& rhs)/* = delete*/;
     // Destructor
     ~Ball() override;
     // copy prirazeni
@@ -27,7 +29,10 @@ public:
     void ResetPoints();
     void ResetPosition();
 
+    void Save(File& file);
+    void Load(File& file);
 protected:
     int points = 0;
+ 
     int playerOwnerId = -1;
 };

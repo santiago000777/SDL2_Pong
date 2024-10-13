@@ -3,6 +3,7 @@
 
 int Player::playerCount = 0;
 
+
 Player::Player(Vec4f box, const std::string& path, int characterWidth)
 	: MovableObject(box, path, characterWidth) {
 	idPlayer = playerCount;
@@ -14,8 +15,19 @@ Player::Player(Vec4f box, const std::string& path, int characterWidth)
 //}
 //
 //Player::Player(Player&& rhs)
-//	: Object(std::move(rhs)) {
+//	: Object(rhs) {
+//
 //}
+
+Player::Player(Player&& rhs) 
+	: MovableObject(std::move(rhs)){
+
+	lives = rhs.lives;
+	points = rhs.points;
+	path = "Pictures/paddle.bmp"; 
+	auto [tex, _] = CreateTexture(path, 255, 0, 255, 255);
+	texture.reset(tex);
+}
 
 Player::~Player() {
 	std::cout << "Deleted player\n";
@@ -68,8 +80,6 @@ void Player::HandleEvents() {
 }
 
 void Player::Update() {
-
-	std::cout << "Player - " << points << "\n";
 
 	if (!this->collision[LEFT] && !this->collision[RIGHT] && !this->collision[UP] && !this->collision[DOWN]) {
 		this->box.x += vector.x * MovableObject::deltaT;
@@ -148,6 +158,33 @@ int Player::GetPoints() const {
 void Player::AddPoints(int points) {
 	this->points += points;
 }
+
+
+void Player::Save(File& file) {
+	file.Save(srcBox);
+	file.Save(box);
+	file.Save(currentSprite);
+
+	file.Save(vector);
+
+	file.Save(lives);
+	file.Save(points);
+}
+
+void Player::Load(File& file) {
+	idPlayer = playerCount;
+	playerCount++;
+
+	file.Load(srcBox);
+	file.Load(box);
+	file.Load(currentSprite);
+
+	file.Load(vector);
+
+	file.Load(lives);
+	file.Load(points);
+}
+
 
 bool Player::IsGameOver() const {
 	if (lives <= 0)

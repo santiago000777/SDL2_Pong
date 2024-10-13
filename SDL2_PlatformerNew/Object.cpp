@@ -1,5 +1,30 @@
 #include "Object.h"
 
+Object::Object(Vec4f box, const std::string& path, int characterWidth)
+	: box(box), path(path) {
+
+
+	SDL_Texture* picture;
+	std::tie(picture, srcBox) = CreateTexture(path, 255, 0, 255, 255);
+
+	sprites = srcBox.w / characterWidth;
+	srcBox.w = characterWidth;
+
+	texture.reset(picture);
+}
+
+Object::Object(Object&& rhs) {
+	box = rhs.box;
+	srcBox = rhs.srcBox;
+	isDestroyble = rhs.isDestroyble;
+	currentSprite = rhs.currentSprite;
+	isAlive = rhs.isAlive;
+}
+
+const std::string& Object::GetPath() const {
+	return path;
+}
+
 Vec4f Object::GetBox() const {
 	return box;
 }
@@ -59,15 +84,3 @@ void Object::Render() {
 	SDL_RenderCopy(Renderer::Get().Renderer(), texture.get(), &srcBox, &roundedBox);
 }
 
-Object::Object(Vec4f box, const std::string& path, int characterWidth)
-	: box(box) {
-
-
-	SDL_Texture* picture;
-	std::tie(picture, srcBox) = CreateTexture(path, 255, 0, 255, 255);
-
-	sprites = srcBox.w / characterWidth;
-	srcBox.w = characterWidth;
-
-	texture.reset(picture);
-}

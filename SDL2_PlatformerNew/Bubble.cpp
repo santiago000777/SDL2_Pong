@@ -3,7 +3,6 @@
 Bubble::Bubble(Vec4f box, const std::string& path, int characterWidth)
 	: MovableObject(box, path, characterWidth) {
 
-	isDestroyble = false;
 	std::random_device randomNum;
 	std::uniform_real_distribution<float> dist(0.05f, 0.2f);
 
@@ -26,6 +25,14 @@ Bubble::Bubble(Vec4f box, const std::string& path, int characterWidth)
 
 	this->box.x = (float)position(randomNum);
 	this->box.y = (float)position(randomNum);
+}
+
+Bubble::Bubble(Bubble&& rhs) 
+	: MovableObject(std::move(rhs)) {
+
+	path = "Pictures/BubbleSpriteSheet.bmp";
+	auto [tex, _] = CreateTexture(path, 255, 0, 255, 255);
+	texture.reset(tex);
 }
 
 Bubble::~Bubble() {
@@ -111,4 +118,20 @@ void Bubble::Update() {
 	this->collision[RIGHT] = false;
 	this->collision[UP] = false;
 	this->collision[DOWN] = false;
+}
+
+void Bubble::Save(File& file) {
+	file.Save(srcBox);
+	file.Save(box);
+	file.Save(currentSprite);
+
+	file.Save(vector);
+}
+
+void Bubble::Load(File& file) {
+	file.Load(srcBox);
+	file.Load(box);
+	file.Load(currentSprite);
+
+	file.Load(vector);
 }

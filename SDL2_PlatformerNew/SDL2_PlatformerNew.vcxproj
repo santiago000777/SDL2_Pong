@@ -145,6 +145,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Text.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +170,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Picture.h" />
     <ClInclude Include="Text.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

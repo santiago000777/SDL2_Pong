@@ -102,11 +102,12 @@ void SGame::Loop() {
 
 		// FILEHANDLE
 	fileTimer.CalculateDuration();
-	if (fileTimer.GetDuration_ms() >= 10000) {
+	if (fileTimer.GetDuration_ms() >= 1000) {
 		FileHandle();
 		fileTimer.SetFirst();
 	}
 	fileTimer.SetSecond();
+	
 }
 
 void SGame::Start() {
@@ -349,16 +350,104 @@ void SGame::Collision() {
 void SGame::FileHandle() {
 	if (PressedKey('s')) {
 		Save();
+		std::cout << "Saved!\n";
 	}
 	if (PressedKey('l')) {
 		Load();
+		std::cout << "Loaded!\n";
 	}
 }
 
 void SGame::Save() {
+	file.Clear();
+	file.Open(File::MODE::WRITE);
 
+	file.Save(balls.size());
+	for (auto& ball : balls) {
+		ball->Save(file);
+	}
+
+	file.Save(players.size());
+	for (auto& player : players) {
+		player->Save(file);
+	}
+
+	file.Save(bricks.size());
+	for (auto& brick : bricks) {
+		brick->Save(file);
+	}
+
+	file.Save(bubbles.size());
+	for (auto& bubble : bubbles) {
+		bubble->Save(file);
+	}
+
+	file.Save(bombs.size());
+	for (auto& bomb : bombs) {
+		bomb->Save(file);
+	}
+
+	file.Close();
 }
 
 void SGame::Load() {
+	file.Open(File::MODE::READ);
+	size_t size;
 
+	file.Load(size);
+	balls.clear();
+	balls.reserve(size);
+
+	Ball ball;
+	for (int i = 0; i < size; i++) {
+		ball.Load(file);
+		balls.emplace_back(std::make_unique<Ball>(std::move(ball)));
+	}
+
+
+	file.Load(size);
+	players.clear();
+	players.reserve(size);
+
+	Player player;
+	for (int i = 0; i < size; i++) {
+		player.Load(file);
+		scoreNumber.ChangeText(std::to_string(player.GetPoints()));
+		livesNumber.ChangeText(std::to_string(player.GetLives()));
+		players.emplace_back(std::make_unique<Player>(std::move(player)));
+	}
+
+	
+	
+	file.Load(size);
+	bricks.clear();
+	bricks.reserve(size);
+
+	Brick brick;
+	for (int i = 0; i < size; i++) {
+		brick.Load(file);
+		bricks.emplace_back(std::make_unique<Brick>(std::move(brick)));
+	}
+
+	file.Load(size);
+	bubbles.clear();
+	bubbles.reserve(size);
+
+	Bubble bubble;
+	for (int i = 0; i < size; i++) {
+		bubble.Load(file);
+		bubbles.emplace_back(std::make_unique<Bubble>(std::move(bubble)));
+	}
+
+	file.Load(size);
+	bombs.clear();
+	bombs.reserve(size);
+
+	Bomb bomb;
+	for (int i = 0; i < size; i++) {
+		bomb.Load(file);
+		bombs.emplace_back(std::make_unique<Bomb>(std::move(bomb)));
+	}
+
+	file.Close();
 }

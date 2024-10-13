@@ -1,13 +1,16 @@
 #pragma once
 #include "MovableObject.h"
+#include "File.h"
 
 class Player : public MovableObject {
 public:
+    Player() {}
+
     Player(Vec4f box, const std::string& path, int characterWidth);
     // copy ctor (zakazany)
     Player(const Player& rhs) = delete;
     // move ctor (zakazany)
-    Player(Player&& rhs) = delete;
+    Player(Player&& rhs)/* = delete*/;
     // Destructor
     ~Player() override;
     // copy prirazeni
@@ -27,6 +30,8 @@ public:
     int GetPoints() const;
     void AddPoints(int points);
 
+    void Save(File& file);
+    void Load(File& file);
 private:
     int idPlayer;
     static int playerCount;
@@ -37,6 +42,6 @@ private:
         RIGHT = 'd'
     };
 
-    int lives = 3;//s
-    int points = 0;//s
+    int lives = 3;
+    int points = 0;
 };
