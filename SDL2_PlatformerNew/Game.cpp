@@ -103,11 +103,11 @@ void SGame::Loop() {
 		// FILEHANDLE
 	fileTimer.CalculateDuration();
 	if (fileTimer.GetDuration_ms() >= 1000) {
-		FileHandle();
+		
 		fileTimer.SetFirst();
+		FileHandle();
 	}
 	fileTimer.SetSecond();
-	
 }
 
 void SGame::Start() {
@@ -115,7 +115,6 @@ void SGame::Start() {
 	SDL_RenderClear(Renderer::Get().Renderer());
 	background->Render();
 	SDL_RenderPresent(Renderer::Get().Renderer());
-
 
 	while (sec < 4) {
 		updateTimer.SetSecond();
@@ -348,11 +347,11 @@ void SGame::Collision() {
 }
 
 void SGame::FileHandle() {
-	if (PressedKey('s')) {
+	if (WasPressedKey('s')) {
 		Save();
 		std::cout << "Saved!\n";
 	}
-	if (PressedKey('l')) {
+	if (WasPressedKey('l')) {
 		Load();
 		std::cout << "Loaded!\n";
 	}

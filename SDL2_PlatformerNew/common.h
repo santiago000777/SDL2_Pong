@@ -29,6 +29,14 @@
 	// SDL_ttf
 #include "SDL_ttf.h"
 
+static bool WasPressedKey(short key) {
+	short i = GetAsyncKeyState(toupper(key));
+	if ((i & 0x0001) == 0) {
+		return false;
+	}
+	return true;
+}
+
 static bool PressedKey(short key) {
 	short i = GetAsyncKeyState(toupper(key));
 	if ((i & 0x8000) == 0) {
