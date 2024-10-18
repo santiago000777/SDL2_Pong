@@ -39,6 +39,11 @@ Bubble::~Bubble() {
 	std::cout << "Deleted Bubble\n";
 }
 
+void Bubble::SetSpawnPosition(const Vec2& pos) {
+	box.x = pos.x;
+	box.y = pos.y;
+}
+
 void Bubble::Update() {
 
 	if (!this->collision[LEFT] && !this->collision[RIGHT] && !this->collision[UP] && !this->collision[DOWN]) {

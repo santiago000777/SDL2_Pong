@@ -32,7 +32,7 @@ public:
     void Save(File& file);
     void Load(File& file);
 protected:
-    int points = 0;
  
+    int points = 0;
     int playerOwnerId = -1;
 };

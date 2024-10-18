@@ -64,14 +64,13 @@ void SGame::Init(const std::string& windowName, int posX, int posY, int windowWi
 	Add<Bubble>({ 100, 200, 28, 28 }, "Pictures/BubbleSpriteSheet.bmp", 10);
 
 
-
 	updateTimer.SetFirst();
 	frameTimer.SetFirst();
 	fileTimer.SetFirst();
 }
 
 void SGame::Loop() {
-
+	
 		// UPDATE
 	updateTimer.CalculateDuration();
 	if (updateTimer.GetDuration_ms() >= deltaTime / 4) {
@@ -102,7 +101,7 @@ void SGame::Loop() {
 
 		// FILEHANDLE
 	fileTimer.CalculateDuration();
-	if (fileTimer.GetDuration_ms() >= 1000) {
+	if (fileTimer.GetDuration_ms() >= 10000) {
 		
 		fileTimer.SetFirst();
 		FileHandle();
@@ -403,7 +402,6 @@ void SGame::Load() {
 		balls.emplace_back(std::make_unique<Ball>(std::move(ball)));
 	}
 
-
 	file.Load(size);
 	players.clear();
 	players.reserve(size);
@@ -416,8 +414,6 @@ void SGame::Load() {
 		players.emplace_back(std::make_unique<Player>(std::move(player)));
 	}
 
-	
-	
 	file.Load(size);
 	bricks.clear();
 	bricks.reserve(size);
