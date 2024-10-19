@@ -4,11 +4,27 @@ Ball::Ball(Vec4f box, const std::string& path, int characterWidth)
 	: MovableObject(box, path, characterWidth) {
 
 	std::random_device randomNum;
+	std::uniform_real_distribution<float> dist(0.5f, 0.7f);
+	std::uniform_int_distribution<int> decide(0, 3);
+
+	vector.x = dist(randomNum);
+	vector.y = sqrtf((pow(velocity, 2)) - pow(vector.x, 2));
+
+	
+	if (decide(randomNum) == 1) {
+		vector = { -vector.x, -vector.y };
+	} else if (decide(randomNum) == 2) {
+		vector = { -vector.x, vector.y };
+	} else if (decide(randomNum) == 3) {
+		vector = { vector.x, -vector.y };
+	}
+
+	/*std::random_device randomNum;
 	std::uniform_real_distribution<float> dist(0.1f, 0.4f);
 
 	std::uniform_int_distribution<int> decide(0, 3);
 
-
+	
 	if (decide(randomNum) == 0) {
 		vector = { dist(randomNum), dist(randomNum) };
 	} else if (decide(randomNum) == 1) {
@@ -17,7 +33,7 @@ Ball::Ball(Vec4f box, const std::string& path, int characterWidth)
 		vector = { -dist(randomNum), dist(randomNum) };
 	} else {
 		vector = { dist(randomNum), -dist(randomNum) };
-	}
+	}*/
 
 	std::cout << vector.x << "  " << vector.y << "\n";
 }
@@ -26,9 +42,23 @@ Ball::Ball(Vec4f box, Vec2 vector, const std::string& path, int characterWidth)
 	: MovableObject(box, path, characterWidth) {
 
 	std::random_device randomNum;
-	std::uniform_real_distribution<float> dist(0.1f, 0.4f);
+	std::uniform_real_distribution<float> dist(0.5f, 0.7f);
+	std::uniform_int_distribution<int> decide(0, 3);
 
-	if (vector.x > 0) {
+	this->vector.x = dist(randomNum);
+	this->vector.y = sqrtf((pow(velocity, 2)) - pow(this->vector.x, 2));
+
+	if (vector.x < 0) {
+		this->vector.x *= -1;
+	}
+	if (vector.y < 0) {
+		this->vector.y *= -1;
+	}
+
+	/*std::random_device randomNum;
+	std::uniform_real_distribution<float> dist(0.1f, 0.4f);*/
+
+	/*if (vector.x > 0) {
 		this->vector.x = dist(randomNum);
 	} else {
 		this->vector.x = -dist(randomNum);
@@ -37,7 +67,7 @@ Ball::Ball(Vec4f box, Vec2 vector, const std::string& path, int characterWidth)
 		this->vector.y = dist(randomNum);
 	} else {
 		this->vector.y = -dist(randomNum);
-	}
+	}*/
 }
 
 //Ball::Ball(const Ball& rhs) {
