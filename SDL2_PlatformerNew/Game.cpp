@@ -248,8 +248,8 @@ void SGame::Update() {
 			ball->isAlive = false;
 		}
 	}
-	for (auto& player : players) {
-		if (uncatchedBalls > 0) {
+	if (uncatchedBalls > 0) {
+		for (auto& player : players) {
 			player->DecreaseLives(uncatchedBalls);
 		}
 	}

@@ -32,7 +32,13 @@ public:
     void Save(File& file);
     void Load(File& file);
 protected:
+
     float velocity = 0.7;
     int points = 0;
     int playerOwnerId = -1;
+
+private:
+    std::random_device randomNum;
+    std::uniform_real_distribution<float> vectorDist;
+    std::uniform_int_distribution<int> decide;
 };
