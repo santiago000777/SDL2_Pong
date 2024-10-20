@@ -4,19 +4,21 @@ Bubble::Bubble(Vec4f box, const std::string& path, int characterWidth)
 	: MovableObject(box, path, characterWidth) {
 
 	std::random_device randomNum;
-	std::uniform_real_distribution<float> dist(0.05f, 0.2f);
+	std::uniform_real_distribution<float> vectorDist(0.05f, 0.35f);
 
 	std::uniform_int_distribution<int> decide(0, 3);
 
 
-	if (decide(randomNum) == 0) {
-		vector = { dist(randomNum), dist(randomNum) };
-	} else if (decide(randomNum) == 1) {
-		vector = { -dist(randomNum), -dist(randomNum) };
-	} else if (decide(randomNum) == 2) {
-		vector = { -dist(randomNum), dist(randomNum) };
-	} else {
-		vector = { dist(randomNum), -dist(randomNum) };
+	vector.x = vectorDist(randomNum); 
+	vector.y = sqrtf((pow(velocity, 2)) - pow(vector.x, 2)); 
+
+
+	if (decide(randomNum) == 1) { 
+		vector = { -vector.x, -vector.y }; 
+	} else if (decide(randomNum) == 2) { 
+		vector = { -vector.x, vector.y }; 
+	} else if (decide(randomNum) == 3) { 
+		vector = { vector.x, -vector.y }; 
 	}
 
 	std::cout << vector.x << "  " << vector.y << "\n";

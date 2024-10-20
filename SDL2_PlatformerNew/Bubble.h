@@ -20,4 +20,7 @@ public:
 	void Load(File& file);
 
 	static Timer RespawnDuration;
+
+private:
+	float velocity = 0.4f;
 };

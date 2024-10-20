@@ -33,7 +33,7 @@ public:
     void Load(File& file);
 protected:
 
-    float velocity = 0.7;
+    float velocity = 0.7f;
     int points = 0;
     int playerOwnerId = -1;
 

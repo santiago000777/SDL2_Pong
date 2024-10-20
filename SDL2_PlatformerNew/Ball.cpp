@@ -1,7 +1,7 @@
 #include "Ball.h"
 
 Ball::Ball(Vec4f box, const std::string& path, int characterWidth)
-	: MovableObject(box, path, characterWidth), vectorDist(0.5f, 0.7f), decide(0, 3) {
+	: MovableObject(box, path, characterWidth), vectorDist(0.5f, 0.65f), decide(0, 3) {
 
 	vector.x = vectorDist(randomNum);
 	vector.y = sqrtf((pow(velocity, 2)) - pow(vector.x, 2));
@@ -19,7 +19,7 @@ Ball::Ball(Vec4f box, const std::string& path, int characterWidth)
 }
 
 Ball::Ball(Vec4f box, Vec2 vector, const std::string& path, int characterWidth)
-	: MovableObject(box, path, characterWidth), vectorDist(0.5f, 0.7f), decide(0, 3) {
+	: MovableObject(box, path, characterWidth), vectorDist(0.5f, 0.65f), decide(0, 3) {
 
 	this->vector.x = vectorDist(randomNum);
 	this->vector.y = sqrtf((pow(velocity, 2)) - pow(this->vector.x, 2));
