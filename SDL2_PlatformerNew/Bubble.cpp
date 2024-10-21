@@ -1,5 +1,7 @@
 #include "Bubble.h"
 
+Timer Bubble::RespawnDuration;
+
 Bubble::Bubble(Vec4f box, const std::string& path, int characterWidth)
 	: MovableObject(box, path, characterWidth) {
 

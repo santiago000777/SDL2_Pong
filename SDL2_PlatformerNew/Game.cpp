@@ -67,11 +67,13 @@ void SGame::Init(const std::string& windowName, int posX, int posY, int windowWi
 	updateTimer.SetFirst();
 	frameTimer.SetFirst();
 	fileTimer.SetFirst();
+	Bubble::RespawnDuration.SetFirst();
 }
 
 void SGame::Loop() {
 	
 		// UPDATE
+	updateTimer.SetSecond();
 	updateTimer.CalculateDuration();
 	if (updateTimer.GetDuration_ms() >= deltaTime / 4) {
 		Basket();
@@ -88,25 +90,24 @@ void SGame::Loop() {
 		Collision();
 		Update();
 	}
-	updateTimer.SetSecond();
 
 		// FRAME
+	frameTimer.SetSecond();
 	frameTimer.CalculateDuration();
 	if (frameTimer.GetDuration_ms() >= deltaTime) {
 		
 		frameTimer.SetFirst();
 		Render();
 	}
-	frameTimer.SetSecond();
 
 		// FILEHANDLE
+	fileTimer.SetSecond();
 	fileTimer.CalculateDuration();
 	if (fileTimer.GetDuration_ms() >= 10000) {
 		
 		fileTimer.SetFirst();
 		FileHandle();
 	}
-	fileTimer.SetSecond();
 }
 
 void SGame::Start() {
@@ -200,6 +201,13 @@ void SGame::Update() {
 	}
 
 		// Bubble logic
+	Bubble::RespawnDuration.SetSecond();
+	Bubble::RespawnDuration.CalculateDuration();
+	if (Bubble::RespawnDuration.GetDuration_ms() >= 30000) {
+		Bubble::RespawnDuration.SetFirst();
+		std::cout << "Created new bubble!!!!!\n";
+	}
+
 	for (auto& ball : balls) {
 		for (auto& bubble : bubbles) {
 			if (MovableObject::Collision(*bubble, *ball)) {
