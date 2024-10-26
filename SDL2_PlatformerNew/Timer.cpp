@@ -10,7 +10,6 @@ void Timer::SetFirst() {
 
 void Timer::SetSecond() {
     second = std::chrono::high_resolution_clock::now();
-    
 }
 
 void Timer::CalculateDuration() {

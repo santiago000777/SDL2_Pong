@@ -39,6 +39,6 @@ protected:
 
 private:
     std::random_device randomNum;
-    std::uniform_real_distribution<float> vectorDist;
-    std::uniform_int_distribution<int> decide;
+    std::uniform_real_distribution<float> vectorDist { 0.5f, 0.65f };
+    std::uniform_int_distribution<int> decide { 0, 3 };
 };

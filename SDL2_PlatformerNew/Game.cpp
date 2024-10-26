@@ -36,7 +36,7 @@ void SGame::Init(const std::string& windowName, int posX, int posY, int windowWi
 	Add<Wall>({ 25 + 525, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", 7);
 	Add<Wall>({ 25, 50, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
 
-	//Add<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
+	Add<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
 
 	Add<Player>({ 255, 750, 100, 24 }, "Pictures/paddle.bmp", 25);
 		// Init Text
@@ -137,7 +137,7 @@ int SGame::CountOfBricks() const {
 
 bool SGame::IsEnd() {
 	if (isEnd || PressedKey(VK_ESCAPE)) {
-		return true;
+		return false; //
 	}
 	else {
 		return false;
@@ -170,7 +170,6 @@ void SGame::Render() {
 	}
 	for (auto& brick : bricks) {
 		brick->Render();
-		
 	}
 	for (auto& ball : balls) {
 		ball->Render();
@@ -200,21 +199,31 @@ void SGame::Update() {
 		bubble->Update();
 	}
 
+	bubbleRespawnTimer.SetSecond();
+	bubbleRespawnTimer.CalculateDuration();
+	if (bubbleRespawnTimer.GetDuration_ms() >= 500) {
+		bubbleRespawnTimer.SetFirst();
+		std::uniform_int_distribution<int> decide { 0, (int)balls.size() - 1 };
+		respawnBubbleBox = balls.at(decide(randomNum))->GetBox();
+	}
+
 		// Bubble logic
 	Bubble::RespawnDuration.SetSecond();
 	Bubble::RespawnDuration.CalculateDuration();
-	if (Bubble::RespawnDuration.GetDuration_ms() >= 30000) {
+	if (Bubble::RespawnDuration.GetDuration_ms() >= 15000) {
 		Bubble::RespawnDuration.SetFirst();
-		std::cout << "Created new bubble!!!!!\n";
+		Vec4f pom = { respawnBubbleBox.x, respawnBubbleBox.y, 28, 28 };
+		bubbles.emplace_back(std::make_unique<Bubble>(pom, "Pictures/BubbleSpriteSheet.bmp", 10));
+		std::cout << "Created a new bubble!\n";
 	}
 
-	for (auto& ball : balls) {
-		for (auto& bubble : bubbles) {
-			if (MovableObject::Collision(*bubble, *ball)) {
-				bubble->isAlive = false;
-				Vec4f pom = { bubble->GetBox().x, bubble->GetBox().y, ball->GetBox().w, ball->GetBox().h };
+	for (auto& bubble : bubbles) {
+		for (auto& ball : balls) {
+			if (bubble->isAlive && MovableObject::Collision(*bubble, *ball)) {
+				Vec4f pom = { bubble->GetBox().x, bubble->GetBox().y, ball->GetBox().w, ball->GetBox().h};
 				bubble->Update();
-				balls.push_back(std::make_unique<Ball>(pom, bubble->GetVector(), ball->GetPath(), ball->GetSpriteWidth()));
+				balls.emplace_back(std::make_unique<Ball>(pom, bubble->GetVector(), ball->GetPath(), ball->GetSpriteWidth()));
+				bubble->isAlive = false;
 			}
 		}
 	}

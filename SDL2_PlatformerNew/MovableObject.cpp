@@ -124,7 +124,8 @@ bool MovableObject::Collision(const Object& object, const SDL_Rect& other) {
 					std::cout << "Right\n";
 				}
 			}
-		} else {
+		} 
+		else {
 			if (abs(DownEdge(object.GetBox().Get()) - UpEdge(other)) < abs(LeftEdge(object.GetBox().Get()) - RightEdge(other))
 				&& abs(DownEdge(object.GetBox().Get()) - UpEdge(other)) < abs(RightEdge(object.GetBox().Get()) - LeftEdge(other))) {
 
@@ -138,7 +139,8 @@ bool MovableObject::Collision(const Object& object, const SDL_Rect& other) {
 			}
 		}
 		return true;
-	} else {
+	} 
+	else {
 		return false;
 	}
 }
@@ -171,25 +173,29 @@ bool MovableObject::Collision(MovableObject& object, MovableObject& other) {
 					std::cout << "Left\n";
 					object.collision[LEFT] = true;
 					other.collision[RIGHT] = true;
-				} else {
+				} 
+				else {
 					std::cout << "Right\n";
 					object.collision[RIGHT] = true;
 					other.collision[LEFT] = true;
 				}
 			}
-		} else {
+		} 
+		else {
 			if (abs(DownEdge(box1) - UpEdge(box2)) < abs(LeftEdge(box1) - RightEdge(box2))
 				&& abs(DownEdge(box1) - UpEdge(box2)) < abs(RightEdge(box1) - LeftEdge(box2))) {
 
 				std::cout << "Down\n";
 				object.collision[DOWN] = true;
 				other.collision[UP] = true;
-			} else {
+			} 
+			else {
 				if (abs(LeftEdge(box1) - RightEdge(box2)) < abs(RightEdge(box1) - LeftEdge(box2))) {
 					std::cout << "Left\n";
 					object.collision[LEFT] = true;
 					other.collision[RIGHT] = true;
-				} else {
+				} 
+				else {
 					std::cout << "Right\n";
 					object.collision[RIGHT] = true;
 					other.collision[LEFT] = true;
@@ -197,7 +203,8 @@ bool MovableObject::Collision(MovableObject& object, MovableObject& other) {
 			}
 		}
 		return true;
-	} else {
+	} 
+	else {
 		return false;
 	}
 }
