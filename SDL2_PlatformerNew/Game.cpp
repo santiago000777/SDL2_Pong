@@ -36,7 +36,7 @@ void SGame::Init(const std::string& windowName, int posX, int posY, int windowWi
 	Add<Wall>({ 25 + 525, 80, 30, 90 * 8 }, "Pictures/verticalWall.bmp", 7);
 	Add<Wall>({ 25, 50, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
 
-	Add<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
+	//Add<Wall>({ 25, 780, 550, 30 }, "Pictures/horizontalWall.bmp", 9);
 
 	Add<Player>({ 255, 750, 100, 24 }, "Pictures/paddle.bmp", 25);
 		// Init Text
@@ -137,7 +137,7 @@ int SGame::CountOfBricks() const {
 
 bool SGame::IsEnd() {
 	if (isEnd || PressedKey(VK_ESCAPE)) {
-		return false; //
+		return true;
 	}
 	else {
 		return false;
