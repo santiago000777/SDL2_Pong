@@ -230,7 +230,7 @@ void SGame::Update() {
 		}
 	}
 
-		// Bomb logic
+		// Bomb logicc
 	for (auto& ball : balls) {
 		for (auto& bomb : bombs) {
 			if (MovableObject::Collision(*ball, *bomb)) {
