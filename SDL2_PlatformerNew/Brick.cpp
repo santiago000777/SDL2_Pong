@@ -24,7 +24,6 @@ int Brick::GetPoints() const {
 	return points;
 }
 
-
 void Brick::Save(File& file) {
 	file.Save(srcBox);
 	file.Save(box);
