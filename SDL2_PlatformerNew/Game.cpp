@@ -187,6 +187,7 @@ void SGame::Render() {
 	SDL_RenderPresent(Renderer::Get().Renderer());
 }
 
+
 void SGame::Update() {
 		// Update
 	for (auto& ball : balls) {
@@ -198,6 +199,7 @@ void SGame::Update() {
 	for (auto& bubble : bubbles) {
 		bubble->Update();
 	}
+
 
 	bubbleRespawnTimer.SetSecond();
 	bubbleRespawnTimer.CalculateDuration();
