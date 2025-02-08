@@ -199,6 +199,7 @@ void SGame::Update() {
 		bubble->Update();
 	}
 
+
 	bubbleRespawnTimer.SetSecond();
 	bubbleRespawnTimer.CalculateDuration();
 	if (bubbleRespawnTimer.GetDuration_ms() >= 500) {
