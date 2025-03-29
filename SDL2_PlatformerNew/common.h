@@ -8,7 +8,7 @@
 #include <dos.h>
 #include <fcntl.h>
 #include <fstream>
-#include<iostream>
+#include <iostream>
 #include <locale.h>
 #include <map>
 #include <random>
@@ -18,6 +18,7 @@
 #include <thread>
 #include <windows.h>
 #include <winuser.h>
+#include <chrono>
 
 #define DEBUG()	if(GetAsyncKeyState(VK_ESCAPE)) {__debugbreak();}
 #define BREAK	__debugbreak
